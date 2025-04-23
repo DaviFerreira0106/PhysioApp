@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+enum AuthMode {
+  login,
+  signup,
+}
+
 class AuthForm extends StatefulWidget {
   const AuthForm({super.key});
 
@@ -10,6 +15,8 @@ class AuthForm extends StatefulWidget {
 }
 
 class AuthFormState extends State<AuthForm> {
+  final AuthMode _auth_mode = AuthMode.login;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,56 +33,69 @@ class AuthFormState extends State<AuthForm> {
           Form(
             child: Column(
               children: [
-                Container(
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
+                _auth_mode == AuthMode.login
+                    ? Container()
+                    : SizedBox(
+                        child: Column(
+                          children: [
+                            const CircleAvatar(
+                              radius: 50,
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text("Selecionar Foto"),
+                            ),
+                          ],
+                        ),
                       ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text("Selecionar Foto"),
-                      ),
-                    ],
+                if (_auth_mode == AuthMode.signup)
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Número Crefito"),
                   ),
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Número Crefito"),
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Nome Completo"),
-                ),
+                if (_auth_mode == AuthMode.signup)
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Nome Completo"),
+                  ),
                 TextFormField(
                   decoration: InputDecoration(labelText: "E-mail"),
                 ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Número de Telefone"),
-                ),
+                if (_auth_mode == AuthMode.signup)
+                  TextFormField(
+                    decoration:
+                        InputDecoration(labelText: "Número de Telefone"),
+                  ),
                 TextFormField(
                   decoration: InputDecoration(labelText: "Senha"),
                 ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Confirmar Senha"),
-                ),
+                if (_auth_mode == AuthMode.signup)
+                  TextFormField(
+                    decoration: InputDecoration(labelText: "Confirmar Senha"),
+                  ),
               ],
             ),
           ),
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
           TextButton(
-            style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(
-                const Color.fromARGB(255, 0, 111, 202),
-              ),
-              minimumSize: WidgetStatePropertyAll(Size(300, 50))
-            ),
+            style: const ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                  Color.fromARGB(255, 0, 111, 202),
+                ),
+                minimumSize: WidgetStatePropertyAll(Size(300, 50))),
             onPressed: () {},
-            child: const Text(
-              "Cadastrar",
-              style: TextStyle(
+            child: Text(
+              _auth_mode == AuthMode.signup ? "Cadastrar" : "Entrar",
+              style: const TextStyle(
                 color: Colors.white,
               ),
             ),
-          )
+          ),
+          const SizedBox(height: 20),
+          TextButton(
+            onPressed: () {},
+            child: Text(
+              _auth_mode == AuthMode.signup ? "Entrar" : "Cadastrar-se",
+            ),
+          ),
         ],
       ),
     );
