@@ -15,7 +15,7 @@ class AuthForm extends StatefulWidget {
 }
 
 class AuthFormState extends State<AuthForm> {
-  final AuthMode _auth_mode = AuthMode.login;
+  AuthMode _auth_mode = AuthMode.login;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,13 @@ class AuthFormState extends State<AuthForm> {
           ),
           const SizedBox(height: 20),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                _auth_mode == AuthMode.login
+                    ? _auth_mode = AuthMode.signup
+                    : _auth_mode = AuthMode.login;
+              });
+            },
             child: Text(
               _auth_mode == AuthMode.signup ? "Entrar" : "Cadastrar-se",
             ),
