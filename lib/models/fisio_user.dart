@@ -3,7 +3,7 @@ class FisioUser {
   final String name;
   final String numberCrefito;
   final String email;
-  final int numberTelephone;
+  final String numberTelephone;
   final String password;
 
   FisioUser({
