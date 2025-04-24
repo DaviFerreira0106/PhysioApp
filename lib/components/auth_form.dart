@@ -142,6 +142,11 @@ class AuthFormState extends State<AuthForm> {
               _auth_mode == AuthMode.signup ? "Entrar" : "Cadastrar-se",
             ),
           ),
+          if (_auth_mode == AuthMode.login)
+            TextButton(
+              onPressed: () {},
+              child: const Text("Esqueci minha senha"),
+            ),
         ],
       ),
     );
