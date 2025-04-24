@@ -7,21 +7,27 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color.fromARGB(255, 0, 97, 177),
-              Colors.blue,
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 0, 97, 177),
+                Colors.blue,
+              ],
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AuthForm(),
             ],
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
           ),
         ),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          AuthForm(),
-        ]),
       ),
     );
   }
