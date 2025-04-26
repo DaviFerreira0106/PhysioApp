@@ -15,13 +15,15 @@ class AuthForm extends StatefulWidget {
 }
 
 class AuthFormState extends State<AuthForm> {
-  AuthMode _auth_mode = AuthMode.login;
+  AuthMode _authMode = AuthMode.login;
   final FocusNode _nameFocus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _phoneFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _confirmPassword = FocusNode();
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   var _formData = Map<String, Object>();
 
@@ -38,6 +40,16 @@ class AuthFormState extends State<AuthForm> {
   void submit() {
     _formKey.currentState?.validate();
     _formKey.currentState?.save();
+  }
+
+  void _toggleForm() {
+    setState(() {
+      _authMode == AuthMode.login
+          ? _authMode = AuthMode.signup
+          : _authMode = AuthMode.login;
+      _emailController.text = "";
+      _passwordController.text = "";
+    });
   }
 
   @override
@@ -57,7 +69,7 @@ class AuthFormState extends State<AuthForm> {
             key: _formKey,
             child: Column(
               children: [
-                _auth_mode == AuthMode.login
+                _authMode == AuthMode.login
                     ? Container()
                     : SizedBox(
                         child: Column(
@@ -72,10 +84,10 @@ class AuthFormState extends State<AuthForm> {
                           ],
                         ),
                       ),
-                if (_auth_mode == AuthMode.signup)
+                if (_authMode == AuthMode.signup)
                   TextFormField(
-                    initialValue: _formData['numberCrefito']?.toString(),
-                    decoration: InputDecoration(labelText: "Número Crefito"),
+                    decoration:
+                        const InputDecoration(labelText: "Número Crefito"),
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.next,
                     onSaved: (numberCrefito) =>
@@ -96,10 +108,10 @@ class AuthFormState extends State<AuthForm> {
                       return null;
                     },
                   ),
-                if (_auth_mode == AuthMode.signup)
+                if (_authMode == AuthMode.signup)
                   TextFormField(
-                    initialValue: _formData["name"]?.toString(),
-                    decoration: InputDecoration(labelText: "Nome Completo"),
+                    decoration:
+                        const InputDecoration(labelText: "Nome Completo"),
                     keyboardType: TextInputType.name,
                     focusNode: _nameFocus,
                     textInputAction: TextInputAction.next,
@@ -120,10 +132,9 @@ class AuthFormState extends State<AuthForm> {
                       return null;
                     },
                   ),
-                if (_auth_mode == AuthMode.signup)
+                if (_authMode == AuthMode.signup)
                   TextFormField(
-                      initialValue: _formData["phone"]?.toString(),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           labelText: "Número de Telefone",
                           hintText: "11999993333"),
                       keyboardType: TextInputType.phone,
@@ -146,12 +157,12 @@ class AuthFormState extends State<AuthForm> {
                         return null;
                       }),
                 TextFormField(
-                    initialValue: _formData["email"]?.toString(),
-                    decoration: InputDecoration(labelText: "E-mail"),
+                    decoration: const InputDecoration(labelText: "E-mail"),
                     keyboardType: TextInputType.emailAddress,
                     focusNode: _emailFocus,
                     textInputAction: TextInputAction.next,
                     onSaved: (email) => _formData["email"] = email ?? "",
+                    controller: _emailController,
                     onFieldSubmitted: (_) =>
                         FocusScope.of(context).requestFocus(_passwordFocus),
                     validator: (emailValue) {
@@ -162,15 +173,14 @@ class AuthFormState extends State<AuthForm> {
                       }
 
                       if (!email.trim().contains("@") ||
-                          email.trim().length < 10) {
+                          email.trim().length < 11) {
                         return "Digite um e-mail válido";
                       }
 
                       return null;
                     }),
                 TextFormField(
-                  initialValue: _formData["password"]?.toString(),
-                  decoration: InputDecoration(labelText: "Senha"),
+                  decoration: const InputDecoration(labelText: "Senha"),
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   focusNode: _passwordFocus,
@@ -187,15 +197,18 @@ class AuthFormState extends State<AuthForm> {
                       return "A senha precisa ter no minimo 8 caracteres!";
                     }
 
+                    if (!password.trim().contains([]))
+
                     return null;
                   },
                 ),
-                if (_auth_mode == AuthMode.signup)
+                if (_authMode == AuthMode.signup)
                   TextFormField(
-                    initialValue: _formData["confirmPassword"]?.toString(),
-                    decoration: InputDecoration(labelText: "Confirmar Senha"),
+                    decoration:
+                        const InputDecoration(labelText: "Confirmar Senha"),
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
+                    controller: _passwordController,
                     validator: (confirmPasswordValue) {
                       final String conPassword = confirmPasswordValue ?? "";
 
@@ -222,7 +235,7 @@ class AuthFormState extends State<AuthForm> {
                 minimumSize: WidgetStatePropertyAll(Size(300, 50))),
             onPressed: () => submit(),
             child: Text(
-              _auth_mode == AuthMode.signup ? "Cadastrar" : "Entrar",
+              _authMode == AuthMode.signup ? "Cadastrar" : "Entrar",
               style: const TextStyle(
                 color: Colors.white,
               ),
@@ -230,19 +243,12 @@ class AuthFormState extends State<AuthForm> {
           ),
           const SizedBox(height: 20),
           TextButton(
-            onPressed: () {
-              setState(() {
-                _auth_mode == AuthMode.login
-                    ? _auth_mode = AuthMode.signup
-                    : _auth_mode = AuthMode.login;
-                _formData = {};
-              });
-            },
+            onPressed: () => _toggleForm(),
             child: Text(
-              _auth_mode == AuthMode.signup ? "Entrar" : "Cadastrar-se",
+              _authMode == AuthMode.signup ? "Entrar" : "Cadastrar-se",
             ),
           ),
-          if (_auth_mode == AuthMode.login)
+          if (_authMode == AuthMode.login)
             TextButton(
               onPressed: () {},
               child: const Text("Esqueci minha senha"),
