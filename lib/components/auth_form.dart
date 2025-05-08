@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/controller/login_controller.dart';
 
 enum AuthMode {
   login,
@@ -40,6 +41,9 @@ class AuthFormState extends State<AuthForm> {
   void submit() {
     _formKey.currentState?.validate();
     _formKey.currentState?.save();
+
+    LoginController().nemFisioUser(data: _formData);
+    print("Chamou!!!");
   }
 
   void _toggleForm() {
@@ -196,8 +200,6 @@ class AuthFormState extends State<AuthForm> {
                     if (password.trim().length < 8) {
                       return "A senha precisa ter no minimo 8 caracteres!";
                     }
-
-                    if (!password.trim().contains([]))
 
                     return null;
                   },
