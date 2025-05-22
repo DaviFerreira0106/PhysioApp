@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/controller/login_controller.dart';
 import 'package:physioapp/pages/auth_page.dart';
 import 'package:physioapp/pages/home_page.dart';
 
@@ -13,6 +12,6 @@ class ControllerPage extends StatefulWidget {
 class ControllerPageState extends State<ControllerPage> {
   @override
   Widget build(BuildContext context) {
-    return LoginController().currentUserState ? HomePage() : AuthPage();
+    return AuthPage();
   }
 }

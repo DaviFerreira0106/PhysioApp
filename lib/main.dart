@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/controller/login_controller.dart';
+import 'package:physioapp/controller/auth_controller.dart';
 import 'package:physioapp/pages/auth_page.dart';
 import 'package:physioapp/pages/controller_page.dart';
 import 'package:physioapp/utils/app_routes.dart';
@@ -14,7 +14,7 @@ class PhysioApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: ChangeNotifierProvider(
-          create: (context) => LoginController(),
+          create: (context) => AuthController(),
           child: ControllerPage(),
         ),
         routes: {

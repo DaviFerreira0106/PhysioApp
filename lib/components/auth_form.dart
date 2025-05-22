@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/controller/login_controller.dart';
+import 'package:physioapp/controller/auth_controller.dart';
+import 'package:provider/provider.dart';
 
 enum AuthMode {
   login,
@@ -25,6 +26,7 @@ class AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
 
   var _formData = Map<String, Object>();
 
@@ -38,12 +40,24 @@ class AuthFormState extends State<AuthForm> {
     _confirmPassword.dispose();
   }
 
-  void submit() {
+  Future<void> submit() async {
     _formKey.currentState?.validate();
     _formKey.currentState?.save();
 
-    LoginController().nemFisioUser(data: _formData);
-    print("Chamou!!!");
+    setState(() => _isLoading = true);
+
+    final auth = Provider.of<AuthController>(context, listen: false);
+    if(_authMode == AuthMode.login) {
+      // Login
+    } else {
+      // Cadastro
+      await auth.signup(
+        email: _formData['email'] as String, 
+        password: _formData['password'] as String,
+        );
+    }
+    
+    setState(() => _isLoading = false);
   }
 
   void _toggleForm() {
