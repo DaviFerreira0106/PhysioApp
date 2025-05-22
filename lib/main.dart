@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/controller/auth_controller.dart';
 import 'package:physioapp/pages/auth_page.dart';
-import 'package:physioapp/pages/controller_page.dart';
+import 'package:physioapp/pages/auth_or_home_page.dart';
 import 'package:physioapp/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ class PhysioApp extends StatelessWidget {
     return MaterialApp(
         home: ChangeNotifierProvider(
           create: (context) => AuthController(),
-          child: ControllerPage(),
+          child: AuthOrHomePage(),
         ),
         routes: {
           AppRoutes.authpage: (context) => AuthPage(),

@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:physioapp/controller/auth_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:physioapp/exceptions/auth_exception.dart';
 
 enum AuthMode {
   login,
@@ -25,10 +28,12 @@ class AuthFormState extends State<AuthForm> {
   final FocusNode _confirmPassword = FocusNode();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
 
-  var _formData = Map<String, Object>();
+  final _formData = Map<String, Object>();
 
   @override
   void dispose() {
@@ -40,23 +45,56 @@ class AuthFormState extends State<AuthForm> {
     _confirmPassword.dispose();
   }
 
+  void _showErrorDialog({required String msg}) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Erro de Autenticação'),
+        content: Text(msg),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> submit() async {
-    _formKey.currentState?.validate();
+    final bool isValid = _formKey.currentState?.validate() ?? false;
+
+    if (!isValid) return;
+
     _formKey.currentState?.save();
 
     setState(() => _isLoading = true);
 
     final auth = Provider.of<AuthController>(context, listen: false);
-    if(_authMode == AuthMode.login) {
-      // Login
-    } else {
-      // Cadastro
-      await auth.signup(
-        email: _formData['email'] as String, 
-        password: _formData['password'] as String,
+
+    try {
+      if (_authMode == AuthMode.login) {
+        // Login
+        await auth.signin(
+          email: _formData['email'] as String,
+          password: _formData['password'] as String,
         );
+      } else {
+        // Cadastro
+        await auth.signup(
+          email: _formData['email'] as String,
+          password: _formData['password'] as String,
+        );
+      }
+    } on AuthExceptions catch (error) {
+      _showErrorDialog(msg: error.toString());
+    } catch (error) {
+      print(error);
+      _showErrorDialog(
+        msg: 'Ocorreu um erro na autneticação do usuário',
+      );
     }
-    
+
     setState(() => _isLoading = false);
   }
 
@@ -66,7 +104,7 @@ class AuthFormState extends State<AuthForm> {
           ? _authMode = AuthMode.signup
           : _authMode = AuthMode.login;
       _emailController.text = "";
-      _passwordController.text = "";
+      _confirmPasswordController.text = "";
     });
   }
 
@@ -202,6 +240,7 @@ class AuthFormState extends State<AuthForm> {
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   focusNode: _passwordFocus,
+                  controller: _passwordController,
                   textInputAction: TextInputAction.done,
                   onSaved: (password) => _formData["password"] = password ?? "",
                   validator: (passwordValue) {
@@ -224,7 +263,7 @@ class AuthFormState extends State<AuthForm> {
                         const InputDecoration(labelText: "Confirmar Senha"),
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
-                    controller: _passwordController,
+                    controller: _confirmPasswordController,
                     validator: (confirmPasswordValue) {
                       final String conPassword = confirmPasswordValue ?? "";
 
@@ -232,7 +271,7 @@ class AuthFormState extends State<AuthForm> {
                         return "Preenchimento obrigatório!";
                       }
 
-                      if (conPassword.trim() != _formData['password']) {
+                      if (conPassword.trim() != _passwordController.text) {
                         return "As senhas estão diferentes";
                       }
 
@@ -243,20 +282,22 @@ class AuthFormState extends State<AuthForm> {
             ),
           ),
           const SizedBox(height: 40),
-          TextButton(
-            style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  Color.fromARGB(255, 0, 111, 202),
+          _isLoading
+              ? const CircularProgressIndicator()
+              : TextButton(
+                  style: const ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                        Color.fromARGB(255, 0, 111, 202),
+                      ),
+                      minimumSize: WidgetStatePropertyAll(Size(300, 50))),
+                  onPressed: () => submit(),
+                  child: Text(
+                    _authMode == AuthMode.signup ? "Cadastrar" : "Entrar",
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-                minimumSize: WidgetStatePropertyAll(Size(300, 50))),
-            onPressed: () => submit(),
-            child: Text(
-              _authMode == AuthMode.signup ? "Cadastrar" : "Entrar",
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
           const SizedBox(height: 20),
           TextButton(
             onPressed: () => _toggleForm(),
