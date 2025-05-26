@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/pages/home_page.dart';
 import 'package:physioapp/pages/exercises_page.dart';
+import 'package:physioapp/components/app_drawer.dart';
 
 class TabsPage extends StatefulWidget {
   const TabsPage({super.key});
@@ -38,6 +39,7 @@ class TabsPageState extends State<TabsPage> {
         title: Text(title),
       ),
       body: body,
+      drawer: const AppDrawer(),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(

@@ -21,7 +21,7 @@ class AuthPage extends StatelessWidget {
               end: Alignment.bottomLeft,
             ),
           ),
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AuthForm(),
