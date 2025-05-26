@@ -5,8 +5,9 @@ import 'package:physioapp/pages/auth_or_home_page.dart';
 import 'package:physioapp/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:physioapp/pages/exercises_detail_page.dart';
+import 'package:physioapp/pages/exercises_execution_page.dart';
 
-void main() => runApp(PhysioApp());
+void main() => runApp(const PhysioApp());
 
 class PhysioApp extends StatelessWidget {
   const PhysioApp({super.key});
@@ -16,11 +17,13 @@ class PhysioApp extends StatelessWidget {
     return MaterialApp(
         home: ChangeNotifierProvider(
           create: (context) => AuthController(),
-          child: AuthOrHomePage(),
+          child: const AuthOrHomePage(),
         ),
         routes: {
-          AppRoutes.authpage: (context) => AuthPage(),
-          AppRoutes.exercisesDetail: (context) => ExercisesDetailPage(),
+          AppRoutes.authpage: (context) => const AuthPage(),
+          AppRoutes.exercisesDetail: (context) => const ExercisesDetailPage(),
+          AppRoutes.exercisesExecution: (context) =>
+              const ExercisesExecutionPage(),
         });
   }
 }
