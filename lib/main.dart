@@ -4,6 +4,7 @@ import 'package:physioapp/pages/auth_page.dart';
 import 'package:physioapp/pages/auth_or_home_page.dart';
 import 'package:physioapp/utils/app_routes.dart';
 import 'package:provider/provider.dart';
+import 'package:physioapp/pages/exercises_detail_page.dart';
 
 void main() => runApp(PhysioApp());
 
@@ -19,6 +20,7 @@ class PhysioApp extends StatelessWidget {
         ),
         routes: {
           AppRoutes.authpage: (context) => AuthPage(),
+          AppRoutes.exercisesDetail: (context) => ExercisesDetailPage(),
         });
   }
 }

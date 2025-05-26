@@ -18,17 +18,26 @@ class TabsPageState extends State<TabsPage> {
     setState(() => _index = index);
   }
 
-  Map<String, Object> tabSreen = {
-    'title': {'Pagína Inicial', 'Exercícios'},
-    'screen': {},
-  };
+  final List<Map<String, Object>> _tabSreen = [
+    {
+      'title': 'Pagína Inicial',
+      'screen': const HomePage(),
+    },
+    {
+      'title': 'Exercício',
+      'screen': const ExercisesPage(),
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
+    final String title = _tabSreen.elementAt(_index)['title'] as String;
+    final Widget body = _tabSreen.elementAt(_index)['screen'] as Widget;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("PhysioApp"),
+        title: Text(title),
       ),
+      body: body,
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
