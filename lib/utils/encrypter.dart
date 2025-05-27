@@ -9,8 +9,11 @@ class Encrypter {
   final _iv = encrypt.IV.fromLength(16);
 
   // Criando objeto de critação
-  void encrypter({required Map<String, Object> data}){
-    final _objEncryper = encrypt.Encrypter(encrypt.AES(_key));
+  void encrypter({required Map<String, Object> data, required String uid}){
+    final objEncryper = encrypt.Encrypter(encrypt.AES(_key));
+
+    // Criptografando os dados
+    final uidCipher = objEncryper.encrypt(uid, iv: _iv);    
   }
   
 
