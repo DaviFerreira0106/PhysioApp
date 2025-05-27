@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:physioapp/exceptions/auth_exception.dart';
-import 'package:physioapp/utils/constants.dart';
 
 class AuthController with ChangeNotifier {
   String? _token;
@@ -63,13 +62,7 @@ class AuthController with ChangeNotifier {
 
   // Método Signup
   Future<void> signup({required String email, required String password}) async {
-    final response = await http.post(
-      Uri.parse('${Constants.userBaseUrl}.json'),
-      body: jsonEncode({
-        'e-mail': email,
-      }),
-    );
-    print(response.body);
+    
     return _authenticate(
         email: email, password: password, urlFragment: 'signUp');
   }

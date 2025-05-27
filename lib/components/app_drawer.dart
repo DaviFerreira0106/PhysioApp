@@ -30,8 +30,8 @@ class AppDrawer extends StatelessWidget {
               padding: const EdgeInsets.only(top: 50),
               child: TextButton.icon(
                 onPressed: () => auth.logout(),
-                label: Text('Sair'),
-                icon: Icon(Icons.exit_to_app),
+                label: const Text('Sair', style: TextStyle(fontSize: 18),),
+                icon: const Icon(Icons.exit_to_app, size: 25),
               ),
             ),
           ],
