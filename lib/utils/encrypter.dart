@@ -5,14 +5,16 @@ import 'package:physioapp/utils/secure.dart';
 class Encrypter {
   // Criando chaves de criptografia
   
-  final  _key = encrypt.Key.fromUtf8(Secure.key);
+  final _key = encrypt.Key.fromUtf8(Secure.key);
   final _iv = encrypt.IV.fromLength(16);
 
   // Criando objeto de critação
-  final _objEncryper = encrypt.Encrypter(encrypt.AES(_key));
-    // final objEncrypter = encrypt.Encrypter(encrypt.AES(key));
+  void encrypter({required Map<String, Object> data}){
+    final _objEncryper = encrypt.Encrypter(encrypt.AES(_key));
+  }
+  
 
-    // // Criptografando os dados
+    // Criptografando os dados
     // final uidCipher = objEncrypter.encrypt(uid, iv: iv);
     // final emailCipher =
     //     objEncrypter.encrypt(formData['email'] as String, iv: iv);
