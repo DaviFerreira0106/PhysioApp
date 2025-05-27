@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:physioapp/controller/auth_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:physioapp/exceptions/auth_exception.dart';
-import 'package:physioapp/controller/user_fisio_controller.dart';
 
 enum AuthMode {
   login,
@@ -70,22 +69,14 @@ class AuthFormState extends State<AuthForm> {
     setState(() => _isLoading = true);
 
     final auth = Provider.of<AuthController>(context, listen: false);
-    final fisioUser = UserFisioController();
 
     try {
       if (_authMode == AuthMode.login) {
         // Login
-        await auth.signin(
-          email: _formData['email'] as String,
-          password: _formData['password'] as String,
-        );
+        await auth.signin(formData: _formData);
       } else {
         // Cadastro
-        await auth.signup(
-          email: _formData['email'] as String,
-          password: _formData['password'] as String,
-        );
-        await fisioUser.createFisioUser(formData: _formData);
+        await auth.signup(formData: _formData);
       }
     } on AuthExceptions catch (error) {
       _showErrorDialog(msg: error.toString());

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:physioapp/exceptions/auth_exception.dart';
+import 'package:physioapp/controller/user_fisio_controller.dart';
 
 class AuthController with ChangeNotifier {
   String? _token;
@@ -25,8 +26,7 @@ class AuthController with ChangeNotifier {
 
   // Método de autenticação
   Future<void> _authenticate({
-    required String email,
-    required String password,
+    required Map<String, Object> formData,
     required String urlFragment,
   }) async {
     final String _url =
@@ -35,8 +35,8 @@ class AuthController with ChangeNotifier {
     final response = await http.post(
       Uri.parse(_url),
       body: jsonEncode({
-        'email': email,
-        'password': password,
+        'email': formData['email'] as String,
+        'password': formData['password'] as String,
         'returnSecureToken': true,
       }),
     );
@@ -55,22 +55,24 @@ class AuthController with ChangeNotifier {
         ),
       );
 
+      if (urlFragment == 'signUp') {
+        await UserFisioController()
+            .createFisioUser(formData: formData, uid: _uid ?? '');
+      }
+
       _autoLogout();
       notifyListeners();
     }
   }
 
   // Método Signup
-  Future<void> signup({required String email, required String password}) async {
-    
-    return _authenticate(
-        email: email, password: password, urlFragment: 'signUp');
+  Future<void> signup({required Map<String, Object> formData}) async {
+    return _authenticate(formData: formData, urlFragment: 'signUp');
   }
 
   // Método Signin
-  Future<void> signin({required String email, required String password}) async {
-    return _authenticate(
-        email: email, password: password, urlFragment: 'signInWithPassword');
+  Future<void> signin({required Map<String, Object> formData}) async {
+    return _authenticate(formData: formData, urlFragment: 'signInWithPassword');
   }
 
   void logout() {

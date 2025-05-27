@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/controller/user_fisio_controller.dart';
 import 'package:physioapp/pages/home_page.dart';
 import 'package:physioapp/pages/exercises_page.dart';
 import 'package:physioapp/components/app_drawer.dart';
+import 'package:provider/provider.dart';
 
 class TabsPage extends StatefulWidget {
   const TabsPage({super.key});
@@ -17,6 +19,12 @@ class TabsPageState extends State<TabsPage> {
 
   void _onChangeIndex(int index) {
     setState(() => _index = index);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<UserFisioController>(context, listen: false).loadFisioUser();
   }
 
   final List<Map<String, Object>> _tabSreen = [

@@ -14,4 +14,5 @@ class FisioUser {
     required this.numberTelephone,
     required this.password,
   });
+  
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/controller/auth_controller.dart';
+import 'package:physioapp/controller/user_fisio_controller.dart';
 import 'package:physioapp/pages/auth_or_home_page.dart';
 import 'package:physioapp/utils/app_routes.dart';
 import 'package:provider/provider.dart';
@@ -22,11 +23,12 @@ class PhysioApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AuthController(),
-          child: const ExercisesDetailPage(),
         ),
         ChangeNotifierProvider(
           create: (context) => AuthController(),
-          child: const ExercisesExecutionPage(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserFisioController(),
         ),
       ],
       child: MaterialApp(

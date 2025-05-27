@@ -6,30 +6,24 @@ import 'package:http/http.dart' as http;
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:physioapp/utils/secure.dart';
 import 'package:crypto/crypto.dart' as crypto;
+import 'package:physioapp/models/fisio_user.dart';
 
 class UserFisioController with ChangeNotifier {
-  Future<void> createFisioUser({required Map<String, Object> formData}) async {
-    // Criptografando os dados
-    final key = encrypt.Key.fromUtf8(Secure.key);
-    final iv = encrypt.IV.fromLength(16);
+  FisioUser? _fisioUser;
 
-    final objEncrypter = encrypt.Encrypter(encrypt.AES(key));
-    final emailCipher =
-        objEncrypter.encrypt(formData['email'] as String, iv: iv);
-    final crefitoCipher =
-        objEncrypter.encrypt(formData['numberCrefito'] as String, iv: iv);
-    final nameCipher = objEncrypter.encrypt(formData['name'] as String, iv: iv);
-    final phoneCipher =
-        objEncrypter.encrypt(formData['phone'] as String, iv: iv);
+  FisioUser get fisioUser => _fisioUser!;
 
-    // Senha
-    final String password = formData['password'] as String;
-    final bytesPassword = utf8.encode(password + Secure.salt);
-    final passwordHash = crypto.sha256.convert(bytesPassword);
+  Future<void> createFisioUser(
+      {required Map<String, Object> formData, required String uid}) async {
+    // Método para criar usuário fisioterapeuta
+    _addFisioUser(formData: formData, uid: uid);
 
-    final response = await http.post(
+    
+
+    await http.post(
       Uri.parse('${Constants.fisioUserBaseUrl}.json'),
       body: jsonEncode({
+        'uid': uidCipher.base64,
         'email': emailCipher.base64,
         'password': passwordHash.toString(),
         'numberCrefito': crefitoCipher.base64,
@@ -37,8 +31,53 @@ class UserFisioController with ChangeNotifier {
         'telephone': phoneCipher.base64,
       }),
     );
+  }
 
-    final body = jsonDecode(response.body)['name'];
-    print(body);
+  void _addFisioUser(
+      {required Map<String, Object> formData, required String uid}) {
+    // Salvo Usuario na lista
+
+    _fisioUser = FisioUser(
+      id: uid,
+      name: formData['name'] as String,
+      numberCrefito: formData['numberCrefito'] as String,
+      email: formData['email'] as String,
+      numberTelephone: formData['phone'] as String,
+      password: formData['password'] as String,
+    );
+
+    notifyListeners();
+  }
+
+  Future<void> loadFisioUser() async {
+    final response =
+        await http.get(Uri.parse('${Constants.fisioUserBaseUrl}.json'));
+
+    if (response.body == 'null') return;
+
+    Map<String, dynamic> data = jsonDecode(response.body);
+
+    data.forEach((key, value) {
+      // Criando chaves de criptografia
+      final key = encrypt.Key.fromUtf8(Secure.key);
+      final iv = encrypt.IV.fromLength(16);
+
+      // Criando objeto de critação
+      print('Chave part2: ${Secure().k}');
+      print('iv part2: ${Secure().iv}');
+      final objEncrypter = encrypt.Encrypter(encrypt.AES(Secure().k!));
+      final emailCipher =
+          encrypt.Encrypted.fromBase64(value['email'] as String);
+      final data = objEncrypter.decrypt(emailCipher, iv: Secure().iv);
+      print(data);
+      // final fisioUser = FisioUser(
+      //   id: id,
+      //   name: name,
+      //   numberCrefito: numberCrefito,
+      //   email: email,
+      //   numberTelephone: numberTelephone,
+      //   password: password,
+      // );
+    });
   }
 }
