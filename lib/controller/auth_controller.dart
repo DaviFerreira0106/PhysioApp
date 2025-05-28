@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:physioapp/exceptions/auth_exception.dart';
 import 'package:physioapp/controller/user_fisio_controller.dart';
+import 'package:physioapp/exceptions/reset_password_exception.dart';
 
 class AuthController with ChangeNotifier {
   String? _token;
@@ -78,7 +79,7 @@ class AuthController with ChangeNotifier {
   Future<void> resetPassword({required String email}) async {
     const _url =
         'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDfmSm9hXz8Dz1qJdvdwh4dwjqTJEo86w0';
-   
+
     final response = await http.post(
       Uri.parse(_url),
       body: jsonEncode({
@@ -87,7 +88,11 @@ class AuthController with ChangeNotifier {
       }),
     );
 
-    print(response.body);
+    final body = jsonDecode(response.body);
+    print(body);
+    if (body['error'] != null) {
+      throw ResetPasswordExceptions(error: body['error']['message']);
+    }
   }
 
   void logout() {

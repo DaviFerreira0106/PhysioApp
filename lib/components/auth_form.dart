@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/controller/auth_controller.dart';
+import 'package:physioapp/exceptions/reset_password_exception.dart';
 import 'package:provider/provider.dart';
 import 'package:physioapp/exceptions/auth_exception.dart';
 
 enum AuthMode {
   login,
   signup,
+  resetPassword,
 }
 
 class AuthForm extends StatefulWidget {
@@ -26,7 +28,6 @@ class AuthFormState extends State<AuthForm> {
   final FocusNode _confirmPassword = FocusNode();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _emailReset = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -60,22 +61,31 @@ class AuthFormState extends State<AuthForm> {
     );
   }
 
-  void _showResetDialog() {
-    final auth = Provider.of<AuthController>(context, listen: false);
+  void _showErrorResetPasswordDialog({required String msg}) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Redefinição de Senha'),
-        content: TextFormField(
-          decoration: const InputDecoration(
-            label: Text('E-mail'),
-          ),
-          controller: _emailReset,
-        ),
+        title: const Text('Erro de Verificação'),
+        content: Text(msg),
         actions: [
           TextButton(
-            onPressed: () async {
-              await auth.resetPassword(email: _emailReset.text);
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showResetDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Redefinição de senha'),
+        content: const Text('Enviamos um link para seu e-mail'),
+        actions: [
+          TextButton(
+            onPressed: () {
               Navigator.of(context).pop();
             },
             child: const Text('Ok'),
@@ -83,6 +93,31 @@ class AuthFormState extends State<AuthForm> {
         ],
       ),
     );
+  }
+
+  Future<void> resetPassword() async {
+    final bool isValid = _formKey.currentState?.validate() ?? false;
+
+    if (!isValid) return;
+
+    _formKey.currentState?.save();
+
+    setState(() => _isLoading = true);
+
+    final auth = Provider.of<AuthController>(context, listen: false);
+
+    try {
+      await auth.resetPassword(email: _formData['email'] as String);
+      _showResetDialog();
+    } on ResetPasswordExceptions catch (error) {
+      _showErrorResetPasswordDialog(msg: error.toString());
+    } catch (error) {
+      _showErrorResetPasswordDialog(
+        msg: 'Ocorreu um erro na autneticação do usuário',
+      );
+    }
+
+    setState(() => _isLoading = false);
   }
 
   Future<void> submit() async {
@@ -126,6 +161,15 @@ class AuthFormState extends State<AuthForm> {
     });
   }
 
+  void _toggleFormResetPassword() {
+    setState(() {
+      _authMode == AuthMode.login
+          ? _authMode = AuthMode.resetPassword
+          : _authMode = AuthMode.login;
+      _emailController.text = '';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -143,7 +187,8 @@ class AuthFormState extends State<AuthForm> {
             key: _formKey,
             child: Column(
               children: [
-                _authMode == AuthMode.login
+                _authMode == AuthMode.login ||
+                        _authMode == AuthMode.resetPassword
                     ? Container()
                     : SizedBox(
                         child: Column(
@@ -253,28 +298,30 @@ class AuthFormState extends State<AuthForm> {
 
                       return null;
                     }),
-                TextFormField(
-                  decoration: const InputDecoration(labelText: "Senha"),
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
-                  focusNode: _passwordFocus,
-                  controller: _passwordController,
-                  textInputAction: TextInputAction.done,
-                  onSaved: (password) => _formData["password"] = password ?? "",
-                  validator: (passwordValue) {
-                    final String password = passwordValue ?? "";
+                if (_authMode == AuthMode.login || _authMode == AuthMode.signup)
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: "Senha"),
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: true,
+                    focusNode: _passwordFocus,
+                    controller: _passwordController,
+                    textInputAction: TextInputAction.done,
+                    onSaved: (password) =>
+                        _formData["password"] = password ?? "",
+                    validator: (passwordValue) {
+                      final String password = passwordValue ?? "";
 
-                    if (password.trim().isEmpty) {
-                      return "Preenchimento obrigatório!";
-                    }
+                      if (password.trim().isEmpty) {
+                        return "Preenchimento obrigatório!";
+                      }
 
-                    if (password.trim().length < 8) {
-                      return "A senha precisa ter no minimo 8 caracteres!";
-                    }
+                      if (password.trim().length < 8) {
+                        return "A senha precisa ter no minimo 8 caracteres!";
+                      }
 
-                    return null;
-                  },
-                ),
+                      return null;
+                    },
+                  ),
                 if (_authMode == AuthMode.signup)
                   TextFormField(
                     decoration:
@@ -308,25 +355,40 @@ class AuthFormState extends State<AuthForm> {
                         Color.fromARGB(255, 0, 111, 202),
                       ),
                       minimumSize: WidgetStatePropertyAll(Size(300, 50))),
-                  onPressed: () => submit(),
-                  child: Text(
-                    _authMode == AuthMode.signup ? "Cadastrar" : "Entrar",
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
+                  onPressed: () => _authMode == AuthMode.login ||
+                          _authMode == AuthMode.signup
+                      ? submit()
+                      : resetPassword(),
+                  child: _authMode == AuthMode.login ||
+                          _authMode == AuthMode.signup
+                      ? Text(
+                          _authMode == AuthMode.signup ? "Cadastrar" : "Entrar",
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Text(
+                          "Enviar",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
           const SizedBox(height: 20),
-          TextButton(
-            onPressed: () => _toggleForm(),
-            child: Text(
-              _authMode == AuthMode.signup ? "Entrar" : "Cadastrar-se",
-            ),
-          ),
-          if (_authMode == AuthMode.login)
+          if (_authMode == AuthMode.login || _authMode == AuthMode.signup)
             TextButton(
-              onPressed: () => _showResetDialog(),
-              child: const Text("Esqueci minha senha"),
+              onPressed: () => _toggleForm(),
+              child: Text(
+                _authMode == AuthMode.signup ? "Entrar" : "Cadastrar-se",
+              ),
+            ),
+          if (_authMode == AuthMode.login ||
+              _authMode == AuthMode.resetPassword)
+            TextButton(
+              onPressed: () => _toggleFormResetPassword(),
+              child: Text(_authMode == AuthMode.login
+                  ? "Esqueci minha senha"
+                  : "Voltar para login"),
             ),
         ],
       ),
