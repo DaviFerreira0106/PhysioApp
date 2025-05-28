@@ -75,6 +75,21 @@ class AuthController with ChangeNotifier {
     return _authenticate(formData: formData, urlFragment: 'signInWithPassword');
   }
 
+  Future<void> resetPassword({required String email}) async {
+    const _url =
+        'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDfmSm9hXz8Dz1qJdvdwh4dwjqTJEo86w0';
+   
+    final response = await http.post(
+      Uri.parse(_url),
+      body: jsonEncode({
+        'requestType': 'PASSWORD_RESET',
+        'email': email,
+      }),
+    );
+
+    print(response.body);
+  }
+
   void logout() {
     _token = null;
     _email = null;

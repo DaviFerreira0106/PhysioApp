@@ -26,6 +26,7 @@ class AuthFormState extends State<AuthForm> {
   final FocusNode _confirmPassword = FocusNode();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailReset = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -52,6 +53,31 @@ class AuthFormState extends State<AuthForm> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showResetDialog() {
+    final auth = Provider.of<AuthController>(context, listen: false);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Redefinição de Senha'),
+        content: TextFormField(
+          decoration: const InputDecoration(
+            label: Text('E-mail'),
+          ),
+          controller: _emailReset,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              await auth.resetPassword(email: _emailReset.text);
+              Navigator.of(context).pop();
+            },
             child: const Text('Ok'),
           ),
         ],
@@ -299,7 +325,7 @@ class AuthFormState extends State<AuthForm> {
           ),
           if (_authMode == AuthMode.login)
             TextButton(
-              onPressed: () {},
+              onPressed: () => _showResetDialog(),
               child: const Text("Esqueci minha senha"),
             ),
         ],
