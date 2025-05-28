@@ -28,6 +28,15 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(
+              height: 40,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(user.fisioUser.email),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 50),
               child: TextButton.icon(

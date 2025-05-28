@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:physioapp/utils/constants.dart';
 import 'package:http/http.dart' as http;
-import 'package:encrypt/encrypt.dart' as encrypt;
-import 'package:physioapp/utils/secure.dart';
-import 'package:crypto/crypto.dart' as crypto;
+import 'package:physioapp/utils/encrypter.dart';
 import 'package:physioapp/models/fisio_user.dart';
 
 class UserFisioController with ChangeNotifier {
@@ -18,19 +16,24 @@ class UserFisioController with ChangeNotifier {
     // Método para criar usuário fisioterapeuta
     _addFisioUser(formData: formData, uid: uid);
 
-    
+    final data = Encrypter().encrypter(data: formData, uid: uid);
 
     await http.post(
       Uri.parse('${Constants.fisioUserBaseUrl}.json'),
       body: jsonEncode({
-        'uid': uidCipher.base64,
-        'email': emailCipher.base64,
-        'password': passwordHash.toString(),
-        'numberCrefito': crefitoCipher.base64,
-        'name': nameCipher.base64,
-        'telephone': phoneCipher.base64,
+        'uid': data['uid'] as String,
+        'email': data['email'] as String,
+        'password': data['password'] as String,
+        'numberCrefito': data['numberCrefito'] as String,
+        'name': data['name'] as String,
+        'telephone': data['phone'] as String,
       }),
     );
+
+    // Limpando dados das variaveis
+    formData.clear();
+    uid = '';
+    notifyListeners();
   }
 
   void _addFisioUser(
@@ -43,7 +46,6 @@ class UserFisioController with ChangeNotifier {
       numberCrefito: formData['numberCrefito'] as String,
       email: formData['email'] as String,
       numberTelephone: formData['phone'] as String,
-      password: formData['password'] as String,
     );
 
     notifyListeners();
@@ -58,26 +60,16 @@ class UserFisioController with ChangeNotifier {
     Map<String, dynamic> data = jsonDecode(response.body);
 
     data.forEach((key, value) {
-      // Criando chaves de criptografia
-      final key = encrypt.Key.fromUtf8(Secure.key);
-      final iv = encrypt.IV.fromLength(16);
-
-      // Criando objeto de critação
-      print('Chave part2: ${Secure().k}');
-      print('iv part2: ${Secure().iv}');
-      final objEncrypter = encrypt.Encrypter(encrypt.AES(Secure().k!));
-      final emailCipher =
-          encrypt.Encrypted.fromBase64(value['email'] as String);
-      final data = objEncrypter.decrypt(emailCipher, iv: Secure().iv);
-      print(data);
-      // final fisioUser = FisioUser(
-      //   id: id,
-      //   name: name,
-      //   numberCrefito: numberCrefito,
-      //   email: email,
-      //   numberTelephone: numberTelephone,
-      //   password: password,
-      // );
+      final data = Encrypter().decrypter(data: value);
+      final fisioUser = FisioUser(
+        id: data['uid'] as String,
+        name: data['name'] as String,
+        numberCrefito: data['numberCrefito'] as String,
+        email: data['email'] as String,
+        numberTelephone: data['phone'] as String,
+      );
+      _fisioUser = fisioUser;
+      notifyListeners();
     });
   }
 }
