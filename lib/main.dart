@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:physioapp/pages/exercises_detail_page.dart';
 import 'package:physioapp/pages/exercises_execution_page.dart';
 import 'package:physioapp/pages/patient_detail_page.dart';
+import 'package:physioapp/pages/account_page.dart';
 
 void main() => runApp(const PhysioApp());
 
@@ -32,12 +33,18 @@ class PhysioApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+            centerTitle: true,
+          ),
+        ),
         routes: {
           AppRoutes.authOrHomePage: (context) => const AuthOrHomePage(),
           AppRoutes.exercisesDetail: (context) => const ExercisesDetailPage(),
           AppRoutes.exercisesExecution: (context) =>
               const ExercisesExecutionPage(),
           AppRoutes.patientDetail: (context) => const PatientDetailPage(),
+          AppRoutes.accountPage: (context) => const AccountPage(),
         },
       ),
     );

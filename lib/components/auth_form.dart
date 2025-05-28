@@ -311,13 +311,13 @@ class AuthFormState extends State<AuthForm> {
                         _formData["password"] = password ?? "",
                     validator: (passwordValue) {
                       String password = passwordValue ?? "";
-                      password = password.trim()
+                      password = password.trim();
 
-                      final upper_rule     = RegExp(r'(?=.*[A-Z])');
-                      final lower_rule     = RegExp(r'(?=.*[a-z])');
-                      final numeric_rule   = RegExp(r'(?=.*[0-9])');
+                      final upper_rule = RegExp(r'(?=.*[A-Z])');
+                      final lower_rule = RegExp(r'(?=.*[a-z])');
+                      final numeric_rule = RegExp(r'(?=.*[0-9])');
                       final specialCH_rule = RegExp(r'(?=.*[!@#\$&*~])');
-                      final minCh_rule     = RegExp(r'.{8,}');
+                      final minCh_rule = RegExp(r'.{8,}');
 
                       if (password.isEmpty) {
                         return 'Senha é obrigatória';

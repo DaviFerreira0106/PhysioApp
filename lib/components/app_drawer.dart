@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:physioapp/controller/auth_controller.dart';
 import 'package:physioapp/controller/user_fisio_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:physioapp/utils/app_routes.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -40,13 +41,31 @@ class AppDrawer extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 50),
               child: TextButton.icon(
-                onPressed: () => auth.logout(),
+                onPressed: () => Navigator.of(context)
+                    .pushReplacementNamed(AppRoutes.accountPage),
                 label: const Text(
-                  'Sair',
+                  'Configurações de Conta',
                   style: TextStyle(fontSize: 18),
                 ),
-                icon: const Icon(Icons.exit_to_app, size: 25),
+                icon: const Icon(Icons.account_circle_sharp, size: 30),
               ),
+            ),
+            TextButton.icon(
+              onPressed: () => Navigator.of(context)
+                  .pushReplacementNamed(AppRoutes.authOrHomePage),
+              label: const Text(
+                'Início',
+                style: TextStyle(fontSize: 18),
+              ),
+              icon: const Icon(Icons.home_filled, size: 28),
+            ),
+            TextButton.icon(
+              onPressed: () => auth.logout(),
+              label: const Text(
+                'Sair',
+                style: TextStyle(fontSize: 18),
+              ),
+              icon: const Icon(Icons.exit_to_app, size: 25),
             ),
           ],
         ),
