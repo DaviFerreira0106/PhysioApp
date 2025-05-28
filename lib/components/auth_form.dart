@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:physioapp/controller/auth_controller.dart';
 import 'package:physioapp/exceptions/reset_password_exception.dart';
 import 'package:provider/provider.dart';
@@ -309,14 +310,27 @@ class AuthFormState extends State<AuthForm> {
                     onSaved: (password) =>
                         _formData["password"] = password ?? "",
                     validator: (passwordValue) {
-                      final String password = passwordValue ?? "";
+                      String password = passwordValue ?? "";
+                      password = password.trim()
 
-                      if (password.trim().isEmpty) {
-                        return "Preenchimento obrigatório!";
-                      }
+                      final upper_rule     = RegExp(r'(?=.*[A-Z])');
+                      final lower_rule     = RegExp(r'(?=.*[a-z])');
+                      final numeric_rule   = RegExp(r'(?=.*[0-9])');
+                      final specialCH_rule = RegExp(r'(?=.*[!@#\$&*~])');
+                      final minCh_rule     = RegExp(r'.{8,}');
 
-                      if (password.trim().length < 8) {
-                        return "A senha precisa ter no minimo 8 caracteres!";
+                      if (password.isEmpty) {
+                        return 'Senha é obrigatória';
+                      } else if (!upper_rule.hasMatch(password)) {
+                        return 'Senha precisa de pelo menos UMA letra maiúscula';
+                      } else if (!lower_rule.hasMatch(password)) {
+                        return 'Senha precisa de pelo menos UMA letra minúscula';
+                      } else if (!numeric_rule.hasMatch(password)) {
+                        return 'Senha precisa de pelo menos UM número';
+                      } else if (!specialCH_rule.hasMatch(password)) {
+                        return 'Senha precisa de pelo menos UM caractere especial';
+                      } else if (!minCh_rule.hasMatch(password)) {
+                        return 'Senha precisa de pelo menos 8 caracteres';
                       }
 
                       return null;
