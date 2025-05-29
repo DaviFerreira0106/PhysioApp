@@ -75,8 +75,8 @@ class UserFisioController with ChangeNotifier {
 
   Future<void> updateFisioUser({required Map<String, Object> formData}) async {
     final data = Encrypter().updateEncrypter(data: formData, uid: fisioUser.id);
-    await http.put(
-        Uri.parse('${Constants.fisioUserBaseUrl}/${fisioUser.id}.json'),
+    await http.patch(
+        Uri.parse('${Constants.fisioUserBaseUrl}/${fisioUser.idBD}.json'),
         body: jsonEncode({
           'email': data['email'] as String,
           'name': data['name'] as String,
@@ -89,7 +89,9 @@ class UserFisioController with ChangeNotifier {
 
   Future<void> deleteAccount() async {
     await http.delete(
-      Uri.parse("${Constants.fisioUserBaseUrl}/${fisioUser.id}.json"),
+      Uri.parse("${Constants.fisioUserBaseUrl}/${fisioUser.idBD}.json"),
     );
+
+    notifyListeners();
   }
 }

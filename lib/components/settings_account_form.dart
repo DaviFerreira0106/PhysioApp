@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/controller/auth_controller.dart';
 import 'package:physioapp/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:physioapp/controller/user_fisio_controller.dart';
@@ -17,7 +18,6 @@ class SettingsAccountFormState extends State<SettingsAccountForm> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoadingUpdate = false;
   bool _isLoadingDelete = false;
-  
 
   void _showUpdateDialog({required String msg}) {
     showDialog(
@@ -49,6 +49,8 @@ class SettingsAccountFormState extends State<SettingsAccountForm> {
           TextButton(
             onPressed: () async {
               await Provider.of<UserFisioController>(context, listen: false)
+                  .deleteAccount();
+              await Provider.of<AuthController>(context, listen: false)
                   .deleteAccount();
               Navigator.of(context)
                   .pushReplacementNamed(AppRoutes.authOrHomePage);

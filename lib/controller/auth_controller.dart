@@ -34,7 +34,7 @@ class AuthController with ChangeNotifier {
     final String _url =
         'https://identitytoolkit.googleapis.com/v1/accounts:$urlFragment?key=AIzaSyDfmSm9hXz8Dz1qJdvdwh4dwjqTJEo86w0';
 
-    logger.info('Login User: $email');
+    //logger.info('Login User: $email');
 
     final response = await http.post(
       Uri.parse(_url),
@@ -48,7 +48,7 @@ class AuthController with ChangeNotifier {
     final body = jsonDecode(response.body);
 
     if (body['error'] != null) {
-      logger.error('Failed login user: ${body["error"]}');
+      //logger.error('Failed login user: ${body["error"]}');
       throw AuthExceptions(error: body['error']['message']);
     } else {
       _token = body['idToken'];
@@ -85,7 +85,7 @@ class AuthController with ChangeNotifier {
     const _url =
         'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDfmSm9hXz8Dz1qJdvdwh4dwjqTJEo86w0';
 
-    logger.info('Password reset: $email');
+    //logger.info('Password reset: $email');
 
     final response = await http.post(
       Uri.parse(_url),
@@ -94,9 +94,19 @@ class AuthController with ChangeNotifier {
 
     final body = jsonDecode(response.body);
     if (body['error'] != null) {
-      logger.info('Failed password reset: ${body["error"]}');
+      //logger.info('Failed password reset: ${body["error"]}');
       throw ResetPasswordExceptions(error: body['error']['message']);
     }
+  }
+
+  Future<void> deleteAccount() async {
+    const deleteUrl =
+        'https://identitytoolkit.googleapis.com/v1/accounts:delete?key=AIzaSyDfmSm9hXz8Dz1qJdvdwh4dwjqTJEo86w0';
+    await http.post(Uri.parse(deleteUrl),
+        body: jsonEncode({
+          'idToken': _token,
+        }));
+    notifyListeners();
   }
 
   void logout() {
