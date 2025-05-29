@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/app_drawer.dart';
-import 'package:physioapp/components/settings_account.dart';
+import 'package:physioapp/components/settings_account_form.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -11,7 +11,7 @@ class AccountPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Configurações de Conta'),
       ),
-      body: const SettingsAccount(),
+      body: const SettingsAccountForm(),
       drawer: const AppDrawer(),
     );
   }

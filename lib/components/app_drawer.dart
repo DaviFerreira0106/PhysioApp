@@ -60,7 +60,10 @@ class AppDrawer extends StatelessWidget {
               icon: const Icon(Icons.home_filled, size: 28),
             ),
             TextButton.icon(
-              onPressed: () => auth.logout(),
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoutes.authOrHomePage);
+                auth.logout();
+              } ,
               label: const Text(
                 'Sair',
                 style: TextStyle(fontSize: 18),
