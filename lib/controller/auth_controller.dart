@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:physioapp/exceptions/auth_exception.dart';
 import 'package:physioapp/controller/user_fisio_controller.dart';
 import 'package:physioapp/exceptions/reset_password_exception.dart';
+import 'package:physioapp/utils/logger.dart';
 
 class AuthController with ChangeNotifier {
   String? _token;
@@ -33,6 +34,8 @@ class AuthController with ChangeNotifier {
     final String _url =
         'https://identitytoolkit.googleapis.com/v1/accounts:$urlFragment?key=AIzaSyDfmSm9hXz8Dz1qJdvdwh4dwjqTJEo86w0';
 
+    logger.info('Login User: $email');
+
     final response = await http.post(
       Uri.parse(_url),
       body: jsonEncode({
@@ -45,20 +48,21 @@ class AuthController with ChangeNotifier {
     final body = jsonDecode(response.body);
 
     if (body['error'] != null) {
+      logger.error('Failed login user: ${body["error"]}');
       throw AuthExceptions(error: body['error']['message']);
     } else {
       _token = body['idToken'];
       _email = body['e-mail'];
       _uid = body['localId'];
       _expireToken = DateTime.now().add(
-        Duration(
-          seconds: int.parse(body['expiresIn']),
-        ),
+        Duration(seconds: int.parse(body['expiresIn'])),
       );
 
       if (urlFragment == 'signUp') {
-        await UserFisioController()
-            .createFisioUser(formData: formData, uid: _uid ?? '');
+        await UserFisioController().createFisioUser(
+          formData: formData,
+          uid: _uid ?? '',
+        );
       }
 
       _autoLogout();
@@ -76,21 +80,21 @@ class AuthController with ChangeNotifier {
     return _authenticate(formData: formData, urlFragment: 'signInWithPassword');
   }
 
+  // Método Recuperação de Senha
   Future<void> resetPassword({required String email}) async {
     const _url =
         'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDfmSm9hXz8Dz1qJdvdwh4dwjqTJEo86w0';
 
+    logger.info('Password reset: $email');
+
     final response = await http.post(
       Uri.parse(_url),
-      body: jsonEncode({
-        'requestType': 'PASSWORD_RESET',
-        'email': email,
-      }),
+      body: jsonEncode({'requestType': 'PASSWORD_RESET', 'email': email}),
     );
 
     final body = jsonDecode(response.body);
-    print(body);
     if (body['error'] != null) {
+      logger.info('Failed password reset: ${body["error"]}');
       throw ResetPasswordExceptions(error: body['error']['message']);
     }
   }
