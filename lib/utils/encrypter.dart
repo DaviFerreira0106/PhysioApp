@@ -14,7 +14,7 @@ class Encrypter {
   Map<String, String> encrypter(
       {required Map<String, Object> data, required String uid}) {
     final objEncryper = encrypt.Encrypter(encrypt.AES(_key));
-   
+
     // Criptografando os dados
     final uidCipher = objEncryper.encrypt(uid, iv: _iv);
     final emailCipher = objEncryper.encrypt(data['email'] as String, iv: _iv);
@@ -40,9 +40,32 @@ class Encrypter {
     };
   }
 
+  // Criando objeto de critação
+  Map<String, String> updateEncrypter(
+      {required Map<String, Object> data, required String uid}) {
+    final objEncryper = encrypt.Encrypter(encrypt.AES(_key));
+
+    // Criptografando os dados
+    final uidCipher = objEncryper.encrypt(uid, iv: _iv);
+    final emailCipher = objEncryper.encrypt(data['email'] as String, iv: _iv);
+    final crefitoCipher =
+        objEncryper.encrypt(data['numberCrefito'] as String, iv: _iv);
+    final nameCipher = objEncryper.encrypt(data['name'] as String, iv: _iv);
+    final phoneCipher = objEncryper.encrypt(data['phone'] as String, iv: _iv);
+
+    return {
+      'uid': uidCipher.base64,
+      'email': emailCipher.base64,
+      'numberCrefito': crefitoCipher.base64,
+      'name': nameCipher.base64,
+      'phone': phoneCipher.base64,
+      // 'iv': _iv.base64,
+    };
+  }
+
   Map<String, String> decrypter({required dynamic data}) {
     final objEncryper = encrypt.Encrypter(encrypt.AES(_key));
-    
+
     // Pegando os dados do BD e convertendo para tipo Encrypted
     final uidCipher = encrypt.Encrypted.fromBase64(data['uid'] as String);
     final emailCipher = encrypt.Encrypted.fromBase64(data['email'] as String);

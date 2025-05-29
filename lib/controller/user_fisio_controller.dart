@@ -46,6 +46,7 @@ class UserFisioController with ChangeNotifier {
       numberCrefito: formData['numberCrefito'] as String,
       email: formData['email'] as String,
       numberTelephone: formData['phone'] as String,
+      idBD: '',
     );
 
     notifyListeners();
@@ -58,18 +59,37 @@ class UserFisioController with ChangeNotifier {
     if (response.body == 'null') return;
 
     Map<String, dynamic> data = jsonDecode(response.body);
-
     data.forEach((key, value) {
       final data = Encrypter().decrypter(data: value);
       final fisioUser = FisioUser(
-        id: data['uid'] as String,
-        name: data['name'] as String,
-        numberCrefito: data['numberCrefito'] as String,
-        email: data['email'] as String,
-        numberTelephone: data['phone'] as String,
-      );
+          id: data['uid'] as String,
+          name: data['name'] as String,
+          numberCrefito: data['numberCrefito'] as String,
+          email: data['email'] as String,
+          numberTelephone: data['phone'] as String,
+          idBD: key);
       _fisioUser = fisioUser;
       notifyListeners();
     });
+  }
+
+  Future<void> updateFisioUser({required Map<String, Object> formData}) async {
+    final data = Encrypter().updateEncrypter(data: formData, uid: fisioUser.id);
+    await http.put(
+        Uri.parse('${Constants.fisioUserBaseUrl}/${fisioUser.id}.json'),
+        body: jsonEncode({
+          'email': data['email'] as String,
+          'name': data['name'] as String,
+          'numberCrefito': data['numberCrefito'] as String,
+          'telephone': data['phone'] as String,
+        }));
+    notifyListeners();
+    return Future.value();
+  }
+
+  Future<void> deleteAccount() async {
+    await http.delete(
+      Uri.parse("${Constants.fisioUserBaseUrl}/${fisioUser.id}.json"),
+    );
   }
 }

@@ -4,6 +4,7 @@ class FisioUser {
   final String numberCrefito;
   final String email;
   final String numberTelephone;
+  final String idBD;
 
   FisioUser({
     required this.id,
@@ -11,6 +12,7 @@ class FisioUser {
     required this.numberCrefito,
     required this.email,
     required this.numberTelephone,
+    required this.idBD,
   });
   
 }
