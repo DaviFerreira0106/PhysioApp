@@ -52,6 +52,7 @@ class SettingsAccountFormState extends State<SettingsAccountForm> {
                   .deleteAccount();
               await Provider.of<AuthController>(context, listen: false)
                   .deleteAccount();
+              Provider.of<AuthController>(context, listen: false).logout();
               Navigator.of(context)
                   .pushReplacementNamed(AppRoutes.authOrHomePage);
             },
