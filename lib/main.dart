@@ -1,52 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/controller/auth_controller.dart';
-import 'package:physioapp/controller/user_fisio_controller.dart';
-import 'package:physioapp/pages/auth_or_home_page.dart';
-import 'package:physioapp/utils/app_routes.dart';
-import 'package:provider/provider.dart';
-import 'package:physioapp/pages/exercises_detail_page.dart';
-import 'package:physioapp/pages/exercises_execution_page.dart';
-import 'package:physioapp/pages/patient_detail_page.dart';
-import 'package:physioapp/pages/account_page.dart';
+import 'package:physioapp/page/home_page.dart';
 
 void main() => runApp(const PhysioApp());
 
 class PhysioApp extends StatelessWidget {
+  @override
   const PhysioApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => AuthController(),
-          child: const AuthOrHomePage(),
+    return MaterialApp(
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 221, 224, 228),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 221, 224, 228),
+          centerTitle: true,
         ),
-        ChangeNotifierProvider(
-          create: (context) => AuthController(),
+        colorScheme: const ColorScheme.light(
+          primary: Color.fromARGB(255, 56, 163, 165),
+          secondary: Color.fromARGB(255, 255, 29, 145),
+          tertiary: Color.fromARGB(255, 255, 168, 117),
+          primaryContainer: Color.fromARGB(255, 236, 236, 236),
         ),
-        ChangeNotifierProvider(
-          create: (context) => AuthController(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => UserFisioController(),
-        ),
-      ],
-      child: MaterialApp(
-        theme: ThemeData(
-          appBarTheme: const AppBarTheme(
-            centerTitle: true,
+        primaryTextTheme: const TextTheme(
+          displayLarge: TextStyle(
+            color: Color.fromARGB(255, 20, 24, 27),
+          ),
+          displayMedium: TextStyle(
+            color: Color.fromARGB(255, 20, 24, 27),
+          ),
+          displaySmall: TextStyle(
+            color: Color.fromARGB(255, 20, 24, 27),
+          ),
+          headlineLarge: TextStyle(
+            color: Color.fromARGB(255, 20, 24, 27),
+          ),
+          headlineMedium: TextStyle(
+            color: Color.fromARGB(255, 20, 24, 27),
+          ),
+          headlineSmall: TextStyle(
+            color: Color.fromARGB(255, 20, 24, 27),
+          ),
+          titleLarge: TextStyle(
+            color: Color.fromARGB(255, 20, 24, 27),
+          ),
+          titleMedium: TextStyle(
+            color: Colors.white,
+          ),
+          titleSmall: TextStyle(
+            color: Colors.white,
+          ),
+          labelLarge: TextStyle(
+            color: Color.fromARGB(255, 110, 125, 162),
+          ),
+          labelMedium: TextStyle(
+            color: Color.fromARGB(255, 110, 125, 162),
+          ),
+          labelSmall: TextStyle(
+            color: Color.fromARGB(255, 110, 125, 162),
+          ),
+          bodyLarge: TextStyle(
+            color: Color.fromARGB(255, 20, 24, 27),
+          ),
+          bodyMedium: TextStyle(
+            color: Color.fromARGB(255, 20, 24, 27),
+          ),
+          bodySmall: TextStyle(
+            color: Color.fromARGB(255, 20, 24, 27),
           ),
         ),
-        routes: {
-          AppRoutes.authOrHomePage: (context) => const AuthOrHomePage(),
-          AppRoutes.exercisesDetail: (context) => const ExercisesDetailPage(),
-          AppRoutes.exercisesExecution: (context) =>
-              const ExercisesExecutionPage(),
-          AppRoutes.patientDetail: (context) => const PatientDetailPage(),
-          AppRoutes.accountPage: (context) => const AccountPage(),
-        },
       ),
+      home: const HomePage(),
     );
   }
 }
