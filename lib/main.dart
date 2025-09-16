@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/page/home_page.dart';
+import 'package:physioapp/page/home_physio_page.dart';
 
 void main() => runApp(const PhysioApp());
 
@@ -22,55 +22,70 @@ class PhysioApp extends StatelessWidget {
           tertiary: Color.fromARGB(255, 255, 168, 117),
           primaryContainer: Color.fromARGB(255, 236, 236, 236),
         ),
-        primaryTextTheme: const TextTheme(
+        textTheme: const TextTheme(
           displayLarge: TextStyle(
+            fontFamily: "Outfit",
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           displayMedium: TextStyle(
+            fontFamily: "Outfit",
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           displaySmall: TextStyle(
+            fontFamily: "Outfit",
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           headlineLarge: TextStyle(
+            fontFamily: "Outfit",
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           headlineMedium: TextStyle(
+            fontFamily: "Outfit",
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           headlineSmall: TextStyle(
+            fontFamily: "Outfit",
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           titleLarge: TextStyle(
+            fontFamily: "Outfit",
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           titleMedium: TextStyle(
+            fontFamily: "Poppins",
             color: Colors.white,
           ),
           titleSmall: TextStyle(
+            fontFamily: "Poppins",
             color: Colors.white,
           ),
           labelLarge: TextStyle(
+            fontFamily: "Poppins",
             color: Color.fromARGB(255, 110, 125, 162),
           ),
           labelMedium: TextStyle(
+            fontFamily: "Poppins",
             color: Color.fromARGB(255, 110, 125, 162),
           ),
           labelSmall: TextStyle(
+            fontFamily: "Poppins",
             color: Color.fromARGB(255, 110, 125, 162),
           ),
           bodyLarge: TextStyle(
+            fontFamily: "Poppins",
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           bodyMedium: TextStyle(
+            fontFamily: "Poppins",
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           bodySmall: TextStyle(
+            fontFamily: "Poppins",
             color: Color.fromARGB(255, 20, 24, 27),
           ),
         ),
       ),
-      home: const HomePage(),
+      home: const HomePhysioPage(),
     );
   }
 }
