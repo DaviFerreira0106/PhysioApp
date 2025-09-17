@@ -25,62 +25,77 @@ class PhysioApp extends StatelessWidget {
         textTheme: const TextTheme(
           displayLarge: TextStyle(
             fontFamily: "Outfit",
+            fontSize: 64,
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           displayMedium: TextStyle(
             fontFamily: "Outfit",
+            fontSize: 44,
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           displaySmall: TextStyle(
             fontFamily: "Outfit",
+            fontSize: 36,
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           headlineLarge: TextStyle(
             fontFamily: "Outfit",
+            fontSize: 32,
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           headlineMedium: TextStyle(
             fontFamily: "Outfit",
+            fontSize: 24,
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           headlineSmall: TextStyle(
             fontFamily: "Outfit",
+            fontSize: 24,
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           titleLarge: TextStyle(
             fontFamily: "Outfit",
+            fontSize: 22,
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           titleMedium: TextStyle(
             fontFamily: "Poppins",
+            fontSize: 18,
             color: Colors.white,
           ),
           titleSmall: TextStyle(
             fontFamily: "Poppins",
+            fontSize: 16,
             color: Colors.white,
           ),
           labelLarge: TextStyle(
             fontFamily: "Poppins",
+            fontSize: 16,
             color: Color.fromARGB(255, 110, 125, 162),
           ),
           labelMedium: TextStyle(
             fontFamily: "Poppins",
+            fontSize: 14,
             color: Color.fromARGB(255, 110, 125, 162),
           ),
           labelSmall: TextStyle(
             fontFamily: "Poppins",
+            fontSize: 12,
             color: Color.fromARGB(255, 110, 125, 162),
           ),
           bodyLarge: TextStyle(
             fontFamily: "Poppins",
+            fontSize: 16,
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           bodyMedium: TextStyle(
             fontFamily: "Poppins",
+            fontSize: 14,
             color: Color.fromARGB(255, 20, 24, 27),
           ),
           bodySmall: TextStyle(
             fontFamily: "Poppins",
+            fontSize: 12,
             color: Color.fromARGB(255, 20, 24, 27),
           ),
         ),
