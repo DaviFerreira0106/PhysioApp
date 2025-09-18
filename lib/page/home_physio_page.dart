@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/components/consultation_calendar.dart';
-import 'package:physioapp/components/search_patient.dart';
-import 'package:physioapp/components/patient_appointment_list.dart';
-import 'package:physioapp/components/bottom_nav_bar.dart';
+import 'package:physioapp/components/physioterapist/consultation_calendar.dart';
+import 'package:physioapp/components/physioterapist/search_patient.dart';
+import 'package:physioapp/components/physioterapist/patient_appointment_list.dart';
+import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
 
 class HomePhysioPage extends StatelessWidget {
   const HomePhysioPage({super.key});
@@ -12,6 +12,7 @@ class HomePhysioPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Stack(
+          alignment: Alignment.center,
           children: [
             SizedBox(
               height: MediaQuery.of(context).size.height,

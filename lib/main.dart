@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/page/home_physio_page.dart';
+import 'package:physioapp/utils/app_routes.dart';
+import 'package:physioapp/page/exercises_page_physio.dart';
+import 'package:physioapp/page/chat_page_physio.dart';
+import 'package:physioapp/page/physio_profile_page.dart';
+import 'package:physioapp/page/schedule_appointment_page.dart';
 
 void main() => runApp(const PhysioApp());
 
@@ -101,6 +106,14 @@ class PhysioApp extends StatelessWidget {
         ),
       ),
       home: const HomePhysioPage(),
+      routes: {
+        AppRoutes.homePagePhysio: (context) => const HomePhysioPage(),
+        AppRoutes.exercisesPagePhysio: (context) => const ExercisesPagePhysio(),
+        AppRoutes.chatPagePhysio: (context) => const ChatPagePhysio(),
+        AppRoutes.physioProfilePage: (context) => const PhysioProfilePage(),
+        AppRoutes.scheduleAppointmentPage: (context) =>
+            const ScheduleAppointmentPage(),
+      },
     );
   }
 }

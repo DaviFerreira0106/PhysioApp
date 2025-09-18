@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/components/grid_day_calendar.dart';
+import 'package:physioapp/components/physioterapist/grid_day_calendar.dart';
 
 class ConsultationCalendar extends StatelessWidget {
   const ConsultationCalendar({super.key});
