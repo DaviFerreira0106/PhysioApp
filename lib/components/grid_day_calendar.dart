@@ -26,7 +26,14 @@ class GridDayCalendarState extends State<GridDayCalendar> {
           borderRadius: BorderRadius.circular(25),
         ),
         child: Center(
-          child: Text('1'),
+          child: Text(
+            '1',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.normal,
+              fontSize: 14,
+            ),
+          ),
         ),
       ),
     );

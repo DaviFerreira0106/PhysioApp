@@ -9,7 +9,7 @@ class ConsultationCalendar extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 328,
-      margin: const EdgeInsets.only(left: 20, right: 20, top: 30),
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
