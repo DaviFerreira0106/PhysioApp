@@ -1,4 +1,5 @@
 class AppRoutes {
+  static const String initialAppPage = '/';
   static const String homePagePhysio = '/home-page-physio';
   static const String exercisesPagePhysio = '/exercises-page-physio';
   static const String chatPagePhysio = '/chat-page-physio';

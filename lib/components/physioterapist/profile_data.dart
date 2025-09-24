@@ -66,6 +66,16 @@ class ProfileData extends StatelessWidget {
           title: 'Email',
           subtitle: 'Email do fisioterapeuta',
         ),
+        _listTileData(
+          icon: Icons.phone,
+          title: 'Telefone',
+          subtitle: 'Telefone do fisioterapeuta',
+        ),
+        _listTileData(
+          icon: Icons.location_pin,
+          title: 'Unidade',
+          subtitle: 'Unidade do fisioterapeuta',
+        ),
       ],
     );
   }
