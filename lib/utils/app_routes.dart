@@ -5,4 +5,6 @@ class AppRoutes {
   static const String chatPagePhysio = '/chat-page-physio';
   static const String physioProfilePage = '/physio-profile-page';
   static const String scheduleAppointmentPage = '/schedule-appointment-page';
+  static const String authPhysioPage = '/auth-physio-page';
+  static const String authPatientPage = '/auth-patient-page';
 }
