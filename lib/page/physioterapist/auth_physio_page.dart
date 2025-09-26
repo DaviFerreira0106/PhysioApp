@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/utils/app_routes.dart';
 
 class AuthPhysioPage extends StatelessWidget {
   const AuthPhysioPage({super.key});
@@ -6,11 +7,16 @@ class AuthPhysioPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 236, 236, 236),
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
+            colorFilter: ColorFilter.mode(
+                Color.fromARGB(78, 255, 255, 255), BlendMode.colorDodge),
+            filterQuality: FilterQuality.high,
+            opacity: 0.9,
             image: AssetImage(
               'assets/images/background_image_auth_physio.png',
             ),
@@ -18,20 +24,24 @@ class AuthPhysioPage extends StatelessWidget {
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text(
-              'Junte-se a nós \n& atenda com Confiança',
-              style: Theme.of(context).textTheme.displayMedium,
-              textAlign: TextAlign.center,
+            Container(
+              margin: const EdgeInsets.only(bottom: 40),
+              child: Text(
+                'Junte-se a nós \n& atenda com Confiança',
+                style: Theme.of(context).textTheme.displayMedium,
+                textAlign: TextAlign.center,
+              ),
             ),
             Container(
               height: 60,
               width: double.infinity,
               margin: const EdgeInsets.only(
-                top: 60,
+                top: 20,
                 right: 16,
                 left: 16,
+                bottom: 60,
               ),
               child: ElevatedButton.icon(
                 style: ButtonStyle(
@@ -39,7 +49,7 @@ class AuthPhysioPage extends StatelessWidget {
                     Theme.of(context).colorScheme.primary,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).pushNamed(AppRoutes.signInPhysioPage),
                 label: Text(
                   'Entre com email e senha',
                   style: TextStyle(
@@ -56,7 +66,43 @@ class AuthPhysioPage extends StatelessWidget {
                   size: 24,
                 ),
               ),
-            )
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 100),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Não possui conta?',
+                    style: TextStyle(
+                      fontFamily:
+                          Theme.of(context).textTheme.labelLarge?.fontFamily,
+                      color: Theme.of(context).textTheme.labelLarge?.color,
+                      fontSize:
+                          Theme.of(context).textTheme.labelLarge?.fontSize,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(AppRoutes.signUpPhysioPage),
+                    child: Text(
+                      'Cadastre-se agora!',
+                      style: TextStyle(
+                        fontFamily:
+                            Theme.of(context).textTheme.bodyLarge?.fontFamily,
+                        fontSize:
+                            Theme.of(context).textTheme.bodyLarge?.fontSize,
+                        fontWeight: FontWeight.w700,
+                        color: Theme.of(context).colorScheme.primary,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

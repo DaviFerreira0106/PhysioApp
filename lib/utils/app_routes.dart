@@ -7,4 +7,6 @@ class AppRoutes {
   static const String scheduleAppointmentPage = '/schedule-appointment-page';
   static const String authPhysioPage = '/auth-physio-page';
   static const String authPatientPage = '/auth-patient-page';
+  static const String signInPhysioPage = '/signin-physio-page';
+  static const String signUpPhysioPage = '/signup-physio-page';
 }

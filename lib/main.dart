@@ -8,6 +8,8 @@ import 'package:physioapp/page/physioterapist/schedule_appointment_page.dart';
 import 'package:physioapp/page/physio_or_patient_page.dart';
 import 'package:physioapp/page/physioterapist/auth_physio_page.dart';
 import 'package:physioapp/page/patient/auth_patient_page.dart';
+import 'package:physioapp/page/physioterapist/signin_physio_page.dart';
+import 'package:physioapp/page/physioterapist/signup_physio_page.dart';
 
 void main() => runApp(const PhysioApp());
 
@@ -118,6 +120,8 @@ class PhysioApp extends StatelessWidget {
             const ScheduleAppointmentPage(),
         AppRoutes.authPhysioPage: (context) => const AuthPhysioPage(),
         AppRoutes.authPatientPage: (context) => const AuthPatientPage(),
+        AppRoutes.signInPhysioPage: (context) => const SigninPhysioPage(),
+        AppRoutes.signUpPhysioPage: (context) => const SignupPhysioPage(),
       },
     );
   }
