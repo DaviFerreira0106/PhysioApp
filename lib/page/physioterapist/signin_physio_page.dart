@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/form_signin.dart';
+import 'package:physioapp/utils/app_routes.dart';
 
 class SigninPhysioPage extends StatelessWidget {
   const SigninPhysioPage({super.key});
@@ -29,7 +30,7 @@ class SigninPhysioPage extends StatelessWidget {
             ),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -60,10 +61,56 @@ class SigninPhysioPage extends StatelessWidget {
                 height: 50,
               ),
               const FormSignIn(),
+              Container(
+                margin: const EdgeInsets.only(top: 24, bottom: 64),
+                child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Não possui conta?',
+                    style: TextStyle(
+                      fontFamily:
+                          Theme.of(context).textTheme.labelLarge?.fontFamily,
+                      color: Theme.of(context).textTheme.labelLarge?.color,
+                      fontSize:
+                          Theme.of(context).textTheme.labelLarge?.fontSize,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(AppRoutes.signUpPhysioPage),
+                    child: Text(
+                      'Cadastre-se agora!',
+                      style: TextStyle(
+                        fontFamily:
+                            Theme.of(context).textTheme.bodyLarge?.fontFamily,
+                        fontSize:
+                            Theme.of(context).textTheme.bodyLarge?.fontSize,
+                        fontWeight: FontWeight.w700,
+                        color: Theme.of(context).colorScheme.primary,
+                        decoration: TextDecoration.underline,
+                        decorationColor: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              )
             ],
           ),
         ),
       ),
+      floatingActionButton: IconButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        icon: const Icon(
+          Icons.arrow_back_ios_new_rounded,
+          color: Colors.white,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
     );
   }
 }

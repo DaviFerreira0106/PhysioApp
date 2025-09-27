@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+enum RadioButton {
+  physioOption,
+  therapyOption,
+}
+
 class FormSignIn extends StatefulWidget {
   const FormSignIn({super.key});
 
@@ -11,7 +16,14 @@ class FormSignInState extends State<FormSignIn> {
   bool _vibilityPassword = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
- 
+  RadioButton _radioPhysioValue = RadioButton.physioOption;
+  bool _physioOptionSelect() => _radioPhysioValue == RadioButton.physioOption;
+
+  void _onChangedRadioValue({required RadioButton? value}) {
+    setState(() {
+      _radioPhysioValue = value ?? RadioButton.physioOption;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +61,7 @@ class FormSignInState extends State<FormSignIn> {
           Container(
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.only(left: 20),
+            margin: const EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(50),
@@ -97,11 +110,110 @@ class FormSignInState extends State<FormSignIn> {
               controller: _passwordController,
             ),
           ),
-          // Row(
-          //   children: [
-          //     RadioListTile(value: ,)
-          //   ],
-          // )
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                fit: FlexFit.loose,
+                flex: 1,
+                child: RadioListTile<RadioButton>(
+                  value: RadioButton.physioOption,
+                  groupValue: _radioPhysioValue,
+                  title: Text(
+                    'Fisioterapia',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily:
+                          Theme.of(context).textTheme.bodyMedium?.fontFamily,
+                      color: _physioOptionSelect()
+                          ? Colors.white
+                          : Theme.of(context).textTheme.labelLarge?.color,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    _onChangedRadioValue(value: value);
+                  },
+                  fillColor: WidgetStatePropertyAll(
+                    !_physioOptionSelect()
+                        ? Theme.of(context).textTheme.labelLarge?.color
+                        : Theme.of(context).colorScheme.primary,
+                  ),
+                  selected: _physioOptionSelect(),
+                ),
+              ),
+              Flexible(
+                fit: FlexFit.loose,
+                flex: 1,
+                child: RadioListTile<RadioButton>(
+                  value: RadioButton.therapyOption,
+                  groupValue: _radioPhysioValue,
+                  title: Text(
+                    'Terapia\nOcupacional',
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily:
+                          Theme.of(context).textTheme.bodyMedium?.fontFamily,
+                      color: !_physioOptionSelect()
+                          ? Colors.white
+                          : Theme.of(context).textTheme.labelLarge?.color,
+                    ),
+                  ),
+                  onChanged: (value) {
+                    _onChangedRadioValue(value: value);
+                  },
+                  fillColor: WidgetStatePropertyAll(
+                    _physioOptionSelect()
+                        ? Theme.of(context).textTheme.labelLarge?.color
+                        : Theme.of(context).colorScheme.primary,
+                  ),
+                  selected: !_physioOptionSelect(),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            height: 60,
+            width: double.infinity,
+            margin: const EdgeInsets.only(top: 20),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                  Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              onPressed: () {},
+              child: Text(
+                'Entrar',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily:
+                      Theme.of(context).textTheme.titleLarge?.fontFamily,
+                  fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20),
+            child: TextButton(
+              onPressed: () {},
+              child: Text(
+                'Esqueci minha senha',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  fontFamily:
+                      Theme.of(context).textTheme.labelLarge?.fontFamily,
+                  fontSize: Theme.of(context).textTheme.labelLarge?.fontSize,
+                  fontWeight: FontWeight.w400,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Theme.of(context).colorScheme.tertiary,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
