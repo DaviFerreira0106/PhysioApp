@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/components/physioterapist/form_signup.dart';
+import 'package:physioapp/components/physioterapist/first_form_signup.dart';
 import 'package:physioapp/utils/app_routes.dart';
-
-enum SignUpfirstForm {
-  firstForm,
-  secondForm,
-}
+import 'package:physioapp/components/physioterapist/second_form_signup.dart';
+import 'package:physioapp/utils/signup_page_form.dart';
+import 'package:provider/provider.dart';
+import 'package:physioapp/components/physioterapist/image_picket.dart';
 
 class SignupPhysioPage extends StatefulWidget {
   const SignupPhysioPage({super.key});
@@ -15,11 +14,11 @@ class SignupPhysioPage extends StatefulWidget {
 }
 
 class _SignupPhysioPageState extends State<SignupPhysioPage> {
-  SignUpfirstForm _signUpfirstForm = SignUpfirstForm.firstForm;
-  bool _firstPageForm() => _signUpfirstForm == SignUpfirstForm.firstForm;
-
   @override
   Widget build(BuildContext context) {
+    final pageForm = Provider.of<SignUpPageForm>(
+      context,
+    );
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -46,6 +45,8 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              if (pageForm.signUpPageForm == SignUpForm.secondForm)
+                const ImagePicket(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -75,19 +76,28 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
               const SizedBox(
                 height: 20,
               ),
-              const FormSignUp(),
+              if (pageForm.signUpPageForm == SignUpForm.firstForm)
+                const FirstFormSignUp(),
+              if (pageForm.signUpPageForm == SignUpForm.secondForm)
+                const SecondFormSignUp(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Radio<SignUpfirstForm>(
-                    value: SignUpfirstForm.firstForm,
-                    groupValue: _signUpfirstForm,
-                    onChanged: (value) {},
+                  Radio(
+                    value: SignUpForm.firstForm,
+                    groupValue: pageForm.signUpPageForm,
+                    onChanged: (value) {
+                      Provider.of<SignUpPageForm>(context, listen: false)
+                          .toggleForm(value: value ?? SignUpForm.firstForm);
+                    },
                   ),
-                  Radio<SignUpfirstForm>(
-                    value: SignUpfirstForm.secondForm,
-                    groupValue: _signUpfirstForm,
-                    onChanged: (value) {},
+                  Radio(
+                    value: SignUpForm.secondForm,
+                    groupValue: pageForm.signUpPageForm,
+                    onChanged: (value) {
+                      Provider.of<SignUpPageForm>(context, listen: false)
+                          .toggleForm(value: value ?? SignUpForm.secondForm);
+                    },
                   ),
                 ],
               ),
@@ -134,6 +144,7 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
       ),
       floatingActionButton: IconButton(
         onPressed: () {
+          pageForm.toggleForm(value: SignUpForm.firstForm);
           Navigator.of(context).pop();
         },
         icon: const Icon(

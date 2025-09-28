@@ -62,6 +62,7 @@ class PhysioOrPatientPageState extends State<PhysioOrPatientPage> {
                   color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(50)),
               child: Row(
+                mainAxisAlignment: !_optionProfilePhysio ? MainAxisAlignment.start : MainAxisAlignment.end,
                 children: [
                   !_optionProfilePhysio
                       ? Container(

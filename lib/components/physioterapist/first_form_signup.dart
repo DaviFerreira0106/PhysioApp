@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/utils/signup_page_form.dart';
+import 'package:provider/provider.dart';
 
 enum RadioOption {
   clinic01,
@@ -11,23 +13,20 @@ enum RadioButton {
   therapyOption,
 }
 
-
-
-class FormSignUp extends StatefulWidget {
-  const FormSignUp({super.key});
+class FirstFormSignUp extends StatefulWidget {
+  const FirstFormSignUp({super.key});
 
   @override
-  FormSignUpState createState() => FormSignUpState();
+  FisrtFormSignUpState createState() => FisrtFormSignUpState();
 }
 
-class FormSignUpState extends State<FormSignUp> {
+class FisrtFormSignUpState extends State<FirstFormSignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   RadioOption _radioOptionValue = RadioOption.clinic01;
   bool _openListOption = false;
   bool _firstClinicOption() => _radioOptionValue == RadioOption.clinic01;
   bool _secondClinicOption() => _radioOptionValue == RadioOption.clinic02;
   bool _thirdClinicOption() => _radioOptionValue == RadioOption.clinic03;
-  
 
   RadioButton _radioPhysioValue = RadioButton.physioOption;
   bool _physioOptionSelect() => _radioPhysioValue == RadioButton.physioOption;
@@ -285,7 +284,10 @@ class FormSignUpState extends State<FormSignUp> {
                   Theme.of(context).colorScheme.primary,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<SignUpPageForm>(context, listen: false)
+                    .toggleForm(value: SignUpForm.secondForm);
+              },
               label: Text(
                 'Próximo',
                 style: TextStyle(
@@ -296,7 +298,7 @@ class FormSignUpState extends State<FormSignUp> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_forward_rounded,
                 color: Colors.white,
                 size: 20,
@@ -304,7 +306,6 @@ class FormSignUpState extends State<FormSignUp> {
               iconAlignment: IconAlignment.end,
             ),
           ),
-          
         ],
       ),
     );
