@@ -13,6 +13,7 @@ class FormSignIn extends StatefulWidget {
 }
 
 class FormSignInState extends State<FormSignIn> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _vibilityPassword = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -28,6 +29,7 @@ class FormSignInState extends State<FormSignIn> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Column(
         children: [
           Container(

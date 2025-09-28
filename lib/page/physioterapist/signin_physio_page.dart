@@ -49,14 +49,14 @@ class SigninPhysioPage extends StatelessWidget {
                 ],
               ),
               Text(
-                'Acesse sua conta e otimize o acompanhamento dos seus pacientes.',
-                style: TextStyle(
-                  fontFamily: Theme.of(context).textTheme.bodyMedium?.fontFamily,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w300,
-                  fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
-                )
-              ),
+                  'Acesse sua conta e otimize o acompanhamento dos seus pacientes.',
+                  style: TextStyle(
+                    fontFamily:
+                        Theme.of(context).textTheme.bodyMedium?.fontFamily,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w300,
+                    fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
+                  )),
               const SizedBox(
                 height: 50,
               ),
@@ -64,39 +64,40 @@ class SigninPhysioPage extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(top: 24, bottom: 64),
                 child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Não possui conta?',
-                    style: TextStyle(
-                      fontFamily:
-                          Theme.of(context).textTheme.labelLarge?.fontFamily,
-                      color: Theme.of(context).textTheme.labelLarge?.color,
-                      fontSize:
-                          Theme.of(context).textTheme.labelLarge?.fontSize,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.of(context)
-                        .pushNamed(AppRoutes.signUpPhysioPage),
-                    child: Text(
-                      'Cadastre-se agora!',
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Não possui conta?',
                       style: TextStyle(
                         fontFamily:
-                            Theme.of(context).textTheme.bodyLarge?.fontFamily,
+                            Theme.of(context).textTheme.labelLarge?.fontFamily,
+                        color: Theme.of(context).textTheme.labelLarge?.color,
                         fontSize:
-                            Theme.of(context).textTheme.bodyLarge?.fontSize,
-                        fontWeight: FontWeight.w700,
-                        color: Theme.of(context).colorScheme.primary,
-                        decoration: TextDecoration.underline,
-                        decorationColor: Theme.of(context).colorScheme.primary,
+                            Theme.of(context).textTheme.labelLarge?.fontSize,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                  ),
-                ],
+                    GestureDetector(
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(AppRoutes.signUpPhysioPage),
+                      child: Text(
+                        'Cadastre-se agora!',
+                        style: TextStyle(
+                          fontFamily:
+                              Theme.of(context).textTheme.bodyLarge?.fontFamily,
+                          fontSize:
+                              Theme.of(context).textTheme.bodyLarge?.fontSize,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).colorScheme.primary,
+                          decoration: TextDecoration.underline,
+                          decorationColor:
+                              Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              )
             ],
           ),
         ),
