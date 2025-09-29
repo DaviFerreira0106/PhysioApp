@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:physioapp/model/auth/physio/auth.dart';
 import 'package:physioapp/model/auth/physio/auth_form.dart';
+import 'package:physioapp/utils/app_routes.dart';
 
 class SecondFormSignUp extends StatefulWidget {
   const SecondFormSignUp({super.key});
@@ -13,6 +17,27 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _vibilityPassword = false;
   bool _visibilityConfirmPassword = false;
+  final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _submit() async {
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    if (isValid != true) return;
+    if(!mounted) return;
+    print('chegou');
+    print(_authForm.email);
+    await Auth().signUp(
+      crefito: '1234',
+      clinic: RadioOption.clinic01,
+      physioType: RadioButton.physioOption,
+      imageProfile: File('/Users/daviferreira/Library/Developer/CoreSimulator/Devices/CF2B0CD7-8F9F-4423-BCD8-58DED4EE0F54/data/Containers/Data/Application/96C39E73-33E2-4DDA-8664-C2ED152D6687/tmp/image_picker_8F6F81B0-ABF0-4619-980C-0D3EA7E8BFDF-71021-0000094E1F1FAF08.jpg'),
+      name: 'teste',
+      email: 'teste@teste',
+      password: 'teste123',
+    );
+    print('chegou2');
+    Navigator.of(context).pushNamed(AppRoutes.homePagePhysio);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +74,7 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
               validator: (_name) {
                 String name = _name ?? '';
 
-                if(name.isEmpty || name.length < 5) {
+                if (name.isEmpty || name.length < 5) {
                   return 'Digite seu nome completo';
                 }
               },
@@ -84,7 +109,7 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
               validator: (_email) {
                 String email = _email ?? '';
 
-                if(email.isEmpty || !email.contains('@')) {
+                if (email.isEmpty || !email.contains('@')) {
                   return 'Digite um email valído';
                 }
               },
@@ -102,6 +127,7 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
             ),
             child: TextFormField(
               onSaved: (password) => _authForm.password = password,
+              controller: _passwordController,
               decoration: InputDecoration(
                 label: Text(
                   'Senha',
@@ -143,7 +169,7 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
               validator: (_password) {
                 String password = _password ?? '';
 
-                if(password.isEmpty || password.length < 5) {
+                if (password.isEmpty || password.length < 5) {
                   return 'Degite uma senha valída';
                 }
               },
@@ -201,7 +227,8 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
               validator: (_confirmPassword) {
                 String confirmPassword = _confirmPassword ?? '';
 
-                if(confirmPassword != _authForm.password) {
+                if (confirmPassword != _passwordController.text) {
+                  print(_authForm.password);
                   return 'Senhas divergente!';
                 }
               },
@@ -217,7 +244,9 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
                   Theme.of(context).colorScheme.primary,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                _submit();
+              },
               child: Text(
                 'Cadastrar',
                 style: TextStyle(
@@ -228,7 +257,6 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              
             ),
           ),
         ],
