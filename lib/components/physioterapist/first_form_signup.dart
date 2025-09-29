@@ -1,17 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/model/auth/physio/auth_form.dart';
 import 'package:physioapp/utils/signup_page_form.dart';
 import 'package:provider/provider.dart';
-
-enum RadioOption {
-  clinic01,
-  clinic02,
-  clinic03,
-}
-
-enum RadioButton {
-  physioOption,
-  therapyOption,
-}
 
 class FirstFormSignUp extends StatefulWidget {
   const FirstFormSignUp({super.key});
@@ -21,26 +11,30 @@ class FirstFormSignUp extends StatefulWidget {
 }
 
 class FisrtFormSignUpState extends State<FirstFormSignUp> {
+  final _authForm = AuthForm();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   RadioOption _radioOptionValue = RadioOption.clinic01;
   bool _openListOption = false;
   bool _firstClinicOption() => _radioOptionValue == RadioOption.clinic01;
   bool _secondClinicOption() => _radioOptionValue == RadioOption.clinic02;
   bool _thirdClinicOption() => _radioOptionValue == RadioOption.clinic03;
-
   RadioButton _radioPhysioValue = RadioButton.physioOption;
   bool _physioOptionSelect() => _radioPhysioValue == RadioButton.physioOption;
+
 
   void _onChangedRadioValue({required RadioButton? value}) {
     setState(() {
       _radioPhysioValue = value ?? RadioButton.physioOption;
+      _authForm.physioType = value;
+      print('value physioType: ${_authForm.physioType}');
     });
   }
 
   void _onChangedRadioOption({required RadioOption? value}) {
-    setState(
-      () => _radioOptionValue = value ?? RadioOption.clinic01,
-    );
+    setState(() {
+      _radioOptionValue = value ?? RadioOption.clinic01;
+      _authForm.clinic = value;
+    });
   }
 
   @override
@@ -60,6 +54,7 @@ class FisrtFormSignUpState extends State<FirstFormSignUp> {
                   color: const Color.fromARGB(255, 110, 125, 162), width: 1),
             ),
             child: TextFormField(
+              onSaved: (crefito) => _authForm.crefito = crefito,
               decoration: InputDecoration(
                 label: Text(
                   'Número Crefito',
@@ -74,6 +69,14 @@ class FisrtFormSignUpState extends State<FirstFormSignUp> {
                 border: InputBorder.none,
               ),
               keyboardType: TextInputType.text,
+
+              validator: (_crefito) {
+                String crefito = _crefito ?? '';
+
+                if(crefito.isEmpty){
+                  return 'Digite o seu número crefito';
+                }
+              },
             ),
           ),
           Container(
@@ -93,7 +96,9 @@ class FisrtFormSignUpState extends State<FirstFormSignUp> {
               children: [
                 ListTile(
                   title: Text(
-                    'Unidade',
+                    _authForm.clinic == null
+                        ? 'Unidade'
+                        : _authForm.clinic.toString(),
                     style: TextStyle(
                       fontFamily:
                           Theme.of(context).textTheme.bodyMedium?.fontFamily,

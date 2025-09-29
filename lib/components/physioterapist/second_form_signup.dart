@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/model/auth/physio/auth_form.dart';
 
 class SecondFormSignUp extends StatefulWidget {
   const SecondFormSignUp({super.key});
@@ -8,6 +9,7 @@ class SecondFormSignUp extends StatefulWidget {
 }
 
 class SecondFormSignUpState extends State<SecondFormSignUp> {
+  final AuthForm _authForm = AuthForm();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _vibilityPassword = false;
   bool _visibilityConfirmPassword = false;
@@ -29,6 +31,7 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
                   color: const Color.fromARGB(255, 110, 125, 162), width: 1),
             ),
             child: TextFormField(
+              onSaved: (name) => _authForm.name = name,
               decoration: InputDecoration(
                 label: Text(
                   'Nome Completo',
@@ -43,6 +46,13 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
                 border: InputBorder.none,
               ),
               keyboardType: TextInputType.name,
+              validator: (_name) {
+                String name = _name ?? '';
+
+                if(name.isEmpty || name.length < 5) {
+                  return 'Digite seu nome completo';
+                }
+              },
             ),
           ),
           Container(
@@ -56,6 +66,7 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
                   color: const Color.fromARGB(255, 110, 125, 162), width: 1),
             ),
             child: TextFormField(
+              onSaved: (email) => _authForm.email = email,
               decoration: InputDecoration(
                 label: Text(
                   'Email',
@@ -70,6 +81,13 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
                 border: InputBorder.none,
               ),
               keyboardType: TextInputType.emailAddress,
+              validator: (_email) {
+                String email = _email ?? '';
+
+                if(email.isEmpty || !email.contains('@')) {
+                  return 'Digite um email valído';
+                }
+              },
             ),
           ),
           Container(
@@ -83,6 +101,7 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
                   color: const Color.fromARGB(255, 110, 125, 162), width: 1),
             ),
             child: TextFormField(
+              onSaved: (password) => _authForm.password = password,
               decoration: InputDecoration(
                 label: Text(
                   'Senha',
@@ -121,6 +140,13 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
               ),
               keyboardType: TextInputType.visiblePassword,
               obscureText: _vibilityPassword == true ? false : true,
+              validator: (_password) {
+                String password = _password ?? '';
+
+                if(password.isEmpty || password.length < 5) {
+                  return 'Degite uma senha valída';
+                }
+              },
             ),
           ),
           Container(
@@ -172,6 +198,13 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
               ),
               keyboardType: TextInputType.visiblePassword,
               obscureText: _visibilityConfirmPassword == true ? false : true,
+              validator: (_confirmPassword) {
+                String confirmPassword = _confirmPassword ?? '';
+
+                if(confirmPassword != _authForm.password) {
+                  return 'Senhas divergente!';
+                }
+              },
             ),
           ),
           Container(

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:physioapp/model/auth/physio/auth_form.dart';
 
 class ImagePicket extends StatefulWidget {
   const ImagePicket({super.key});
@@ -11,6 +12,7 @@ class ImagePicket extends StatefulWidget {
 }
 
 class ImagePicketState extends State<ImagePicket> {
+  final AuthForm _authForm = AuthForm();
   final ImagePicker _picket = ImagePicker();
   File? _image;
 
@@ -23,13 +25,15 @@ class ImagePicketState extends State<ImagePicket> {
     if (image != null) {
       setState(() {
         _image = File(image.path);
+        _authForm.imageProfile = _image;
+        print('image: ${_image}');
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       child: Column(
         children: [
           CircleAvatar(
@@ -41,7 +45,7 @@ class ImagePicketState extends State<ImagePicket> {
             onPressed: () {
               _getImage();
             },
-            label: Text(
+            label: const Text(
               'Selecionar Foto de Perfil',
               style: TextStyle(
                 color: Colors.white,
@@ -49,7 +53,7 @@ class ImagePicketState extends State<ImagePicket> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            icon: Icon(
+            icon: const Icon(
               Icons.photo,
               size: 24,
               color: Colors.white,
