@@ -8,8 +8,13 @@ class PhysioOrPatientPage extends StatefulWidget {
   PhysioOrPatientPageState createState() => PhysioOrPatientPageState();
 }
 
-class PhysioOrPatientPageState extends State<PhysioOrPatientPage> {
+class PhysioOrPatientPageState extends State<PhysioOrPatientPage>
+    with SingleTickerProviderStateMixin {
+  // Atributos de controle
   bool _optionProfilePhysio = false;
+  final double _widthContainer = 310;
+  final double _widthContainerOption = 150;
+  final double _paddingContainer = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -56,81 +61,79 @@ class PhysioOrPatientPageState extends State<PhysioOrPatientPage> {
               ),
             ),
             Container(
-              width: 320,
+              width: _widthContainer,
               height: 60,
               decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(50)),
-              child: Row(
-                mainAxisAlignment: !_optionProfilePhysio ? MainAxisAlignment.start : MainAxisAlignment.end,
+              child: Stack(
                 children: [
-                  !_optionProfilePhysio
-                      ? Container(
-                          width: 150,
-                          height: 60,
-                          margin: const EdgeInsets.all(5.0),
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 236, 236, 236),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: TextButton(
-                            onPressed: () {
-                              setState(() => _optionProfilePhysio = true);
-                            },
-                            child: Text(
-                              'Paciente',
-                              style: TextStyle(
-                                fontStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.fontStyle,
-                                fontWeight: FontWeight.w500,
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.fontSize,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
-                                    ?.color,
-                                overflow: TextOverflow.ellipsis,
+                  AnimatedPositioned(
+                    duration: const Duration(milliseconds: 100),
+                    curve: Curves.easeIn,
+                    left: _optionProfilePhysio
+                        ? _widthContainer -
+                            _widthContainerOption -
+                            _paddingContainer
+                        : _paddingContainer,
+                    child: Container(
+                      width: _widthContainerOption,
+                      height: 50,
+                      margin: const EdgeInsets.only(top: 5),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 236, 236, 236),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                          setState(
+                            () => _optionProfilePhysio == false
+                                ? _optionProfilePhysio = true
+                                : _optionProfilePhysio = false,
+                          );
+                        },
+                        child: !_optionProfilePhysio
+                            ? Text(
+                                'Paciente',
+                                style: TextStyle(
+                                  fontStyle: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.fontStyle,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.fontSize,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium
+                                      ?.color,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              )
+                            : Text(
+                                'Fisioterapeuta',
+                                style: TextStyle(
+                                  fontStyle: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.fontStyle,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.fontSize,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium
+                                      ?.color,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                            ),
-                          ),
-                        )
-                      : Container(
-                          width: 150,
-                          height: 60,
-                          margin: const EdgeInsets.all(5.0),
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 236, 236, 236),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: TextButton(
-                            onPressed: () {
-                              setState(() => _optionProfilePhysio = false);
-                            },
-                            child: Text(
-                              'Fisioterapeuta',
-                              style: TextStyle(
-                                fontStyle: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.fontStyle,
-                                fontWeight: FontWeight.w500,
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.fontSize,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
-                                    ?.color,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
