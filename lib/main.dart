@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/model/auth/physio/auth_form.dart';
 import 'package:physioapp/page/physioterapist/home_physio_page.dart';
 import 'package:physioapp/utils/app_routes.dart';
 import 'package:physioapp/page/physioterapist/exercises_page_physio.dart';
@@ -21,8 +22,15 @@ class PhysioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => SignUpPageForm(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => SignUpPageForm(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthForm(),
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           scaffoldBackgroundColor: const Color.fromARGB(255, 221, 224, 228),
@@ -117,7 +125,8 @@ class PhysioApp extends StatelessWidget {
         home: const PhysioOrPatientPage(),
         routes: {
           AppRoutes.homePagePhysio: (context) => const HomePhysioPage(),
-          AppRoutes.exercisesPagePhysio: (context) => const ExercisesPagePhysio(),
+          AppRoutes.exercisesPagePhysio: (context) =>
+              const ExercisesPagePhysio(),
           AppRoutes.chatPagePhysio: (context) => const ChatPagePhysio(),
           AppRoutes.physioProfilePage: (context) => const PhysioProfilePage(),
           AppRoutes.scheduleAppointmentPage: (context) =>

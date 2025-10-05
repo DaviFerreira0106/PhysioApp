@@ -5,9 +5,9 @@ import 'package:physioapp/model/auth/physio/auth_form.dart';
 import 'package:http/http.dart' as http;
 
 class Auth {
+  String? crefito;
+
   Future<void> signUp({
-     required String crefito,
-     required RadioOption clinic,
      required RadioButton physioType,
      required File imageProfile,
      required String name,
@@ -16,7 +16,7 @@ class Auth {
   }) async {
     final response = await http.post(
       Uri.parse('http://localhost:8080/users'),
-      body: {
+      body: jsonEncode({
         "user_type": "PHYSIO",
         "username": name,
         "fullname": name,
@@ -25,7 +25,7 @@ class Auth {
         "password": password,
         "role": "PHYSIO",
         "crefito": crefito,
-      },
+      }),
     );
 
     print('json: ${jsonDecode(response.body)}');
@@ -34,7 +34,6 @@ class Auth {
 
 class PhysioUser {
   String crefito;
-  RadioOption clinic;
   RadioButton physioType;
   File imageProfile;
   String name;
@@ -43,7 +42,6 @@ class PhysioUser {
 
   PhysioUser({
     required this.crefito,
-    required this.clinic,
     required this.physioType,
     required this.imageProfile,
     required this.name,

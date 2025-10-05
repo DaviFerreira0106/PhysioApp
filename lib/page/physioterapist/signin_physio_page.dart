@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/components/physioterapist/form_signin.dart';
+import 'package:physioapp/components/physioterapist/auth/form_signin.dart';
 import 'package:physioapp/utils/app_routes.dart';
 
 class SigninPhysioPage extends StatelessWidget {

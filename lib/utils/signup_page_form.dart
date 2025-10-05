@@ -8,17 +8,21 @@ enum SignUpForm {
 }
 
 class SignUpPageForm with ChangeNotifier {
-  SignUpPageForm({
-    bool? firstForm,
-    bool? secondForm,
-  });
+  //Configuração default do page form
+  SignUpForm currentPageForm = SignUpForm.firstForm;
 
-  SignUpForm signUpPageForm = SignUpForm.firstForm;
-  bool firstPageForm() => signUpPageForm == SignUpForm.firstForm;
+  // Gettera para acessar valores do enum
+  SignUpForm get firstForm => SignUpForm.firstForm;
+  SignUpForm get secondForm => SignUpForm.secondForm; 
 
+  // Getters para verificar a página
+  bool get firstPageForm => currentPageForm == SignUpForm.firstForm;
+  bool get secondPageForm => currentPageForm == SignUpForm.secondForm;
+
+  // Função para alterar de página
   void toggleForm({required SignUpForm value}) {
     print('valor recebido: $value');
-    signUpPageForm = value;
+    currentPageForm = value;
     notifyListeners();
   }
 }

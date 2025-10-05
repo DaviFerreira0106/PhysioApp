@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:physioapp/components/physioterapist/auth/form_components.dart';
 import 'package:physioapp/model/auth/physio/auth.dart';
 import 'package:physioapp/model/auth/physio/auth_form.dart';
 import 'package:physioapp/utils/app_routes.dart';
@@ -13,28 +14,55 @@ class SecondFormSignUp extends StatefulWidget {
 }
 
 class SecondFormSignUpState extends State<SecondFormSignUp> {
+  // Atributos de controle
   final AuthForm _authForm = AuthForm();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _vibilityPassword = false;
   bool _visibilityConfirmPassword = false;
   final TextEditingController _passwordController = TextEditingController();
 
+  void _showErrorValidate({required String message}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+        backgroundColor: Theme.of(context).colorScheme.error,
+      ),
+    );
+  }
+
+  // Metodo para submissão de formulário
   Future<void> _submit() async {
     final isValid = _formKey.currentState?.validate() ?? false;
+    if (isValid == false) return;
 
-    if (isValid != true) return;
-    if(!mounted) return;
+    // Validação de campos
+    if(_authForm.name == null || _authForm.name!.isEmpty || _authForm.name!.length < 5) {
+      return _showErrorValidate(message: 'Digite seu nome completo!');
+    }
+    if(_authForm.email == null || _authForm.email!.isEmpty || !_authForm.email!.contains('@')) {
+      return _showErrorValidate(message: 'Digite um e-mail valído!');
+    }
+    if(_authForm.password == null || _authForm.password!.isEmpty || _authForm.password!.length < 6) {
+      return _showErrorValidate(message: 'Digite uma senha com pelo menos 6 caracteres!');
+    }
+    if(_passwordController.text != _authForm.password) {
+      return _showErrorValidate(message: 'As senhas digitadas estão divergentes!');
+    }
+
+    
     print('chegou');
     print(_authForm.email);
+
     await Auth().signUp(
-      crefito: '1234',
-      clinic: RadioOption.clinic01,
-      physioType: RadioButton.physioOption,
-      imageProfile: File('/Users/daviferreira/Library/Developer/CoreSimulator/Devices/CF2B0CD7-8F9F-4423-BCD8-58DED4EE0F54/data/Containers/Data/Application/96C39E73-33E2-4DDA-8664-C2ED152D6687/tmp/image_picker_8F6F81B0-ABF0-4619-980C-0D3EA7E8BFDF-71021-0000094E1F1FAF08.jpg'),
-      name: 'teste',
-      email: 'teste@teste',
-      password: 'teste123',
+      physioType: _authForm.currentRadioValue,
+      imageProfile: File(
+          '/Users/daviferreira/Library/Developer/CoreSimulator/Devices/CF2B0CD7-8F9F-4423-BCD8-58DED4EE0F54/data/Containers/Data/Application/96C39E73-33E2-4DDA-8664-C2ED152D6687/tmp/image_picker_8F6F81B0-ABF0-4619-980C-0D3EA7E8BFDF-71021-0000094E1F1FAF08.jpg'),
+      name: _authForm.name!,
+      email: _authForm.email!,
+      password: _authForm.password!,
     );
+
     print('chegou2');
     Navigator.of(context).pushNamed(AppRoutes.homePagePhysio);
   }
@@ -45,18 +73,9 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
       key: _formKey,
       child: Column(
         children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(left: 20),
-            margin: const EdgeInsets.only(bottom: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(50),
-              border: Border.all(
-                  color: const Color.fromARGB(255, 110, 125, 162), width: 1),
-            ),
-            child: TextFormField(
-              onSaved: (name) => _authForm.name = name,
+          FormComponents(
+            textForm: TextFormField(
+              onChanged: (name) => _authForm.name = name,
               decoration: InputDecoration(
                 label: Text(
                   'Nome Completo',
@@ -71,27 +90,11 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
                 border: InputBorder.none,
               ),
               keyboardType: TextInputType.name,
-              validator: (_name) {
-                String name = _name ?? '';
-
-                if (name.isEmpty || name.length < 5) {
-                  return 'Digite seu nome completo';
-                }
-              },
             ),
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(left: 20),
-            margin: const EdgeInsets.only(bottom: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(50),
-              border: Border.all(
-                  color: const Color.fromARGB(255, 110, 125, 162), width: 1),
-            ),
-            child: TextFormField(
-              onSaved: (email) => _authForm.email = email,
+          FormComponents(
+            textForm: TextFormField(
+              onChanged: (email) => _authForm.email = email,
               decoration: InputDecoration(
                 label: Text(
                   'Email',
@@ -106,27 +109,11 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
                 border: InputBorder.none,
               ),
               keyboardType: TextInputType.emailAddress,
-              validator: (_email) {
-                String email = _email ?? '';
-
-                if (email.isEmpty || !email.contains('@')) {
-                  return 'Digite um email valído';
-                }
-              },
             ),
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(left: 20),
-            margin: const EdgeInsets.only(bottom: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(50),
-              border: Border.all(
-                  color: const Color.fromARGB(255, 110, 125, 162), width: 1),
-            ),
-            child: TextFormField(
-              onSaved: (password) => _authForm.password = password,
+          FormComponents(
+            textForm: TextFormField(
+              onChanged: (password) => _authForm.password = password,
               controller: _passwordController,
               decoration: InputDecoration(
                 label: Text(
@@ -166,26 +153,11 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
               ),
               keyboardType: TextInputType.visiblePassword,
               obscureText: _vibilityPassword == true ? false : true,
-              validator: (_password) {
-                String password = _password ?? '';
-
-                if (password.isEmpty || password.length < 5) {
-                  return 'Degite uma senha valída';
-                }
-              },
+              
             ),
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(left: 20),
-            margin: const EdgeInsets.only(bottom: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(50),
-              border: Border.all(
-                  color: const Color.fromARGB(255, 110, 125, 162), width: 1),
-            ),
-            child: TextFormField(
+          FormComponents(
+            textForm: TextFormField(
               decoration: InputDecoration(
                 label: Text(
                   'Confirmar Senha',
@@ -224,14 +196,7 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
               ),
               keyboardType: TextInputType.visiblePassword,
               obscureText: _visibilityConfirmPassword == true ? false : true,
-              validator: (_confirmPassword) {
-                String confirmPassword = _confirmPassword ?? '';
-
-                if (confirmPassword != _passwordController.text) {
-                  print(_authForm.password);
-                  return 'Senhas divergente!';
-                }
-              },
+              
             ),
           ),
           Container(
