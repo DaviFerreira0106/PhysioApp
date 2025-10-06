@@ -69,7 +69,7 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
       );
 
       if (mounted) {
-        Navigator.of(context).pushNamed(AppRoutes.homePagePhysio);
+        Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.homePagePhysio, (_) => false,);
       }
     } catch (e) {
       _showErrorValidate(

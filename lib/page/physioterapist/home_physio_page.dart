@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/components/physioterapist/consultation_calendar.dart';
-import 'package:physioapp/components/physioterapist/search_patient.dart';
-import 'package:physioapp/components/physioterapist/patient_appointment_list.dart';
+import 'package:physioapp/components/physioterapist/home/consultation_calendar.dart';
+import 'package:physioapp/components/physioterapist/home/search_patient.dart';
+import 'package:physioapp/components/physioterapist/home/patient_appointment_list.dart';
 import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
 import 'package:physioapp/main.dart';
 import 'package:physioapp/model/auth/physio/auth.dart';

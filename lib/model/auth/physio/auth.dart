@@ -8,7 +8,7 @@ import 'package:physioapp/model/auth/physio/physio_user.dart';
 
 class Auth {
   static String? crefito;
-  static const String url = '10.8.121.9';
+  static const String url = '192.168.15.8';
   PhysioUser? currentUserPhysio;
 
   Future<void> signUp({

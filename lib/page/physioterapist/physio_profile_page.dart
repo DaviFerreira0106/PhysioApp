@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
-import 'package:physioapp/components/physioterapist/photo_profile.dart';
-import 'package:physioapp/components/physioterapist/profile_data.dart';
+import 'package:physioapp/components/physioterapist/profile/photo_profile.dart';
+import 'package:physioapp/components/physioterapist/profile/profile_data.dart';
 
 class PhysioProfilePage extends StatelessWidget {
   const PhysioProfilePage({super.key});
