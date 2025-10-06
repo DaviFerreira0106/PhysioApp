@@ -3,6 +3,10 @@ import 'package:physioapp/components/physioterapist/consultation_calendar.dart';
 import 'package:physioapp/components/physioterapist/search_patient.dart';
 import 'package:physioapp/components/physioterapist/patient_appointment_list.dart';
 import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
+import 'package:physioapp/main.dart';
+import 'package:physioapp/model/auth/physio/auth.dart';
+import 'package:physioapp/model/auth/physio/physio_user.dart';
+import 'package:physioapp/utils/app_routes.dart';
 
 class HomePhysioPage extends StatelessWidget {
   const HomePhysioPage({super.key});
@@ -27,16 +31,24 @@ class HomePhysioPage extends StatelessWidget {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(right: 10),
-                              child: CircleAvatar(
-                                backgroundColor: Colors.grey,
-                                minRadius: 30,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  await Auth().logout();
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      AppRoutes.initialAppPage, (_) => false);
+                                },
+                                child: const CircleAvatar(
+                                  backgroundColor: Colors.grey,
+                                  minRadius: 30,
+                                ),
                               ),
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Teste',
+                                const Text(
+                                  '',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 20,
@@ -74,15 +86,15 @@ class HomePhysioPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SearchPatient(),
-                  ConsultationCalendar(),
-                  Expanded(
+                  const SearchPatient(),
+                  const ConsultationCalendar(),
+                  const Expanded(
                     child: PatientAppointmentList(),
                   ),
                 ],
               ),
             ),
-            Positioned(
+            const Positioned(
               bottom: 24,
               child: BottomNavBar(),
             ),

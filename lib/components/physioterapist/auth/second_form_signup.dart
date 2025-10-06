@@ -37,34 +37,45 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
     if (isValid == false) return;
 
     // Validação de campos
-    if(_authForm.name == null || _authForm.name!.isEmpty || _authForm.name!.length < 5) {
+    if (_authForm.name == null ||
+        _authForm.name!.isEmpty ||
+        _authForm.name!.length < 5) {
       return _showErrorValidate(message: 'Digite seu nome completo!');
     }
-    if(_authForm.email == null || _authForm.email!.isEmpty || !_authForm.email!.contains('@')) {
+    if (_authForm.email == null ||
+        _authForm.email!.isEmpty ||
+        !_authForm.email!.contains('@')) {
       return _showErrorValidate(message: 'Digite um e-mail valído!');
     }
-    if(_authForm.password == null || _authForm.password!.isEmpty || _authForm.password!.length < 6) {
-      return _showErrorValidate(message: 'Digite uma senha com pelo menos 6 caracteres!');
+    if (_authForm.password == null ||
+        _authForm.password!.isEmpty ||
+        _authForm.password!.length < 6) {
+      return _showErrorValidate(
+          message: 'Digite uma senha com pelo menos 6 caracteres!');
     }
-    if(_passwordController.text != _authForm.password) {
-      return _showErrorValidate(message: 'As senhas digitadas estão divergentes!');
+    if (_passwordController.text != _authForm.password) {
+      return _showErrorValidate(
+          message: 'As senhas digitadas estão divergentes!');
     }
 
-    
-    print('chegou');
-    print(_authForm.email);
+    try {
+      await Auth().signUp(
+        physioType: _authForm.currentRadioValue,
+        imageProfile: File(
+            '/Users/daviferreira/Library/Developer/CoreSimulator/Devices/CF2B0CD7-8F9F-4423-BCD8-58DED4EE0F54/data/Containers/Data/Application/96C39E73-33E2-4DDA-8664-C2ED152D6687/tmp/image_picker_8F6F81B0-ABF0-4619-980C-0D3EA7E8BFDF-71021-0000094E1F1FAF08.jpg'),
+        name: _authForm.name!,
+        email: _authForm.email!,
+        password: _authForm.password!,
+      );
 
-    await Auth().signUp(
-      physioType: _authForm.currentRadioValue,
-      imageProfile: File(
-          '/Users/daviferreira/Library/Developer/CoreSimulator/Devices/CF2B0CD7-8F9F-4423-BCD8-58DED4EE0F54/data/Containers/Data/Application/96C39E73-33E2-4DDA-8664-C2ED152D6687/tmp/image_picker_8F6F81B0-ABF0-4619-980C-0D3EA7E8BFDF-71021-0000094E1F1FAF08.jpg'),
-      name: _authForm.name!,
-      email: _authForm.email!,
-      password: _authForm.password!,
-    );
-
-    print('chegou2');
-    Navigator.of(context).pushNamed(AppRoutes.homePagePhysio);
+      if (mounted) {
+        Navigator.of(context).pushNamed(AppRoutes.homePagePhysio);
+      }
+    } catch (e) {
+      _showErrorValidate(
+        message: e.toString(),
+      );
+    }
   }
 
   @override
@@ -153,7 +164,6 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
               ),
               keyboardType: TextInputType.visiblePassword,
               obscureText: _vibilityPassword == true ? false : true,
-              
             ),
           ),
           FormComponents(
@@ -196,7 +206,6 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
               ),
               keyboardType: TextInputType.visiblePassword,
               obscureText: _visibilityConfirmPassword == true ? false : true,
-              
             ),
           ),
           Container(

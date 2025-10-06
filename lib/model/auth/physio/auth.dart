@@ -1,51 +1,61 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:physioapp/model/auth/physio/auth_form.dart';
 import 'package:http/http.dart' as http;
+import 'package:physioapp/model/auth/physio/physio_user.dart';
 
 class Auth {
-  String? crefito;
+  static String? crefito;
+  static const String url = '10.8.121.9';
+  PhysioUser? currentUserPhysio;
 
   Future<void> signUp({
-     required RadioButton physioType,
-     required File imageProfile,
-     required String name,
-     required String email,
-     required String password,
+    required RadioButton physioType,
+    required File imageProfile,
+    required String name,
+    required String email,
+    required String password,
   }) async {
-    final response = await http.post(
-      Uri.parse('http://localhost:8080/users'),
-      body: jsonEncode({
-        "user_type": "PHYSIO",
-        "username": name,
-        "fullname": name,
-        "email": email,
-        "phone": "555-5678",
-        "password": password,
-        "role": "PHYSIO",
-        "crefito": crefito,
-      }),
+    try {
+      final response = await http.post(
+        Uri.parse('http://$url:8080/users'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "user_type": "PHYSIO",
+          "username": name,
+          "fullname": name,
+          "email": email,
+          "phone": "555-5678",
+          "password": password,
+          "role": "PHYSIO",
+          "crefito": crefito,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        debugPrint("ocorreu tudo bem");
+        debugPrint(response.body);
+      } else {
+        debugPrint("ocorreu deu ruim");
+        debugPrint(response.body);
+      }
+    } catch (e) {
+      debugPrint("ocorreu deu ruim porque: $e");
+    }
+
+    currentUserPhysio = PhysioUser(
+      crefito: crefito!,
+      physioType: physioType,
+      imageProfile: imageProfile,
+      name: name,
+      email: email,
+      password: password,
     );
-
-    print('json: ${jsonDecode(response.body)}');
   }
-}
 
-class PhysioUser {
-  String crefito;
-  RadioButton physioType;
-  File imageProfile;
-  String name;
-  String email;
-  String password;
-
-  PhysioUser({
-    required this.crefito,
-    required this.physioType,
-    required this.imageProfile,
-    required this.name,
-    required this.email,
-    required this.password,
-  });
+  Future<void> logout() async {
+    currentUserPhysio = null;
+  }
 }

@@ -125,6 +125,7 @@ class PhysioApp extends StatelessWidget {
           ),
         ),
         home: const PhysioOrPatientPage(),
+        initialRoute: AppRoutes.initialAppPage,
         routes: {
           AppRoutes.homePagePhysio: (context) => const HomePhysioPage(),
           AppRoutes.exercisesPagePhysio: (context) =>

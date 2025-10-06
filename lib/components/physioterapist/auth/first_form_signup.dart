@@ -28,7 +28,7 @@ class FisrtFormSignUpState extends State<FirstFormSignUp> {
       return _showErrorValidate(message: 'Digite um número crefito valido');
     }
 
-    Auth().crefito = _authForm.crefito!;
+    Auth.crefito = _authForm.crefito!;
 
     Provider.of<SignUpPageForm>(context, listen: false)
         .toggleForm(value: _signUpPage.secondForm);
