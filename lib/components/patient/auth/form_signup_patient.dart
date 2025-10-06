@@ -6,14 +6,14 @@ import 'package:physioapp/model/auth/physio/auth.dart';
 import 'package:physioapp/model/auth/physio/auth_form.dart';
 import 'package:physioapp/utils/app_routes.dart';
 
-class SecondFormSignUp extends StatefulWidget {
-  const SecondFormSignUp({super.key});
+class FormSignUpPatient extends StatefulWidget {
+  const FormSignUpPatient({super.key});
 
   @override
-  SecondFormSignUpState createState() => SecondFormSignUpState();
+  FormSignUpPatientState createState() => FormSignUpPatientState();
 }
 
-class SecondFormSignUpState extends State<SecondFormSignUp> {
+class FormSignUpPatientState extends State<FormSignUpPatient> {
   // Atributos de controle
   final AuthForm _authForm = AuthForm();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

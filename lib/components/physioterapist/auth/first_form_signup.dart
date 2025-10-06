@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/components/physioterapist/auth/form_components.dart';
+import 'package:physioapp/components/form_components.dart';
 import 'package:physioapp/model/auth/physio/auth.dart';
 import 'package:physioapp/model/auth/physio/auth_form.dart';
 import 'package:physioapp/utils/signup_page_form.dart';

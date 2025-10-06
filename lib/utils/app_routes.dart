@@ -9,4 +9,6 @@ class AppRoutes {
   static const String authPatientPage = '/auth-patient-page';
   static const String signInPhysioPage = '/signin-physio-page';
   static const String signUpPhysioPage = '/signup-physio-page';
+  static const String signInPatientPage = '/signin-patient-page';
+  static const String signUpPatientPage = '/signup-patient-page';
 }
