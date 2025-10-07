@@ -22,6 +22,9 @@ class ListPatient extends StatelessWidget {
 
     return SizedBox(
       child: ListTile(
+        onTap: () {
+          // Implementar método para redirecionar a tela do chat
+        },
         leading: const CircleAvatar(
           maxRadius: 30,
           backgroundColor: Colors.grey,

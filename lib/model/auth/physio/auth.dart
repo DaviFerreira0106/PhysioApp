@@ -55,6 +55,12 @@ class Auth {
     );
   }
 
+  Future<void> login({required String email, required String password}) async {
+    http.get(
+      Uri.parse('http://$url:8080/users')
+    );
+  } 
+
   Future<void> logout() async {
     currentUserPhysio = null;
   }
