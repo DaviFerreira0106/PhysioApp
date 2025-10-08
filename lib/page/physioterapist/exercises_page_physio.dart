@@ -24,7 +24,8 @@ class ExercisesPagePhysio extends StatelessWidget {
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.9,
                 width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(top: 20, bottom: 60),
+                margin: const EdgeInsets.only(
+                    left: 10, right: 10, top: 20, bottom: 60),
                 color: const Color.fromARGB(56, 255, 193, 7),
                 child: Column(
                   children: [

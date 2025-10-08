@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
 import 'package:physioapp/components/physioterapist/chat/list_patient.dart';
 import 'package:physioapp/components/physioterapist/chat/search_patient.dart';
+import 'package:physioapp/components/physioterapist/chat/select_patient_photo.dart';
 
 class ChatPagePhysio extends StatelessWidget {
   const ChatPagePhysio({super.key});
@@ -19,7 +22,12 @@ class ChatPagePhysio extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  SearchPatient(),
+                  const SearchPatient(),
+                  SelectPatientPhoto(
+                    imagePatient: File(
+                        ''),
+                    patientCount: 15,
+                  ),
                   ListPatient(
                     namePatient:
                         'Davi ferreira da silva de oliveira cavalcante',
@@ -36,7 +44,7 @@ class ChatPagePhysio extends StatelessWidget {
                   ),
                 ],
               ),
-              Positioned(
+              const Positioned(
                 bottom: 24,
                 child: BottomNavBar(),
               )
