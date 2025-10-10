@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
+import 'package:physioapp/components/physioterapist/exercises/grid_view_exercises.dart';
+import 'package:physioapp/components/physioterapist/exercises/shared_exercises_view.dart';
 
 class ExercisesPagePhysio extends StatelessWidget {
   const ExercisesPagePhysio({super.key});
@@ -21,77 +23,43 @@ class ExercisesPagePhysio extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             SingleChildScrollView(
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.9,
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(
-                    left: 10, right: 10, top: 20, bottom: 60),
-                color: const Color.fromARGB(56, 255, 193, 7),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.74,
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 3 / 3.2,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20,
-                          ),
-                          itemBuilder: (context, index) => Container(
-                            color: const Color.fromARGB(27, 0, 0, 0),
-                            child: Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Container(
-                                  height: 164,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        // Color.fromARGB(255, 223, 224, 234),
-                                        // Color.fromARGB(255, 233, 235, 240)
-                                        Colors.blue,
-                                        Colors.black,
-                                      ],
-                                    ),
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 0,
-                                  child: CircleAvatar(
-                                    maxRadius: 34,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          itemCount: 6,
-                        ),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                children: [
+                  SharedExercisesView(),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.74,
+                    width: double.infinity,
+                    child: const Padding(
+                      padding: EdgeInsets.only(
+                        right: 10,
+                        left: 10,
+                      ),
+                      child: GridViewExercises(),
+                    ),
+                  ),
+                  Container(
+                    height: 50,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Adicionar exercício',
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      height: 50,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Text('Adicionar exercício'),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 120,
+                  ),
+                ],
               ),
             ),
-            Positioned(
+            const Positioned(
               bottom: 24,
               child: BottomNavBar(),
             ),
