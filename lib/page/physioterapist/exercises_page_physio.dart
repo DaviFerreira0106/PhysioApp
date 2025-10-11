@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
 import 'package:physioapp/components/physioterapist/exercises/grid_view_exercises.dart';
 import 'package:physioapp/components/physioterapist/exercises/shared_exercises_view.dart';
+import 'package:physioapp/model/exercises/phtysio/exercises_controller_component.dart';
+import 'package:provider/provider.dart';
 
 class ExercisesPagePhysio extends StatelessWidget {
   const ExercisesPagePhysio({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final exercisesProvider =
+        Provider.of<ExercisesControllerComponent>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -26,7 +31,8 @@ class ExercisesPagePhysio extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
-                  const SharedExercisesView(),
+                  if (exercisesProvider.listComponent.isNotEmpty)
+                    const SharedExercisesView(),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.74,
                     width: double.infinity,

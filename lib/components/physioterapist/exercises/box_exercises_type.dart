@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/utils/app_routes.dart';
 
 class BoxExercisesType extends StatelessWidget {
   final String title;
@@ -35,8 +36,8 @@ class BoxExercisesType extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ListTile(
-                    onTap:
-                        () {}, //Implementar a navegação para a tela de lista de exercícios de cada tipo
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(AppRoutes.exercisesListPage),
                     title: Center(
                       child: Container(
                         margin: const EdgeInsets.only(top: 5),

@@ -1,0 +1,102 @@
+import 'package:flutter/material.dart';
+
+class ExercisesList extends StatelessWidget {
+  final String exerciseName;
+  final int minute;
+  final String pathVideoCover;
+  const ExercisesList({
+    super.key,
+    required this.exerciseName,
+    required this.minute,
+    required this.pathVideoCover,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      color: const Color.fromARGB(0, 255, 255, 255),
+      child: Container(
+        height: 120,
+        width: double.infinity,
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(168, 66, 75, 84),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Row(
+          children: [
+            Container(
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                image: DecorationImage(
+                  image: AssetImage(
+                    pathVideoCover,
+                  ),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            Flexible(
+              fit: FlexFit.tight,
+              child: ListTile(
+                title: Text(
+                  exerciseName,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.fade,
+                ),
+                subtitle: Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: Row(
+                    spacing: 5,
+                    children: [
+                      const Icon(
+                        Icons.access_time_filled_rounded,
+                        size: 24,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        '$minute min',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Column(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.favorite_border_rounded,
+                    size: 24,
+                    color: Colors.white,
+                  ),
+                ),
+                const Icon(
+                  Icons.play_circle,
+                  size: 40,
+                  color: Colors.white,
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
