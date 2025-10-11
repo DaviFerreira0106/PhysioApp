@@ -14,7 +14,7 @@ class ExercisesListPage extends StatelessWidget {
         width: MediaQuery.of(context).size.height,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: ExercisesList(
-          exerciseName: 'Esticada de Perna (Quadriceps)',
+          titleExercises: 'Esticada de Perna (Quadriceps)',
           minute: 13,
           pathVideoCover: 'assets/images/background_image_auth_patient.jpg',
         ),
