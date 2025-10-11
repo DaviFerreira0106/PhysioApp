@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/utils/app_routes.dart';
 
 enum RadioButton {
   physioOption,
@@ -27,9 +28,10 @@ class FormSignInState extends State<FormSignIn> {
   }
 
   Future<void> _submit() async {
-    final isValid = _formKey.currentState?.validate() ?? false;
+    // final isValid = _formKey.currentState?.validate() ?? false;
 
-    
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(AppRoutes.homePagePhysio, (_) => false);
   }
 
   @override
@@ -191,7 +193,7 @@ class FormSignInState extends State<FormSignIn> {
                   Theme.of(context).colorScheme.primary,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () => _submit(),
               child: Text(
                 'Entrar',
                 style: TextStyle(

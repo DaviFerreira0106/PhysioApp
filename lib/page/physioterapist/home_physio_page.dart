@@ -3,9 +3,7 @@ import 'package:physioapp/components/physioterapist/home/consultation_calendar.d
 import 'package:physioapp/components/physioterapist/home/search_patient.dart';
 import 'package:physioapp/components/physioterapist/home/patient_appointment_list.dart';
 import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
-import 'package:physioapp/main.dart';
 import 'package:physioapp/model/auth/physio/auth.dart';
-import 'package:physioapp/model/auth/physio/physio_user.dart';
 import 'package:physioapp/utils/app_routes.dart';
 
 class HomePhysioPage extends StatelessWidget {
@@ -48,7 +46,7 @@ class HomePhysioPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  '',
+                                  'Teste',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 20,

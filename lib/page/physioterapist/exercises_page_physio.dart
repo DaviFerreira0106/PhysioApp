@@ -26,7 +26,7 @@ class ExercisesPagePhysio extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
-                  SharedExercisesView(),
+                  const SharedExercisesView(),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.74,
                     width: double.infinity,
