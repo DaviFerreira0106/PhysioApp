@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/exercises/exercises_detail.dart';
+import 'package:physioapp/components/physioterapist/exercises/exercises_steps.dart';
 import 'package:physioapp/components/physioterapist/exercises/video_box.dart';
 
 class ExercisesDetailPage extends StatelessWidget {
@@ -19,6 +20,7 @@ class ExercisesDetailPage extends StatelessWidget {
             subtileExercises:
                 'Aplicando tecnica de vedação para relaxar os musculos da lombar',
           ),
+          ExerciseSteps(),
         ],
       ),
     );
