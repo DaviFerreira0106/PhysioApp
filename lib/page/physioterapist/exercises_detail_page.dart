@@ -12,16 +12,24 @@ class ExercisesDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Exercises Detail'),
       ),
-      body: Column(
-        children: [
-          VideoBox(),
-          ExercisesDetail(
-            titleExercises: 'Relaxamento da Lombar',
-            subtileExercises:
-                'Aplicando tecnica de vedação para relaxar os musculos da lombar',
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 250,
+                child: VideoBox(),
+              ),
+              ExercisesDetail(
+                titleExercises: 'Relaxamento da Lombar',
+                subtileExercises:
+                    'Aplicando tecnica de vedação para relaxar os musculos da lombar',
+              ),
+              ExerciseSteps(),
+            ],
           ),
-          ExerciseSteps(),
-        ],
+        ),
       ),
     );
   }
