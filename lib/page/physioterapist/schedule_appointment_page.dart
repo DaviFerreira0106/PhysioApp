@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
 import 'package:physioapp/components/physioterapist/schedule_appointment/first_form_schedule_appointment.dart';
+import 'package:physioapp/components/physioterapist/schedule_appointment/second_form_schedule_appointment.dart';
 import 'package:physioapp/components/physioterapist/schedule_appointment/select_form.dart';
+import 'package:physioapp/model/schedule/schedule_appointment_form.dart';
+import 'package:provider/provider.dart';
 
 class ScheduleAppointmentPage extends StatelessWidget {
   const ScheduleAppointmentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final scheduleProvider = Provider.of<ScheduleAppointmentForm>(context);
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -21,37 +25,88 @@ class ScheduleAppointmentPage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               height: double.infinity,
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    padding: const EdgeInsets.only(
-                      left: 8.0,
-                      right: 8.0,
-                      bottom: 50.0,
-                    ),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color.fromARGB(255, 223, 224, 234),
-                          Color.fromARGB(255, 233, 235, 240),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.only(
+                          left: 20, right: 20, bottom: 120),
+                      padding: const EdgeInsets.only(
+                        left: 8.0,
+                        right: 8.0,
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color.fromARGB(255, 223, 224, 234),
+                            Color.fromARGB(255, 233, 235, 240),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(28),
+                      ),
+                      child: Column(
+                        children: [
+                          if (scheduleProvider.firstForm)
+                            const FirstFormScheduleAppointment(),
+                          if (scheduleProvider.secondForm)
+                            const SecondFormScheduleAppointment(),
+                          const SelectForm(),
+                          if (scheduleProvider.firstForm)
+                            TextButton(
+                              onPressed: () {
+                                scheduleProvider.toggleForm(
+                                  valueForm: scheduleProvider.getSecondForm,
+                                );
+                              },
+                              child: const Text(
+                                'Proximo',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          if (scheduleProvider.secondForm)
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                backgroundColor: WidgetStatePropertyAll(
+                                  Theme.of(context).colorScheme.tertiary,
+                                ),
+                                minimumSize: WidgetStatePropertyAll(
+                                  Size(double.infinity, 50),
+                                ),
+                              ),
+                              onPressed: () {},
+                              child: Text(
+                                'Agendar Consulta',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontFamily: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.fontFamily,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text('Voltar'),
+                          ),
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(28),
                     ),
-                    child: Column(
-                      
-                      children: [
-                        
-                        FirstFormScheduleAppointment(),
-                        SelectForm(),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const Positioned(

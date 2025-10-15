@@ -19,16 +19,12 @@ class _SelectFormState extends State<SelectForm> {
         Radio(
           value: FormSchedule.firstForm,
           groupValue: scheduleProvider.currentForm,
-          onChanged: (value) {
-            scheduleProvider.toggleForm(valueForm: value!);
-          },
+          onChanged: (value) {},
         ),
         Radio(
           value: FormSchedule.secondForm,
           groupValue: scheduleProvider.currentForm,
-          onChanged: (value) {
-            scheduleProvider.toggleForm(valueForm: value!);
-          },
+          onChanged: (value) {},
         ),
       ],
     );
