@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/schedule_appointment/preview_map.dart';
-import 'package:physioapp/model/schedule/schedule_appointment_form.dart';
+import 'package:physioapp/services/schedule/schedule_appointment_form.dart';
 import 'package:provider/provider.dart';
 
 class SecondFormScheduleAppointment extends StatefulWidget {

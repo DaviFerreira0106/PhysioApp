@@ -2,14 +2,20 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:physioapp/model/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_form.dart';
 import 'package:http/http.dart' as http;
 import 'package:physioapp/model/user/physio/physio_user.dart';
+import 'package:physioapp/services/auth/physio/auth_service.dart';
 
-class Auth {
-  static const String url = '192.168.15.8';
-  static PhysioUser? currentUserPhysio;
+class AuthBackendService implements AuthService {
+  static const String _url = '192.168.15.8';
+  static PhysioUser? _currentUserPhysio;
 
+  @override
+  // TODO: implement currentPhysioUser
+  PhysioUser? get currentPhysioUser => _currentUserPhysio;
+
+  @override
   Future<void> signUp({
     required RadioButton physioType,
     required File imageProfile,
@@ -19,7 +25,7 @@ class Auth {
     required String crefito,
   }) async {
     final response = await http.post(
-      Uri.parse('http://$url:8080/users'),
+      Uri.parse('http://$_url:8080/users'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "user_type": "PHYSIO",
@@ -36,7 +42,7 @@ class Auth {
     if (response.statusCode == 201) {
       debugPrint("ocorreu tudo bem");
       debugPrint(response.body);
-      currentUserPhysio = PhysioUser(
+      _currentUserPhysio = PhysioUser(
         crefito: crefito,
         physioType: physioType,
         imageProfile: imageProfile,
@@ -50,11 +56,13 @@ class Auth {
     }
   }
 
+  @override
   Future<void> login({required String email, required String password}) async {
-    http.get(Uri.parse('http://$url:8080/users'));
+    http.get(Uri.parse('http://$_url:8080/users'));
   }
 
+  @override
   Future<void> logout() async {
-    currentUserPhysio = null;
+    _currentUserPhysio = null;
   }
 }

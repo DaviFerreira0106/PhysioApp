@@ -3,14 +3,14 @@ import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
 import 'package:physioapp/components/physioterapist/profile/%20data_visualization.dart';
 import 'package:physioapp/components/physioterapist/profile/photo_profile.dart';
 import 'package:physioapp/components/physioterapist/profile/profile_data.dart';
-import 'package:physioapp/model/auth/physio/auth.dart';
+import 'package:physioapp/services/auth/physio/auth_service.dart';
 
 class PhysioProfilePage extends StatelessWidget {
   const PhysioProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final physioUser = Auth();
+    final physioUser = AuthService();
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -57,7 +57,7 @@ class PhysioProfilePage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            Auth.currentUserPhysio!.name,
+                            physioUser.currentPhysioUser!.name,
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 20,
@@ -65,7 +65,7 @@ class PhysioProfilePage extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                           Text(
-                            Auth.currentUserPhysio!.crefito,
+                            physioUser.currentPhysioUser!.crefito,
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
                               color:
@@ -77,7 +77,7 @@ class PhysioProfilePage extends StatelessWidget {
                             height: 10,
                           ),
                           ProfileData(
-                            physioUser: Auth.currentUserPhysio!,
+                            physioUser: physioUser.currentPhysioUser!,
                           ),
                         ],
                       ),

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:physioapp/model/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_form.dart';
 
 class PhysioUser {
   String crefito;
@@ -19,5 +19,5 @@ class PhysioUser {
     required this.password,
   });
 
-  String get getName => name;
+  String get firstName => name.split(' ')[0];
 }

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/form_components.dart';
-import 'package:physioapp/model/auth/physio/auth.dart';
-import 'package:physioapp/model/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_service.dart';
 import 'package:physioapp/utils/app_routes.dart';
 
 class FormSignUpPatient extends StatefulWidget {
@@ -54,7 +54,7 @@ class FormSignUpPatientState extends State<FormSignUpPatient> {
     print('chegou');
     print(_authForm.email);
 
-    await Auth().signUp(
+    await AuthService().signUp(
       physioType: _authForm.currentRadioValue,
       imageProfile: File(
           '/Users/daviferreira/Library/Developer/CoreSimulator/Devices/CF2B0CD7-8F9F-4423-BCD8-58DED4EE0F54/data/Containers/Data/Application/96C39E73-33E2-4DDA-8664-C2ED152D6687/tmp/image_picker_8F6F81B0-ABF0-4619-980C-0D3EA7E8BFDF-71021-0000094E1F1FAF08.jpg'),

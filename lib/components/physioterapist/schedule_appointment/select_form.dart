@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/model/schedule/schedule_appointment_form.dart';
+import 'package:physioapp/services/schedule/schedule_appointment_form.dart';
 import 'package:provider/provider.dart';
 
 class SelectForm extends StatefulWidget {

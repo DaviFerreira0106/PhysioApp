@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/model/exercises/phtysio/exercises_controller_component.dart';
+import 'package:physioapp/services/exercises/phtysio/exercises_controller_component.dart';
 import 'package:provider/provider.dart';
 
 class SharedExercisesView extends StatefulWidget {

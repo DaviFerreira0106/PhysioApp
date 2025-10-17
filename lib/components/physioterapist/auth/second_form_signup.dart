@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/form_components.dart';
-import 'package:physioapp/model/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_form.dart';
 import 'package:physioapp/exception/auth_signup_exception.dart';
 
 class SecondFormSignUp extends StatefulWidget {

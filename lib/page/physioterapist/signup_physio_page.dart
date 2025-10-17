@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/auth/first_form_signup.dart';
 import 'package:physioapp/exception/auth_signup_exception.dart';
-import 'package:physioapp/model/auth/physio/auth.dart';
-import 'package:physioapp/model/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_service.dart';
 import 'package:physioapp/utils/app_routes.dart';
 import 'package:physioapp/components/physioterapist/auth/second_form_signup.dart';
 import 'package:physioapp/utils/signup_page_form.dart';
@@ -17,12 +17,23 @@ class SignupPhysioPage extends StatefulWidget {
 }
 
 class _SignupPhysioPageState extends State<SignupPhysioPage> {
-  Future<void> _dataSubmited(AuthFormData authData) async {
-    final auth = Auth();
+  Future<void> _dataSubmited(AuthFormData? authData) async {
+    final auth = AuthService();
     final authException = AuthSignupException();
     final image = AuthFormData.imageProfile;
     final crefito = AuthFormData.crefito;
 
+    if (authData == null) return;
+
+    if(image == null) {
+      if (mounted) {
+        authException.showErrorValidate(
+          message: 'Imagem não selecionada!',
+          context: context,
+        );
+      }
+    }
+    
     try {
       await auth.signUp(
         physioType: authData.currentRadioValue,
@@ -79,10 +90,7 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (pageForm.secondPageForm)
-                  ImagePicket(
-                    onSubmited: _dataSubmited,
-                  ),
+                if (pageForm.secondPageForm) const ImagePicket(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -114,10 +122,7 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                if (pageForm.firstPageForm)
-                  FirstFormSignUp(
-                    onSubmited: _dataSubmited,
-                  ),
+                if (pageForm.firstPageForm) const FirstFormSignUp(),
                 if (pageForm.secondPageForm)
                   SecondFormSignUp(
                     onSubmited: _dataSubmited,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/model/auth/physio/auth_form.dart';
-import 'package:physioapp/model/exercises/phtysio/exercises_controller_component.dart';
-import 'package:physioapp/model/navigation/bottom_nav_bar_controller.dart';
-import 'package:physioapp/model/schedule/schedule_appointment_form.dart';
+import 'package:physioapp/services/auth/physio/auth_form.dart';
+import 'package:physioapp/services/exercises/phtysio/exercises_controller_component.dart';
+import 'package:physioapp/services/navigation/bottom_nav_bar_controller.dart';
+import 'package:physioapp/services/schedule/schedule_appointment_form.dart';
 import 'package:physioapp/page/patient/signin_patient_page.dart';
 import 'package:physioapp/page/patient/signup_patient_page.dart';
 import 'package:physioapp/page/physioterapist/exercises_detail_page.dart';

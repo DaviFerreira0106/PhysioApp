@@ -3,7 +3,7 @@ import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
 import 'package:physioapp/components/physioterapist/schedule_appointment/first_form_schedule_appointment.dart';
 import 'package:physioapp/components/physioterapist/schedule_appointment/second_form_schedule_appointment.dart';
 import 'package:physioapp/components/physioterapist/schedule_appointment/select_form.dart';
-import 'package:physioapp/model/schedule/schedule_appointment_form.dart';
+import 'package:physioapp/services/schedule/schedule_appointment_form.dart';
 import 'package:provider/provider.dart';
 
 class ScheduleAppointmentPage extends StatelessWidget {

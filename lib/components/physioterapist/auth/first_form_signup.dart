@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/form_components.dart';
-import 'package:physioapp/model/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_form.dart';
 import 'package:physioapp/utils/signup_page_form.dart';
 import 'package:provider/provider.dart';
 
 class FirstFormSignUp extends StatefulWidget {
-  final void Function(AuthFormData) onSubmited;
-  const FirstFormSignUp({super.key, required this.onSubmited});
+  const FirstFormSignUp({super.key});
 
   @override
   FisrtFormSignUpState createState() => FisrtFormSignUpState();
@@ -27,8 +26,6 @@ class FisrtFormSignUpState extends State<FirstFormSignUp> {
     if (AuthFormData.crefito == null || AuthFormData.crefito!.length < 10) {
       return _showErrorValidate(message: 'Digite um número crefito valido');
     }
-
-    widget.onSubmited(_authForm);
 
     Provider.of<SignUpPageForm>(context, listen: false)
         .toggleForm(value: _signUpPage.secondForm);
