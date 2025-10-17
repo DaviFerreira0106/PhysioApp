@@ -25,6 +25,8 @@ class ScheduleAppointmentForm with ChangeNotifier {
   bool get firstForm => _currentForm == FormSchedule.firstForm;
   bool get secondForm => _currentForm == FormSchedule.secondForm;
 
+  bool get inPersonCurrentType => _currentTypeQuery == inPersonTypeQuery;
+
   void toggleForm({required FormSchedule valueForm}) {
     _currentForm = valueForm;
     notifyListeners();

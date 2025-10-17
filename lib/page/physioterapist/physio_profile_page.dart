@@ -4,14 +4,13 @@ import 'package:physioapp/components/physioterapist/profile/%20data_visualizatio
 import 'package:physioapp/components/physioterapist/profile/photo_profile.dart';
 import 'package:physioapp/components/physioterapist/profile/profile_data.dart';
 import 'package:physioapp/model/auth/physio/auth.dart';
-import 'package:provider/provider.dart';
 
 class PhysioProfilePage extends StatelessWidget {
   const PhysioProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final physioUser = Provider.of<Auth>(context);
+    // final physioUser = Auth();
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -58,7 +57,7 @@ class PhysioProfilePage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            physioUser.currentUserPhysio!.name,
+                            Auth.currentUserPhysio!.name,
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 20,
@@ -66,7 +65,7 @@ class PhysioProfilePage extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                           Text(
-                            physioUser.currentUserPhysio!.crefito,
+                            Auth.currentUserPhysio!.crefito,
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
                               color:
@@ -78,7 +77,7 @@ class PhysioProfilePage extends StatelessWidget {
                             height: 10,
                           ),
                           ProfileData(
-                            physioUser: physioUser.currentUserPhysio!,
+                            physioUser: Auth.currentUserPhysio!,
                           ),
                         ],
                       ),

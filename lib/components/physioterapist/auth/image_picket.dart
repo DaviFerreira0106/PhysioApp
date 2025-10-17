@@ -2,17 +2,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:physioapp/exception/auth_signup_exception.dart';
 import 'package:physioapp/model/auth/physio/auth_form.dart';
 
 class ImagePicket extends StatefulWidget {
-  const ImagePicket({super.key});
+  final void Function(AuthFormData) onSubmited;
+  const ImagePicket({super.key, required this.onSubmited});
 
   @override
   ImagePicketState createState() => ImagePicketState();
 }
 
 class ImagePicketState extends State<ImagePicket> {
-  final AuthForm _authForm = AuthForm();
+  final _authException = AuthSignupException();
+  final _authForm = AuthFormData();
   final ImagePicker _picket = ImagePicker();
   File? _image;
 
@@ -22,11 +25,18 @@ class ImagePicketState extends State<ImagePicket> {
       maxWidth: 600,
     );
 
-    if (image != null) {
+    if (image == null) {
+      if (mounted) {
+        _authException.showErrorValidate(
+          message: 'Imagem não selecionada!',
+          context: context,
+        );
+      }
+    } else {
       setState(() {
         _image = File(image.path);
-        _authForm.imageProfile = _image;
-        print('image: ${_image}');
+        AuthFormData.imageProfile = _image!;
+        widget.onSubmited(_authForm);
       });
     }
   }

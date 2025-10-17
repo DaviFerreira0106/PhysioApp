@@ -36,7 +36,7 @@ class PhysioApp extends StatelessWidget {
           create: (context) => SignUpPageForm(),
         ),
         ChangeNotifierProvider(
-          create: (context) => AuthForm(),
+          create: (context) => AuthFormData(),
         ),
         ChangeNotifierProvider(
           create: (context) => ExercisesControllerComponent(),

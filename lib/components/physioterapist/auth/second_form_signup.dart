@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/form_components.dart';
-import 'package:physioapp/model/auth/physio/auth.dart';
 import 'package:physioapp/model/auth/physio/auth_form.dart';
-import 'package:physioapp/utils/app_routes.dart';
+import 'package:physioapp/exception/auth_signup_exception.dart';
 
 class SecondFormSignUp extends StatefulWidget {
-  const SecondFormSignUp({super.key});
+  final void Function(AuthFormData) onSubmited;
+  const SecondFormSignUp({super.key, required this.onSubmited});
 
   @override
   SecondFormSignUpState createState() => SecondFormSignUpState();
@@ -15,21 +13,13 @@ class SecondFormSignUp extends StatefulWidget {
 
 class SecondFormSignUpState extends State<SecondFormSignUp> {
   // Atributos de controle
-  final AuthForm _authForm = AuthForm();
+  final AuthSignupException _authException = AuthSignupException();
+  final AuthFormData _authForm = AuthFormData();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _vibilityPassword = false;
   bool _visibilityConfirmPassword = false;
-  final TextEditingController _passwordController = TextEditingController();
-
-  void _showErrorValidate({required String message}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 3),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      ),
-    );
-  }
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   // Metodo para submissão de formulário
   Future<void> _submit() async {
@@ -37,45 +27,41 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
     if (isValid == false) return;
 
     // Validação de campos
-    if (_authForm.name == null ||
-        _authForm.name!.isEmpty ||
-        _authForm.name!.length < 5) {
-      return _showErrorValidate(message: 'Digite seu nome completo!');
-    }
-    if (_authForm.email == null ||
-        _authForm.email!.isEmpty ||
-        !_authForm.email!.contains('@')) {
-      return _showErrorValidate(message: 'Digite um e-mail valído!');
-    }
-    if (_authForm.password == null ||
-        _authForm.password!.isEmpty ||
-        _authForm.password!.length < 6) {
-      return _showErrorValidate(
-          message: 'Digite uma senha com pelo menos 6 caracteres!');
-    }
-    if (_passwordController.text != _authForm.password) {
-      return _showErrorValidate(
-          message: 'As senhas digitadas estão divergentes!');
-    }
-
-    try {
-      await Auth().signUp(
-        physioType: _authForm.currentRadioValue,
-        imageProfile: File(
-            '/Users/daviferreira/Library/Developer/CoreSimulator/Devices/CF2B0CD7-8F9F-4423-BCD8-58DED4EE0F54/data/Containers/Data/Application/96C39E73-33E2-4DDA-8664-C2ED152D6687/tmp/image_picker_8F6F81B0-ABF0-4619-980C-0D3EA7E8BFDF-71021-0000094E1F1FAF08.jpg'),
-        name: _authForm.name!,
-        email: _authForm.email!,
-        password: _authForm.password!,
-      );
-
-      if (mounted) {
-        Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.homePagePhysio, (_) => false,);
-      }
-    } catch (e) {
-      _showErrorValidate(
-        message: e.toString(),
+    if (_authException.validateName(name: _authForm.name, context: context)) {
+      return _authException.showErrorValidate(
+        message: 'Digite seu nome completo!',
+        context: context,
       );
     }
+
+    if (_authException.validateEmail(
+        email: _authForm.email, context: context)) {
+      return _authException.showErrorValidate(
+        message: 'Digite um e-mail valído!',
+        context: context,
+      );
+    }
+    if (_authException.validatePassword(
+      password: _authForm.password,
+      context: context,
+    )) {
+      return _authException.showErrorValidate(
+        message: 'Digite uma senha com pelo menos 6 caracteres!',
+        context: context,
+      );
+    }
+    if (_authException.confirmPasswordValid(
+      confirmPassword: _confirmPasswordController.text,
+      password: _authForm.password,
+      context: context,
+    )) {
+      return _authException.showErrorValidate(
+        message: 'As senhas digitadas estão divergentes!',
+        context: context,
+      );
+    }
+
+    widget.onSubmited(_authForm);
   }
 
   @override
@@ -125,7 +111,6 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
           FormComponents(
             textForm: TextFormField(
               onChanged: (password) => _authForm.password = password,
-              controller: _passwordController,
               decoration: InputDecoration(
                 label: Text(
                   'Senha',
@@ -168,6 +153,7 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
           ),
           FormComponents(
             textForm: TextFormField(
+              controller: _confirmPasswordController,
               decoration: InputDecoration(
                 label: Text(
                   'Confirmar Senha',
@@ -211,7 +197,7 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
           Container(
             width: double.infinity,
             height: 60,
-            margin: const EdgeInsets.symmetric(vertical: 20),
+            margin: const EdgeInsets.only(bottom: 10, top: 10),
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(

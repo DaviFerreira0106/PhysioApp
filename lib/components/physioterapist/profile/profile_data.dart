@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/model/auth/physio/physio_user.dart';
+import 'package:physioapp/model/user/physio/physio_user.dart';
 
 class ProfileData extends StatelessWidget {
   final PhysioUser physioUser;

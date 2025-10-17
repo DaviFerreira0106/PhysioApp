@@ -15,7 +15,7 @@ class FormSignUpPatient extends StatefulWidget {
 
 class FormSignUpPatientState extends State<FormSignUpPatient> {
   // Atributos de controle
-  final AuthForm _authForm = AuthForm();
+  final AuthFormData _authForm = AuthFormData();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _vibilityPassword = false;
   bool _visibilityConfirmPassword = false;
@@ -61,6 +61,7 @@ class FormSignUpPatientState extends State<FormSignUpPatient> {
       name: _authForm.name!,
       email: _authForm.email!,
       password: _authForm.password!,
+      crefito: _authForm.password!,
     );
 
     print('chegou2');

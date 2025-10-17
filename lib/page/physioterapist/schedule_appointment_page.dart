@@ -14,7 +14,7 @@ class ScheduleAppointmentPage extends StatelessWidget {
     final scheduleProvider = Provider.of<ScheduleAppointmentForm>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Center(
+        title: const Center(
           child: Text('Agendamento de Consulta'),
         ),
       ),
@@ -33,8 +33,9 @@ class ScheduleAppointmentPage extends StatelessWidget {
                       margin: const EdgeInsets.only(
                           left: 20, right: 20, bottom: 120),
                       padding: const EdgeInsets.only(
-                        left: 8.0,
-                        right: 8.0,
+                        left: 20.0,
+                        right: 20.0,
+                        bottom: 10,
                       ),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
@@ -48,6 +49,7 @@ class ScheduleAppointmentPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(28),
                       ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (scheduleProvider.firstForm)
                             const FirstFormScheduleAppointment(),
@@ -80,7 +82,7 @@ class ScheduleAppointmentPage extends StatelessWidget {
                                 backgroundColor: WidgetStatePropertyAll(
                                   Theme.of(context).colorScheme.tertiary,
                                 ),
-                                minimumSize: WidgetStatePropertyAll(
+                                minimumSize: const WidgetStatePropertyAll(
                                   Size(double.infinity, 50),
                                 ),
                               ),
@@ -98,10 +100,15 @@ class ScheduleAppointmentPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text('Voltar'),
-                          ),
+                          if (scheduleProvider.secondForm)
+                            TextButton(
+                              onPressed: () {
+                                scheduleProvider.toggleForm(
+                                  valueForm: scheduleProvider.getFirstForm,
+                                );
+                              },
+                              child: Text('Voltar'),
+                            ),
                         ],
                       ),
                     ),

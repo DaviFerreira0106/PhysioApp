@@ -17,9 +17,8 @@ class _SecondFormScheduleAppointmentState
   Widget build(BuildContext context) {
     final typeQueryProvider = Provider.of<ScheduleAppointmentForm>(context);
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -106,8 +105,7 @@ class _SecondFormScheduleAppointmentState
                 ),
               ),
             ),
-            const PreviewMap(),
-            
+            if (typeQueryProvider.inPersonCurrentType) const PreviewMap(),
           ],
         ),
       ),
