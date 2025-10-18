@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:physioapp/services/auth/physio/auth_service.dart';
 import 'package:physioapp/utils/app_routes.dart';
@@ -12,13 +14,13 @@ class AppDrawer extends StatelessWidget {
     Widget _userComponentDrawer(
         {required String name,
         required String email,
-        required String imageProfile}) {
+        required File imageProfile}) {
       return Container(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
           leading: CircleAvatar(
             backgroundColor: Colors.grey,
-            backgroundImage: AssetImage(imageProfile),
+            backgroundImage: FileImage(imageProfile),
             maxRadius: 30,
           ),
           title: Text(
@@ -55,7 +57,7 @@ class AppDrawer extends StatelessWidget {
             _userComponentDrawer(
               name: authService.currentPhysioUser!.userName,
               email: authService.currentPhysioUser!.email,
-              imageProfile: authService.currentPhysioUser!.imageProfile.path,
+              imageProfile: authService.currentPhysioUser!.imageProfile,
             ),
             Divider(
               color: Colors.grey[300],

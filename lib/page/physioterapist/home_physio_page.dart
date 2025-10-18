@@ -39,9 +39,8 @@ class HomePhysioPage extends StatelessWidget {
                                 },
                                 child: CircleAvatar(
                                   backgroundColor: Colors.grey,
-                                  backgroundImage: AssetImage(
-                                    physioUser
-                                        .currentPhysioUser!.imageProfile.path,
+                                  backgroundImage: FileImage(
+                                    physioUser.currentPhysioUser!.imageProfile,
                                   ),
                                   minRadius: 30,
                                 ),

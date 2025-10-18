@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/model/exercises/exercise.dart';
 import 'package:physioapp/utils/app_routes.dart';
 
 class ExercisesList extends StatelessWidget {
-  final String titleExercises;
-  final int minute;
-  final String pathVideoCover;
+  final Exercise exercise;
   const ExercisesList({
     super.key,
-    required this.titleExercises,
-    required this.minute,
-    required this.pathVideoCover,
+    required this.exercise,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          Navigator.of(context).pushNamed(AppRoutes.exercisesDetailPage),
+      onTap: () => Navigator.of(context).pushNamed(
+        AppRoutes.exercisesDetailPage,
+        arguments: exercise,
+      ),
       child: Card(
         elevation: 2,
         color: const Color.fromARGB(0, 255, 255, 255),
@@ -37,7 +36,7 @@ class ExercisesList extends StatelessWidget {
                   color: Colors.grey,
                   image: DecorationImage(
                     image: AssetImage(
-                      pathVideoCover,
+                      exercise.videoUrl,
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -48,7 +47,7 @@ class ExercisesList extends StatelessWidget {
                 fit: FlexFit.tight,
                 child: ListTile(
                   title: Text(
-                    titleExercises,
+                    exercise.name,
                     style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
@@ -68,7 +67,7 @@ class ExercisesList extends StatelessWidget {
                           color: Colors.white,
                         ),
                         Text(
-                          '$minute min',
+                          '${exercise.minute} min',
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,

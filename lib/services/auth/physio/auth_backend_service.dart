@@ -8,7 +8,8 @@ import 'package:physioapp/model/user/physio/physio_user.dart';
 import 'package:physioapp/services/auth/physio/auth_service.dart';
 
 class AuthBackendService implements AuthService {
-  static const String _url = '192.168.15.8';
+  static const String _url = '10.8.116.1';
+  // static const String _url = '192.168.15.8'; URL em casa
   static PhysioUser? _currentUserPhysio;
 
   @override
@@ -42,7 +43,7 @@ class AuthBackendService implements AuthService {
     if (response.statusCode == 201) {
       debugPrint("ocorreu tudo bem");
       final data = jsonDecode(response.body);
-
+      print('AQUI ANTAAAAA ----->${imageProfile.path}');
       _currentUserPhysio = PhysioUser(
         id: data['id'].toString(),
         crefito: data['crefito'],

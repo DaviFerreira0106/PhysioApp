@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/exercises/step_exercise.dart';
+import 'package:physioapp/model/exercises/exercise.dart';
 
 class ExerciseSteps extends StatelessWidget {
-  const ExerciseSteps({super.key});
+  final Exercise exercise;
+  const ExerciseSteps({super.key, required this.exercise});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class ExerciseSteps extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '3 Passos',
+                  '${exercise.steps.length} Passos',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
@@ -42,12 +44,12 @@ class ExerciseSteps extends StatelessWidget {
             child: SizedBox(
               height: 280,
               child: ListView.builder(
-                itemCount: 5,
+                itemCount: exercise.steps.length,
                 itemBuilder: (context, index) => StepExercise(
                   indexStep: index + 1,
-                  titleStep: 'Posição corporal',
+                  titleStep: exercise.steps.elementAt(index).keys.cast().join(),
                   subtitleStep:
-                      'Incline a cabeça levemente para baixo, fazendo seu queixo encostar no seu peito',
+                      exercise.steps.elementAt(index).values.cast().join(),
                 ),
               ),
             ),
