@@ -42,7 +42,7 @@ class AuthBackendService implements AuthService {
     if (response.statusCode == 201) {
       debugPrint("ocorreu tudo bem");
       final data = jsonDecode(response.body);
-      
+
       _currentUserPhysio = PhysioUser(
         id: data['id'].toString(),
         crefito: data['crefito'],
@@ -58,9 +58,7 @@ class AuthBackendService implements AuthService {
   }
 
   @override
-  Future<void> login({required String email, required String password}) async {
-    http.get(Uri.parse('http://$_url:8080/users'));
-  }
+  Future<void> login({required String email, required String password}) async {}
 
   @override
   Future<void> logout() async {

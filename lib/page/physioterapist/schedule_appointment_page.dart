@@ -12,6 +12,7 @@ class ScheduleAppointmentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheduleProvider = Provider.of<ScheduleAppointmentForm>(context);
+    
     return Scaffold(
       appBar: AppBar(
         title: const Center(
