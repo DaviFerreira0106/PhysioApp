@@ -3,21 +3,37 @@ import 'dart:io';
 import 'package:physioapp/services/auth/physio/auth_form.dart';
 
 class PhysioUser {
-  String crefito;
-  RadioButton physioType;
-  File imageProfile;
-  String name;
-  String email;
-  String password;
+  final String id;
+  final String crefito;
+  final RadioButton physioType;
+  final File imageProfile;
+  final String name;
+  final String email;
 
   PhysioUser({
+    required this.id,
     required this.crefito,
     required this.physioType,
     required this.imageProfile,
     required this.name,
     required this.email,
-    required this.password,
   });
 
-  String get firstName => name.split(' ')[0];
+  String get firstName {
+    final first = name.split(' ')[0];
+    final nameFormted =
+        first.substring(0, 1).toUpperCase() + first.substring(1);
+    return nameFormted;
+  }
+
+  String get userName {
+    final nameSplitted = name.split(' ');
+
+    final firstPart = nameSplitted.first.substring(0, 1).toUpperCase() +
+        nameSplitted.first.substring(1);
+
+    final lastPart = nameSplitted.last.substring(0, 1).toUpperCase() +
+        nameSplitted.last.substring(1);
+    return '$firstPart $lastPart';
+  }
 }

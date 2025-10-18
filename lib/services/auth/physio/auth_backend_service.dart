@@ -29,9 +29,9 @@ class AuthBackendService implements AuthService {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "user_type": "PHYSIO",
-        "username": name,
-        "fullname": name,
-        "email": email,
+        "username": name.toLowerCase(),
+        "fullname": name.toLowerCase(),
+        "email": email.toLowerCase(),
         "phone": "555-5678",
         "password": password,
         "role": "PHYSIO",
@@ -41,14 +41,15 @@ class AuthBackendService implements AuthService {
 
     if (response.statusCode == 201) {
       debugPrint("ocorreu tudo bem");
-      debugPrint(response.body);
+      final data = jsonDecode(response.body);
+      
       _currentUserPhysio = PhysioUser(
-        crefito: crefito,
+        id: data['id'].toString(),
+        crefito: data['crefito'],
         physioType: physioType,
         imageProfile: imageProfile,
-        name: name,
-        email: email,
-        password: password,
+        name: data['fullname'],
+        email: data['email'],
       );
     } else {
       debugPrint("ocorreu erro, deu ruim");
@@ -64,5 +65,7 @@ class AuthBackendService implements AuthService {
   @override
   Future<void> logout() async {
     _currentUserPhysio = null;
+    AuthFormData.crefito = null;
+    AuthFormData.imageProfile = null;
   }
 }

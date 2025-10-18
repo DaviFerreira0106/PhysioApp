@@ -22,18 +22,19 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
     final authException = AuthSignupException();
     final image = AuthFormData.imageProfile;
     final crefito = AuthFormData.crefito;
+    final pageForm = Provider.of<SignUpPageForm>(context, listen: false);
 
     if (authData == null) return;
 
-    if(image == null) {
+    if (image == null) {
       if (mounted) {
-        authException.showErrorValidate(
+        return authException.showErrorValidate(
           message: 'Imagem não selecionada!',
           context: context,
         );
       }
     }
-    
+
     try {
       await auth.signUp(
         physioType: authData.currentRadioValue,
@@ -45,6 +46,10 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
       );
 
       if (mounted) {
+        Provider.of<SignUpPageForm>(context, listen: false).toggleForm(
+          value: pageForm.firstForm,
+        );
+
         Navigator.of(context).pushNamedAndRemoveUntil(
           AppRoutes.homePagePhysio,
           (_) => false,
@@ -52,7 +57,7 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
       }
     } catch (error) {
       if (mounted) {
-        authException.showErrorValidate(
+        return authException.showErrorValidate(
           message: error.toString(),
           context: context,
         );
@@ -151,18 +156,12 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
                     Radio(
                       value: pageForm.firstForm,
                       groupValue: pageForm.currentPageForm,
-                      onChanged: (_) {
-                        // Provider.of<SignUpPageForm>(context, listen: false)
-                        //     .toggleForm(value: value ?? pageForm.firstForm);
-                      },
+                      onChanged: (_) {},
                     ),
                     Radio(
                       value: pageForm.secondForm,
                       groupValue: pageForm.currentPageForm,
-                      onChanged: (_) {
-                        // Provider.of<SignUpPageForm>(context, listen: false)
-                        //     .toggleForm(value: value ?? pageForm.secondForm);
-                      },
+                      onChanged: (_) {},
                     ),
                   ],
                 ),
