@@ -1,4 +1,6 @@
-class Exercise {
+import 'package:flutter/material.dart';
+
+class Exercise with ChangeNotifier {
   final String id;
   final String name;
   final String description;
@@ -6,9 +8,9 @@ class Exercise {
   final List<Map<String, String>> steps;
   final int minute;
   final List<String> categoryId;
-  final bool isFavorite;
+  bool isFavorite;
 
-  const Exercise({
+  Exercise({
     required this.id,
     required this.name,
     required this.description,
@@ -18,4 +20,9 @@ class Exercise {
     required this.categoryId,
     this.isFavorite = false,
   });
+
+  void toggleFavorite() {
+    isFavorite = !isFavorite;
+    notifyListeners();
+  }
 }

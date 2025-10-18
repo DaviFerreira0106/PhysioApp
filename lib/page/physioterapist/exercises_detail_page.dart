@@ -24,8 +24,7 @@ class ExercisesDetailPage extends StatelessWidget {
                 child: VideoBox(),
               ),
               ExercisesDetail(
-                titleExercises: exercise.name,
-                subtileExercises: exercise.description,
+                exercise: exercise,
               ),
               ExerciseSteps(
                 exercise: exercise,

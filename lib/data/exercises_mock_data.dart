@@ -42,7 +42,7 @@ class ExercisesMockData {
     ),
   ];
 
-  static const List<Exercise> exercisesList = [
+  static List<Exercise> exercisesList = [
     Exercise(
       id: 'e1',
       name: 'Esticada de Perna (Quadriceps)',

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/model/exercises/exercise.dart';
+import 'package:physioapp/services/exercises/exercise_controller.dart';
+import 'package:provider/provider.dart';
 
 class ExercisesDetail extends StatelessWidget {
-  final String titleExercises;
-  final String subtileExercises;
+  final Exercise exercise;
   const ExercisesDetail({
     super.key,
-    required this.titleExercises,
-    required this.subtileExercises,
+    required this.exercise,
   });
 
   @override
   Widget build(BuildContext context) {
+    final exerciseProvider = Provider.of<ExerciseController>(context);
     return Card(
       color: const Color.fromARGB(255, 236, 236, 236),
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -26,7 +28,7 @@ class ExercisesDetail extends StatelessWidget {
             Expanded(
               child: ListTile(
                 title: Text(
-                  titleExercises,
+                  exercise.name,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontFamily:
@@ -36,7 +38,7 @@ class ExercisesDetail extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: Text(
-                  subtileExercises,
+                  exercise.description,
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
               ),
@@ -46,8 +48,12 @@ class ExercisesDetail extends StatelessWidget {
               icon: Icon(Icons.share_outlined),
             ),
             IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.favorite_rounded),
+              onPressed: () {
+                exerciseProvider.toggleFavorite(exerciseId: exercise.id);
+              },
+              icon: exercise.isFavorite
+                  ? const Icon(Icons.favorite_rounded)
+                  : const Icon(Icons.favorite_border_rounded),
             ),
           ],
         ),
