@@ -8,8 +8,8 @@ import 'package:physioapp/model/user/physio/physio_user.dart';
 import 'package:physioapp/services/auth/physio/auth_service.dart';
 
 class AuthBackendService implements AuthService {
-  static const String _url = '10.8.116.1';
-  // static const String _url = '192.168.15.8'; URL em casa
+  // static const String _url = '10.8.116.1';
+  static const String _url = '192.168.15.8';
   static PhysioUser? _currentUserPhysio;
 
   @override

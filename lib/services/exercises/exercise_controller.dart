@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/model/exercises/category.dart';
 import 'package:physioapp/model/exercises/exercise.dart';
 import 'package:physioapp/data/exercises_mock_data.dart';
 
@@ -15,9 +16,15 @@ class ExerciseController with ChangeNotifier {
 
   int get itemsAcount => _listExercises.length;
 
+  CategoryId get favoriteCategory => CategoryId.favorites;
+
   void toggleFavorite({required String exerciseId}) {
-    final Exercise exerciseLocalized = _listExercises.where((exercise) => exercise.id == exerciseId);
+    final exerciseLocalized = _listExercises
+        .where((exercise) => exercise.id == exerciseId)
+        .toList()
+        .first;
     exerciseLocalized.isFavorite = !exerciseLocalized.isFavorite;
+    listFavorites.add(exerciseLocalized);
     notifyListeners();
   }
 }

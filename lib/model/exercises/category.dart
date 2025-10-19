@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
+enum CategoryId {
+  legs,
+  abdominal,
+  back,
+  arms,
+  favorites,
+  personalized,
+}
+
 class Category {
-  final String id;
+  final CategoryId id;
   final String title;
   final String subtitle;
   final Color color;

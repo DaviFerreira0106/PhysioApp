@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/model/exercises/category.dart';
 
 class Exercise with ChangeNotifier {
   final String id;
@@ -7,7 +8,7 @@ class Exercise with ChangeNotifier {
   final String videoUrl;
   final List<Map<String, String>> steps;
   final int minute;
-  final List<String> categoryId;
+  final List<CategoryId> categoryId;
   bool isFavorite;
 
   Exercise({

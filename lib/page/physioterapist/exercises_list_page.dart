@@ -10,9 +10,13 @@ class ExercisesListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final category = ModalRoute.of(context)?.settings.arguments as Category;
     final exercises = ExerciseController();
+    // Filtrando por categoria
     final filteredList = exercises.listExercises.where(
       (exe) => exe.categoryId.contains(category.id),
     );
+
+    print('list favorite ${exercises.listFavorites}');
+
     return Scaffold(
       appBar: AppBar(
         title: Text(category.title),
@@ -22,9 +26,13 @@ class ExercisesListPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: ListView.builder(
           itemBuilder: (context, index) => ExercisesList(
-            exercise: filteredList.elementAt(index),
+            exercise: category.id == exercises.favoriteCategory
+                ? exercises.listFavorites.elementAt(index)
+                : filteredList.elementAt(index),
           ),
-          itemCount: filteredList.length,
+          itemCount: category.id == exercises.favoriteCategory
+              ? exercises.listFavorites.length
+              : filteredList.length,
         ),
       ),
     );

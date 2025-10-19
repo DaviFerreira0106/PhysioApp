@@ -5,37 +5,37 @@ import 'package:physioapp/model/exercises/exercise.dart';
 class ExercisesMockData {
   static const List<Category> categoryList = [
     Category(
-      id: 'c1',
+      id: CategoryId.legs,
       title: 'Pernas',
       subtitle: 'Exercícios para trabalhar os quadriceps e posteriores',
       color: Color.fromARGB(255, 255, 168, 117),
     ),
     Category(
-      id: 'c2',
+      id: CategoryId.abdominal,
       title: 'Abdominal',
       subtitle: 'Exercícios para trabalhar a região abdominal',
       color: Colors.pink,
     ),
     Category(
-      id: 'c3',
+      id: CategoryId.back,
       title: 'Costas',
       subtitle: 'Exercícios para trabalhar a região das costas e lombar',
       color: Colors.pinkAccent,
     ),
     Category(
-      id: 'c4',
+      id: CategoryId.arms,
       title: 'Braços',
       subtitle: 'Exercícios para trabalhar o braço e antebraço',
       color: Color.fromARGB(255, 56, 163, 165),
     ),
     Category(
-      id: 'c5',
+      id: CategoryId.favorites,
       title: 'Favoritos',
       subtitle: 'Exercícios favoritados pelo Fisioterapeuta',
       color: Colors.redAccent,
     ),
     Category(
-      id: 'c6',
+      id: CategoryId.personalized,
       title: 'Personalizados',
       subtitle: 'Exercícios adicionados pelo fisioterapeuta',
       color: Colors.amberAccent,
@@ -72,38 +72,7 @@ class ExercisesMockData {
               'Mantenha a posição por 1 minutos e após isso abaixe a perna lentamente'
         },
       ],
-      categoryId: ['c1', 'c3'],
-    ),
-    Exercise(
-      id: 'e1',
-      name: 'Esticada de Perna (Quadriceps)',
-      description:
-          'Exercício para alongar as articulações das pernas, melhorando a mobilidade',
-      videoUrl: '',
-      minute: 25,
-      steps: [
-        {
-          'Posição Corporal':
-              'Deite-se em um local plano que possa estabilizar seu corpo'
-        },
-        {
-          'Movimento do Exercício':
-              'Com o corpo deitado de bruços, estique uma perna para cima, mantendo-a esticada'
-        },
-        {
-          'Manter Posição':
-              'Mantenha a posição por 1 minutos e após isso abaixe a perna lentamente'
-        },
-        {
-          'Trocar Perna':
-              'Estique a outra perna e eleve-a o maximo que conseguir, mantendo-a esticada'
-        },
-        {
-          'Manter Posição':
-              'Mantenha a posição por 1 minutos e após isso abaixe a perna lentamente'
-        },
-      ],
-      categoryId: ['c1', 'c3'],
+      categoryId: [CategoryId.legs, CategoryId.back],
     ),
     Exercise(
       id: 'e2',
@@ -137,7 +106,11 @@ class ExercisesMockData {
           'Abaixar perna': 'Abaixe a perna lentamente e deixe as duas esticadas'
         },
       ],
-      categoryId: ['c1', 'c3', 'c2'],
+      categoryId: [
+        CategoryId.legs,
+        CategoryId.back,
+        CategoryId.abdominal,
+      ],
     ),
     Exercise(
       id: 'e3',
@@ -168,7 +141,11 @@ class ExercisesMockData {
               'Mantenha a posição por 1 minutos e após isso abaixe a perna lentamente'
         },
       ],
-      categoryId: ['c1', 'c3', 'c2'],
+      categoryId: [
+        CategoryId.legs,
+        CategoryId.back,
+        CategoryId.abdominal,
+      ],
     ),
     Exercise(
       id: 'e4',
@@ -196,7 +173,7 @@ class ExercisesMockData {
               'Com o corpo para frente, mantenha a perna esticada'
         },
       ],
-      categoryId: ['c1', 'c3', 'c2'],
+      categoryId: [CategoryId.legs, CategoryId.back, CategoryId.abdominal],
     ),
     Exercise(
       id: 'e5',
@@ -224,7 +201,12 @@ class ExercisesMockData {
               'Mantenha a posição por 30 segundos e após isso abaixe a perna e o braço lentamente'
         },
       ],
-      categoryId: ['c1', 'c3', 'c2', 'c4'],
+      categoryId: [
+        CategoryId.legs,
+        CategoryId.back,
+        CategoryId.abdominal,
+        CategoryId.arms,
+      ],
     ),
     Exercise(
       id: 'e6',
@@ -248,7 +230,12 @@ class ExercisesMockData {
               'deixe suas pernas juntas, e icline-se com seus braços juntos para frente o máximo que conseguir'
         },
       ],
-      categoryId: ['c1', 'c3', 'c2', 'c4'],
+      categoryId: [
+        CategoryId.legs,
+        CategoryId.back,
+        CategoryId.abdominal,
+        CategoryId.arms,
+      ],
     ),
   ];
 }

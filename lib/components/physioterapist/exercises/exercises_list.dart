@@ -84,11 +84,17 @@ class ExercisesList extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(
-                      Icons.favorite_border_rounded,
-                      size: 24,
-                      color: Colors.white,
-                    ),
+                    icon: exercise.isFavorite
+                        ? const Icon(
+                            Icons.favorite_rounded,
+                            color: Colors.white,
+                            size: 24,
+                          )
+                        : const Icon(
+                            Icons.favorite_border_rounded,
+                            size: 24,
+                            color: Colors.white,
+                          ),
                   ),
                   const Icon(
                     Icons.play_circle,
