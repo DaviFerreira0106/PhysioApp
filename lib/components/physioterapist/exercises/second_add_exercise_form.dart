@@ -61,7 +61,7 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
                 ),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadiusGeometry.circular(8),
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               ),

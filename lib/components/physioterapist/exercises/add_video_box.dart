@@ -13,6 +13,7 @@ class AddVideoBox extends StatefulWidget {
 
 class _AddVideoBoxState extends State<AddVideoBox> {
   late VideoPlayerController _controller;
+  bool _isLoading = false;
   final ImagePicker _picket = ImagePicker();
 
   @override
@@ -41,12 +42,18 @@ class _AddVideoBoxState extends State<AddVideoBox> {
       await _controller.initialize();
 
       setState(() {
+        _isLoading = false;
         _controller.play();
+        print('Saiuuuu');
       });
     }
   }
 
   Future<void> getVideo() async {
+    setState(() {
+      _isLoading = true;
+      print('Entrou!!!');
+    });
     final video = await _picket.pickVideo(
       source: ImageSource.gallery,
     );
@@ -60,15 +67,19 @@ class _AddVideoBoxState extends State<AddVideoBox> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _controller.value.isInitialized
-            ? AspectRatio(
-                aspectRatio: 16 / 11,
-                child: VideoPlayer(_controller),
-              )
-            : Container(
-                padding: const EdgeInsets.all(8.0),
-                child: const Text('Nenhum vídeo selecionado'),
-              ),
+        if (_controller.value.isInitialized)
+          AspectRatio(
+            aspectRatio: _controller.value.aspectRatio,
+            child: VideoPlayer(_controller),
+          ),
+        if (_isLoading)
+          const Center(
+            child: CircularProgressIndicator(),
+          ),
+        Container(
+          padding: const EdgeInsets.all(8.0),
+          child: const Text('Nenhum vídeo selecionado'),
+        ),
         if (_controller.value.isInitialized)
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

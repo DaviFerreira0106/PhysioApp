@@ -11,8 +11,20 @@ class AddExercisePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final exerciseForm = Provider.of<ExercisesControllerForm>(context);
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Adicionar Exercício')),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+            exerciseForm.toggleForm(valueForm: exerciseForm.getFirstForm);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_rounded,
+          ),
+        ),
+        title: const Text('Adicionar Exercíccdio'),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
