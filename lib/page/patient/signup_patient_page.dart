@@ -41,7 +41,7 @@ class _SignupPatientPageState extends State<SignupPatientPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const ImagePicket(),
+            // ImagePicket(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

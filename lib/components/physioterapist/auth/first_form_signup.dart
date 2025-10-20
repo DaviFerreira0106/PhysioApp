@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/form_components.dart';
-import 'package:physioapp/model/auth/physio/auth.dart';
-import 'package:physioapp/model/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_form.dart';
 import 'package:physioapp/utils/signup_page_form.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +13,7 @@ class FirstFormSignUp extends StatefulWidget {
 
 class FisrtFormSignUpState extends State<FirstFormSignUp> {
   // Variaveis de controle
-  final _authForm = AuthForm();
+  final _authForm = AuthFormData();
   final _signUpPage = SignUpPageForm();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -24,11 +23,9 @@ class FisrtFormSignUpState extends State<FirstFormSignUp> {
 
     if (isValid == false) return;
 
-    if (_authForm.crefito == null || _authForm.crefito!.length < 10) {
+    if (AuthFormData.crefito == null || AuthFormData.crefito!.length < 10) {
       return _showErrorValidate(message: 'Digite um número crefito valido');
     }
-
-    Auth.crefito = _authForm.crefito!;
 
     Provider.of<SignUpPageForm>(context, listen: false)
         .toggleForm(value: _signUpPage.secondForm);
@@ -46,14 +43,14 @@ class FisrtFormSignUpState extends State<FirstFormSignUp> {
 
   @override
   Widget build(BuildContext context) {
-    final authFormProvider = Provider.of<AuthForm>(context);
+    final authFormProvider = Provider.of<AuthFormData>(context);
     return Form(
       key: _formKey,
       child: Column(
         children: [
           FormComponents(
             textForm: TextFormField(
-              onChanged: (crefito) => _authForm.crefito = crefito,
+              onChanged: (crefito) => AuthFormData.crefito = crefito,
               decoration: InputDecoration(
                 label: Text(
                   'Número Crefito',
@@ -94,6 +91,7 @@ class FisrtFormSignUpState extends State<FirstFormSignUp> {
                     authFormProvider.onChangedRadioValue(value: value);
                     _authForm.currentRadioValue =
                         value ?? _authForm.physioValue;
+                    _authForm.physioType = value;
                   },
                   fillColor: WidgetStatePropertyAll(
                     authFormProvider.optionPhysioSelected
@@ -126,6 +124,7 @@ class FisrtFormSignUpState extends State<FirstFormSignUp> {
                     authFormProvider.onChangedRadioValue(value: value);
                     _authForm.currentRadioValue =
                         value ?? _authForm.therapyValue;
+                    _authForm.physioType = value;
                   },
                   fillColor: WidgetStatePropertyAll(
                     authFormProvider.optionTherapySelected

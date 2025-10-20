@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
 import 'package:physioapp/components/physioterapist/exercises/grid_view_exercises.dart';
 import 'package:physioapp/components/physioterapist/exercises/shared_exercises_view.dart';
+import 'package:physioapp/services/exercises/phtysio/exercises_controller_component.dart';
+import 'package:physioapp/utils/app_routes.dart';
+import 'package:provider/provider.dart';
 
 class ExercisesPagePhysio extends StatelessWidget {
   const ExercisesPagePhysio({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final exercisesProvider =
+        Provider.of<ExercisesControllerComponent>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -26,7 +32,8 @@ class ExercisesPagePhysio extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
-                  SharedExercisesView(),
+                  if (exercisesProvider.listComponent.isNotEmpty)
+                    const SharedExercisesView(),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.74,
                     width: double.infinity,
@@ -46,7 +53,8 @@ class ExercisesPagePhysio extends StatelessWidget {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.of(context)
+                          .pushNamed(AppRoutes.addExercisePage),
                       child: Text(
                         'Adicionar exercício',
                         style: Theme.of(context).textTheme.titleSmall,

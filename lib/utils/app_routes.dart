@@ -12,4 +12,7 @@ class AppRoutes {
   static const String signInPatientPage = '/signin-patient-page';
   static const String signUpPatientPage = '/signup-patient-page';
   static const String messagePage = '/message-page';
+  static const String exercisesListPage = '/exercises-list-page';
+  static const String exercisesDetailPage = '/exercises-detail-page';
+  static const String addExercisePage = '/add-exercise-page';
 }

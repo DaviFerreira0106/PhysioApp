@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/model/exercises/category.dart';
+import 'package:physioapp/utils/app_routes.dart';
 
 class BoxExercisesType extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final Color colors;
+  final Category category;
   const BoxExercisesType({
     super.key,
-    required this.title,
-    required this.subtitle,
-    required this.colors,
+    required this.category,
   });
 
   @override
@@ -35,13 +33,15 @@ class BoxExercisesType extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ListTile(
-                    onTap:
-                        () {}, //Implementar a navegação para a tela de lista de exercícios de cada tipo
+                    onTap: () => Navigator.of(context).pushNamed(
+                      AppRoutes.exercisesListPage,
+                      arguments: category,
+                    ),
                     title: Center(
                       child: Container(
                         margin: const EdgeInsets.only(top: 5),
                         child: Text(
-                          title,
+                          category.title,
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -55,7 +55,7 @@ class BoxExercisesType extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 3),
                         height: 80,
                         child: Text(
-                          subtitle,
+                          category.subtitle,
                           softWrap: true,
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -77,7 +77,7 @@ class BoxExercisesType extends StatelessWidget {
               child: Icon(
                 Icons.token_rounded,
                 size: 34,
-                color: colors,
+                color: category.color,
               ),
             ),
           ),

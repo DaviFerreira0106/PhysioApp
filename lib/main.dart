@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/model/auth/physio/auth_form.dart';
+import 'package:physioapp/page/physioterapist/add_exercise_page.dart';
+import 'package:physioapp/services/auth/physio/auth_form.dart';
+import 'package:physioapp/services/exercises/exercise_controller.dart';
+import 'package:physioapp/services/exercises/exercises_controller_form.dart';
+import 'package:physioapp/services/exercises/phtysio/exercises_controller_component.dart';
+import 'package:physioapp/services/navigation/bottom_nav_bar_controller.dart';
+import 'package:physioapp/services/schedule/schedule_appointment_form.dart';
 import 'package:physioapp/page/patient/signin_patient_page.dart';
 import 'package:physioapp/page/patient/signup_patient_page.dart';
+import 'package:physioapp/page/physioterapist/exercises_detail_page.dart';
+import 'package:physioapp/page/physioterapist/exercises_list_page.dart';
 import 'package:physioapp/page/physioterapist/home_physio_page.dart';
 import 'package:physioapp/page/physioterapist/message_page.dart';
 import 'package:physioapp/utils/app_routes.dart';
@@ -31,7 +39,22 @@ class PhysioApp extends StatelessWidget {
           create: (context) => SignUpPageForm(),
         ),
         ChangeNotifierProvider(
-          create: (context) => AuthForm(),
+          create: (context) => AuthFormData(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ExercisesControllerComponent(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BottomNavBarController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ScheduleAppointmentForm(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ExerciseController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ExercisesControllerForm(),
         ),
       ],
       child: MaterialApp(
@@ -142,6 +165,10 @@ class PhysioApp extends StatelessWidget {
           AppRoutes.signInPatientPage: (context) => const SigninPatientPage(),
           AppRoutes.signUpPatientPage: (context) => const SignupPatientPage(),
           AppRoutes.messagePage: (context) => const MessagePage(),
+          AppRoutes.exercisesListPage: (context) => const ExercisesListPage(),
+          AppRoutes.exercisesDetailPage: (context) =>
+              const ExercisesDetailPage(),
+          AppRoutes.addExercisePage: (context) => const AddExercisePage(),
         },
       ),
     );

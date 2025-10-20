@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/model/user/physio/physio_user.dart';
 
 class ProfileData extends StatelessWidget {
-  const ProfileData({super.key});
+  final PhysioUser physioUser;
+  const ProfileData({super.key, required this.physioUser});
 
   @override
   Widget build(BuildContext context) {
-    Widget _listTileData(
-        {required IconData icon,
-        required String title,
-        required String subtitle}) {
+    Widget _listTileData({
+      required IconData icon,
+      required String title,
+      required String subtitle,
+    }) {
       return Container(
         margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
@@ -59,22 +62,12 @@ class ProfileData extends StatelessWidget {
         _listTileData(
           icon: Icons.person,
           title: 'Nome',
-          subtitle: 'Nome do fisioterapeuta',
+          subtitle: physioUser.name,
         ),
         _listTileData(
           icon: Icons.mail,
           title: 'Email',
-          subtitle: 'Email do fisioterapeuta',
-        ),
-        _listTileData(
-          icon: Icons.phone,
-          title: 'Telefone',
-          subtitle: 'Telefone do fisioterapeuta',
-        ),
-        _listTileData(
-          icon: Icons.location_pin,
-          title: 'Unidade',
-          subtitle: 'Unidade do fisioterapeuta',
+          subtitle: physioUser.email,
         ),
       ],
     );

@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:physioapp/model/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_form.dart';
+import 'package:path_provider/path_provider.dart' as syspath;
+import 'package:path/path.dart' as path;
 
 class ImagePicket extends StatefulWidget {
   const ImagePicket({super.key});
@@ -12,7 +14,6 @@ class ImagePicket extends StatefulWidget {
 }
 
 class ImagePicketState extends State<ImagePicket> {
-  final AuthForm _authForm = AuthForm();
   final ImagePicker _picket = ImagePicker();
   File? _image;
 
@@ -23,11 +24,18 @@ class ImagePicketState extends State<ImagePicket> {
     );
 
     if (image != null) {
-      setState(() {
-        _image = File(image.path);
-        _authForm.imageProfile = _image;
-        print('image: ${_image}');
-      });
+      setState(() => _image = File(image.path));
+
+      // Acessando o diretorio de documentos
+      final appDir = await syspath.getApplicationDocumentsDirectory();
+
+      // Pegando o nome do arquivo em questão
+      final imageName = path.basename(_image!.path);
+
+      // Salvando o arquivo em um caminho corrente nos documentos do dispositivo
+      final saveImage = await _image!.copy('${appDir.path}/$imageName');
+
+      AuthFormData.imageProfile = saveImage;
     }
   }
 

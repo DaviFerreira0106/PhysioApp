@@ -12,11 +12,11 @@ enum PasswordType {
   confirmPassword,
 }
 
-class AuthForm with ChangeNotifier {
+class AuthFormData with ChangeNotifier {
   // Atributos
-  String? crefito;
+  static String? crefito;
   RadioButton? physioType;
-  File? imageProfile;
+  static File? imageProfile;
   String? name;
   String? email;
   String? password;
@@ -32,11 +32,11 @@ class AuthForm with ChangeNotifier {
   bool get optionPhysioSelected => currentRadioValue == physioValue;
   bool get optionTherapySelected => currentRadioValue == therapyValue;
   bool get formPassword => passwordType == PasswordType.password;
-  bool get formConfirmPassword => confirmPasswordType == PasswordType.confirmPassword;
+  bool get formConfirmPassword =>
+      confirmPasswordType == PasswordType.confirmPassword;
 
   // Metodo para alteração de valor selecionado
   void onChangedRadioValue({required RadioButton? value}) {
-    print(value);
     currentRadioValue = value ?? physioValue;
     notifyListeners();
   }

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/components/physioterapist/app_drawer.dart';
 import 'package:physioapp/components/physioterapist/home/consultation_calendar.dart';
 import 'package:physioapp/components/physioterapist/home/search_patient.dart';
 import 'package:physioapp/components/physioterapist/home/patient_appointment_list.dart';
 import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
-import 'package:physioapp/main.dart';
-import 'package:physioapp/model/auth/physio/auth.dart';
-import 'package:physioapp/model/auth/physio/physio_user.dart';
-import 'package:physioapp/utils/app_routes.dart';
+import 'package:physioapp/services/auth/physio/auth_service.dart';
 
 class HomePhysioPage extends StatelessWidget {
   const HomePhysioPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final _scaffoldKey = GlobalKey<ScaffoldState>();
+    final physioUser = AuthService();
+
     return Scaffold(
+      key: _scaffoldKey,
       body: SafeArea(
         child: Stack(
           alignment: Alignment.center,
@@ -32,14 +34,14 @@ class HomePhysioPage extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: GestureDetector(
-                                onTap: () async {
-                                  await Auth().logout();
-                                  // ignore: use_build_context_synchronously
-                                  Navigator.of(context).pushNamedAndRemoveUntil(
-                                      AppRoutes.initialAppPage, (_) => false);
+                                onTap: () {
+                                  _scaffoldKey.currentState?.openDrawer();
                                 },
-                                child: const CircleAvatar(
+                                child: CircleAvatar(
                                   backgroundColor: Colors.grey,
+                                  backgroundImage: FileImage(
+                                    physioUser.currentPhysioUser!.imageProfile,
+                                  ),
                                   minRadius: 30,
                                 ),
                               ),
@@ -47,15 +49,15 @@ class HomePhysioPage extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  '',
-                                  style: TextStyle(
+                                Text(
+                                  'Olá ${physioUser.currentPhysioUser!.firstName},',
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 20,
                                   ),
                                 ),
                                 Text(
-                                  'teste subtile',
+                                  'O que vamos fazer hoje?',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 12,
@@ -101,6 +103,7 @@ class HomePhysioPage extends StatelessWidget {
           ],
         ),
       ),
+      drawer: const AppDrawer(),
     );
   }
 }
