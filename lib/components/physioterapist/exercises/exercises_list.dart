@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/model/exercises/exercise.dart';
+import 'package:physioapp/services/exercises/exercise_controller.dart';
 import 'package:physioapp/utils/app_routes.dart';
+import 'package:provider/provider.dart';
 
 class ExercisesList extends StatelessWidget {
   final Exercise exercise;
@@ -11,6 +13,7 @@ class ExercisesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final exercisesProvider = Provider.of<ExerciseController>(context);
     return GestureDetector(
       onTap: () => Navigator.of(context).pushNamed(
         AppRoutes.exercisesDetailPage,
@@ -83,7 +86,9 @@ class ExercisesList extends StatelessWidget {
               Column(
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      exercisesProvider.toggleFavorite(exerciseId: exercise.id);
+                    },
                     icon: exercise.isFavorite
                         ? const Icon(
                             Icons.favorite_rounded,

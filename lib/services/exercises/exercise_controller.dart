@@ -24,7 +24,7 @@ class ExerciseController with ChangeNotifier {
         .toList()
         .first;
     exerciseLocalized.isFavorite = !exerciseLocalized.isFavorite;
-    listFavorites.add(exerciseLocalized);
+
     notifyListeners();
   }
 }
