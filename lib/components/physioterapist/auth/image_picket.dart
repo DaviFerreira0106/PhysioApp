@@ -22,6 +22,7 @@ class ImagePicketState extends State<ImagePicket> {
       source: ImageSource.gallery,
       maxWidth: 600,
     );
+    
 
     if (image != null) {
       setState(() => _image = File(image.path));

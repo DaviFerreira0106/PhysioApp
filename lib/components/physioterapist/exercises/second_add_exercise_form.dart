@@ -24,6 +24,7 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
 
     return Form(
       child: Column(
+        spacing: 10,
         children: [
           Text(
             'Informações do Exercício',
@@ -34,11 +35,7 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
             ),
           ),
           const AddVideoBox(),
-          TextButton.icon(
-            onPressed: () {},
-            label: Text('Selecionar Vídeo'),
-            icon: Icon(Icons.upload_rounded),
-          ),
+          
           defaultTextForm(
             textForm: TextFormField(
               decoration: InputDecoration(
@@ -51,6 +48,32 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
                 border: InputBorder.none,
               ),
               keyboardType: TextInputType.number,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            height: 50,
+            margin: const EdgeInsets.only(top: 10),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                  Theme.of(context).colorScheme.tertiary,
+                ),
+                shape: WidgetStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(8),
+                  ),
+                ),
+              ),
+              onPressed: () {},
+              child: const Text(
+                'Adicionar Exercício',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
             ),
           ),
         ],
