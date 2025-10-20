@@ -13,8 +13,16 @@ class AddVideoBox extends StatefulWidget {
 
 class _AddVideoBoxState extends State<AddVideoBox> {
   late VideoPlayerController _controller;
-  late Future<void> _initializeVideoPlayerFuture;
   final ImagePicker _picket = ImagePicker();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = VideoPlayerController.file(
+      File(''),
+    );
+  }
 
   @override
   void dispose() {
