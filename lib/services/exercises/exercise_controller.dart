@@ -14,6 +14,8 @@ class ExerciseController with ChangeNotifier {
       )
       .toList();
 
+  
+
   int get itemsAcount => _listExercises.length;
 
   CategoryId get favoriteCategory => CategoryId.favorites;
@@ -27,4 +29,6 @@ class ExerciseController with ChangeNotifier {
 
     notifyListeners();
   }
+
+  
 }

@@ -3,6 +3,7 @@ import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
 import 'package:physioapp/components/physioterapist/exercises/grid_view_exercises.dart';
 import 'package:physioapp/components/physioterapist/exercises/shared_exercises_view.dart';
 import 'package:physioapp/services/exercises/phtysio/exercises_controller_component.dart';
+import 'package:physioapp/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
 class ExercisesPagePhysio extends StatelessWidget {
@@ -52,7 +53,8 @@ class ExercisesPagePhysio extends StatelessWidget {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.of(context)
+                          .pushNamed(AppRoutes.addExercisePage),
                       child: Text(
                         'Adicionar exercício',
                         style: Theme.of(context).textTheme.titleSmall,
