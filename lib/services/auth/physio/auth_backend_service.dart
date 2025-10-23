@@ -43,7 +43,7 @@ class AuthBackendService implements AuthService {
     if (response.statusCode == 201) {
       debugPrint("ocorreu tudo bem");
       final data = jsonDecode(response.body);
-      print('AQUI ANTAAAAA ----->${imageProfile.path}');
+      
       _currentUserPhysio = PhysioUser(
         id: data['id'].toString(),
         crefito: data['crefito'],

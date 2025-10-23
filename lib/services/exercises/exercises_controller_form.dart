@@ -8,10 +8,10 @@ enum FormExercise {
 class ExercisesControllerForm with ChangeNotifier{
   List<Widget> stepsExercises = [];
 
-  void addStep({
+  Future<void> addStep({
     required Widget titleTextForm,
     required Widget descriptionTextForm,
-  }) {
+  }) async {
     stepsExercises.addAll([titleTextForm, descriptionTextForm]);
     notifyListeners();
   }
