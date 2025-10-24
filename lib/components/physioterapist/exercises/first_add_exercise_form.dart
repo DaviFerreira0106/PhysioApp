@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/components/physioterapist/exercises/list_steps_exercises.dart';
 import 'package:physioapp/services/exercises/exercises_controller_form.dart';
 import 'package:physioapp/services/exercises/exercises_form_data.dart';
 import 'package:provider/provider.dart';
@@ -12,11 +13,18 @@ class FirstAddExerciseForm extends StatefulWidget {
 
 class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
   final _formKey = GlobalKey<FormState>();
-  final _exercisesFormData = ExercisesFormData();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     final exerciseProvider = Provider.of<ExercisesControllerForm>(context);
+    final exercisesFormData = Provider.of<ExercisesFormData>(context);
 
     Widget defaultTextForm({required Widget textForm}) {
       return Container(
@@ -46,6 +54,7 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
           const SizedBox(height: 6),
           defaultTextForm(
             textForm: TextFormField(
+              initialValue: exercisesFormData.titleExercise,
               decoration: InputDecoration(
                 label: Text(
                   'Título do exercício',
@@ -55,12 +64,13 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
                 ),
                 border: InputBorder.none,
               ),
-              onChanged: (title) => _exercisesFormData.titleExercise = title,
+              onChanged: (title) => exercisesFormData.titleExercise = title,
               keyboardType: TextInputType.text,
             ),
           ),
           defaultTextForm(
             textForm: TextFormField(
+              initialValue: exercisesFormData.descriptionExercise,
               decoration: InputDecoration(
                 label: Text(
                   'Descrição do exercício',
@@ -71,7 +81,7 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
                 border: InputBorder.none,
               ),
               onChanged: (description) =>
-                  _exercisesFormData.descriptionExercise = description,
+                  exercisesFormData.descriptionExercise = description,
               keyboardType: TextInputType.multiline,
               maxLines: 3,
             ),
@@ -87,9 +97,11 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
               ),
             ),
           ),
-          Column(
-            spacing: 10,
-            children: exerciseProvider.stepsExercises,
+          Expanded(
+            child: ListView.builder(
+              itemCount: exercisesFormData.stepsExercise.length,
+              itemBuilder: (context, index) => ListStepsExercises(),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,6 +124,9 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
                     await exerciseProvider.addStep(
                       titleTextForm: defaultTextForm(
                         textForm: TextFormField(
+                          initialValue: exercisesFormData.listKeys.isNotEmpty
+                              ? exercisesFormData.getKeyList()
+                              : '',
                           decoration: InputDecoration(
                             label: Text(
                               'Título da Etapa',
@@ -125,12 +140,13 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
                             border: InputBorder.none,
                           ),
                           onChanged: (titleStep) =>
-                              _exercisesFormData.titleStep = titleStep,
+                              exercisesFormData.titleStep = titleStep,
                           keyboardType: TextInputType.text,
                         ),
                       ),
                       descriptionTextForm: defaultTextForm(
                         textForm: TextFormField(
+                          // initialValue:,
                           decoration: InputDecoration(
                             label: Text(
                               'Descrição da Etapa',
@@ -143,7 +159,7 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
                             ),
                             border: InputBorder.none,
                           ),
-                          onChanged: (descriptionStep) => _exercisesFormData
+                          onChanged: (descriptionStep) => exercisesFormData
                               .descriptionStep = descriptionStep,
                           keyboardType: TextInputType.text,
                           maxLines: 3,
@@ -151,9 +167,9 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
                       ),
                     );
 
-                    _exercisesFormData.addStep(
-                      titleStep: _exercisesFormData.titleStep ?? '',
-                      descriptionStep: _exercisesFormData.descriptionStep ?? '',
+                    exercisesFormData.addStep(
+                      titleStep: exercisesFormData.titleStep ?? '',
+                      descriptionStep: exercisesFormData.descriptionStep ?? '',
                     );
                   },
                   child: const Text(
@@ -172,7 +188,9 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
                 child: ElevatedButton.icon(
                   style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(
-                      Theme.of(context).colorScheme.tertiary,
+                      exercisesFormData.getNextForm
+                          ? Theme.of(context).colorScheme.tertiary
+                          : Colors.grey,
                     ),
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
@@ -181,10 +199,15 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
                     ),
                   ),
                   onPressed: () {
-                    _exercisesFormData.addStep(
-                      titleStep: _exercisesFormData.titleStep ?? '',
-                      descriptionStep: _exercisesFormData.descriptionStep ?? '',
-                    );
+                    if (exercisesFormData.getNextForm == true) {
+                      exercisesFormData.addStep(
+                        titleStep: exercisesFormData.titleStep ?? '',
+                        descriptionStep:
+                            exercisesFormData.descriptionStep ?? '',
+                      );
+
+                      exercisesFormData.advanceForm();
+                    }
                   },
                   label: const Text(
                     'Concluir',

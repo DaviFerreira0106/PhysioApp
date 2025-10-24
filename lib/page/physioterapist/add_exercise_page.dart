@@ -3,6 +3,7 @@ import 'package:physioapp/components/physioterapist/exercises/first_add_exercise
 import 'package:physioapp/components/physioterapist/exercises/second_add_exercise_form.dart';
 import 'package:physioapp/components/physioterapist/exercises/select_form_exercises.dart';
 import 'package:physioapp/services/exercises/exercises_controller_form.dart';
+import 'package:physioapp/services/exercises/exercises_form_data.dart';
 import 'package:provider/provider.dart';
 
 class AddExercisePage extends StatelessWidget {
@@ -11,6 +12,7 @@ class AddExercisePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final exerciseForm = Provider.of<ExercisesControllerForm>(context);
+    final exerciseFormData = Provider.of<ExercisesFormData>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +25,7 @@ class AddExercisePage extends StatelessWidget {
             Icons.arrow_back_ios_rounded,
           ),
         ),
-        title: const Text('Adicionar Exercíccdio'),
+        title: const Text('Adicionar Exercício'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -68,11 +70,20 @@ class AddExercisePage extends StatelessWidget {
                       exerciseForm.firstForm
                           ? TextButton(
                               onPressed: () {
-                                exerciseForm.toggleForm(
-                                  valueForm: exerciseForm.getSecondForm,
-                                );
+                                if (exerciseFormData.getEnableNextButton) {
+                                  exerciseForm.toggleForm(
+                                    valueForm: exerciseForm.getSecondForm,
+                                  );
+                                }
                               },
-                              child: const Text('Proximo'),
+                              child: Text(
+                                'Proximo',
+                                style: TextStyle(
+                                  color: exerciseFormData.getEnableNextButton
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Colors.grey,
+                                ),
+                              ),
                             )
                           : TextButton(
                               onPressed: () {

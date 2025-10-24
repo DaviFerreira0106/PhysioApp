@@ -5,8 +5,8 @@ enum FormExercise {
   secondForm,
 }
 
-class ExercisesControllerForm with ChangeNotifier{
-  List<Widget> stepsExercises = [];
+class ExercisesControllerForm with ChangeNotifier {
+  static List<Widget> stepsExercises = [];
 
   Future<void> addStep({
     required Widget titleTextForm,

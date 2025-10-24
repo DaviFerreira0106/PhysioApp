@@ -3,6 +3,7 @@ import 'package:physioapp/page/physioterapist/add_exercise_page.dart';
 import 'package:physioapp/services/auth/physio/auth_form.dart';
 import 'package:physioapp/services/exercises/exercise_controller.dart';
 import 'package:physioapp/services/exercises/exercises_controller_form.dart';
+import 'package:physioapp/services/exercises/exercises_form_data.dart';
 import 'package:physioapp/services/exercises/phtysio/exercises_controller_component.dart';
 import 'package:physioapp/services/navigation/bottom_nav_bar_controller.dart';
 import 'package:physioapp/services/schedule/schedule_appointment_form.dart';
@@ -31,7 +32,7 @@ class PhysioApp extends StatelessWidget {
   @override
   const PhysioApp({super.key});
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
@@ -55,6 +56,9 @@ class PhysioApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => ExercisesControllerForm(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ExercisesFormData(),
         ),
       ],
       child: MaterialApp(
