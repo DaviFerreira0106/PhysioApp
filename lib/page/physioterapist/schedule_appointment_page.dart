@@ -50,7 +50,9 @@ class ScheduleAppointmentPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(28),
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: scheduleProvider.firstForm
+                            ? CrossAxisAlignment.end
+                            : CrossAxisAlignment.start,
                         children: [
                           if (scheduleProvider.firstForm)
                             const FirstFormScheduleAppointment(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/model/schedule/schedule_form_data.dart';
 
 class FirstFormScheduleAppointment extends StatefulWidget {
   const FirstFormScheduleAppointment({super.key});
@@ -10,6 +11,8 @@ class FirstFormScheduleAppointment extends StatefulWidget {
 
 class _FirstFormScheduleAppointmentState
     extends State<FirstFormScheduleAppointment> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     Widget defaultTextForm({required Widget textForm}) {
@@ -42,11 +45,13 @@ class _FirstFormScheduleAppointmentState
           ),
         ),
         Form(
+          key: _formKey,
           child: Column(
             spacing: 20,
             children: [
               defaultTextForm(
                 textForm: TextFormField(
+                  initialValue: ScheduleFormData.name,
                   decoration: InputDecoration(
                     label: Text(
                       'Nome completo',
@@ -57,10 +62,12 @@ class _FirstFormScheduleAppointmentState
                     ),
                   ),
                   keyboardType: TextInputType.name,
+                  onChanged: (name) => ScheduleFormData.name = name,
                 ),
               ),
               defaultTextForm(
                 textForm: TextFormField(
+                  initialValue: ScheduleFormData.age.toString(),
                   decoration: InputDecoration(
                     label: Text(
                       'Idade',
@@ -71,10 +78,12 @@ class _FirstFormScheduleAppointmentState
                     ),
                   ),
                   keyboardType: TextInputType.number,
+                  onChanged: (age) => ScheduleFormData.age = int.parse(age),
                 ),
               ),
               defaultTextForm(
                 textForm: TextFormField(
+                  initialValue: ScheduleFormData.weight.toString(),
                   decoration: InputDecoration(
                     label: Text(
                       'Peso',
@@ -84,11 +93,14 @@ class _FirstFormScheduleAppointmentState
                       borderSide: BorderSide.none,
                     ),
                   ),
+                  onChanged: (weight) =>
+                      ScheduleFormData.weight = double.parse(weight),
                   keyboardType: TextInputType.number,
                 ),
               ),
               defaultTextForm(
                 textForm: TextFormField(
+                  initialValue: ScheduleFormData.height.toString(),
                   decoration: InputDecoration(
                     label: Text(
                       'Altura',
@@ -99,10 +111,13 @@ class _FirstFormScheduleAppointmentState
                     ),
                   ),
                   keyboardType: TextInputType.number,
+                  onChanged: (height) =>
+                      ScheduleFormData.height = double.parse(height),
                 ),
               ),
               defaultTextForm(
                 textForm: TextFormField(
+                  initialValue: ScheduleFormData.occurrence,
                   decoration: InputDecoration(
                     label: Text(
                       'Ocorrência',
@@ -114,6 +129,8 @@ class _FirstFormScheduleAppointmentState
                   ),
                   maxLines: 5,
                   keyboardType: TextInputType.multiline,
+                  onChanged: (occurrence) =>
+                      ScheduleFormData.occurrence = occurrence,
                 ),
               ),
             ],
