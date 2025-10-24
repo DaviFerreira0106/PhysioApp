@@ -3,7 +3,6 @@ import 'package:physioapp/components/physioterapist/exercises/first_add_exercise
 import 'package:physioapp/components/physioterapist/exercises/second_add_exercise_form.dart';
 import 'package:physioapp/components/physioterapist/exercises/select_form_exercises.dart';
 import 'package:physioapp/services/exercises/exercises_controller_form.dart';
-import 'package:physioapp/services/exercises/exercises_form_data.dart';
 import 'package:provider/provider.dart';
 
 class AddExercisePage extends StatelessWidget {
@@ -11,15 +10,16 @@ class AddExercisePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final exerciseForm = Provider.of<ExercisesControllerForm>(context);
-    final exerciseFormData = Provider.of<ExercisesFormData>(context);
+    final exerciseFormProvider = Provider.of<ExercisesControllerForm>(context);
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
-            exerciseForm.toggleForm(valueForm: exerciseForm.getFirstForm);
+            exerciseFormProvider.resetSteps();
+            exerciseFormProvider.toggleForm(
+                valueForm: exerciseFormProvider.getFirstForm);
           },
           icon: const Icon(
             Icons.arrow_back_ios_rounded,
@@ -56,30 +56,34 @@ class AddExercisePage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  if (exerciseForm.firstForm) const FirstAddExerciseForm(),
-                  if (exerciseForm.secondForm) const SecondAddExerciseForm(),
+                  if (exerciseFormProvider.firstForm)
+                    const FirstAddExerciseForm(),
+                  if (exerciseFormProvider.secondForm)
+                    const SecondAddExerciseForm(),
                   const SizedBox(height: 10),
                   SelectFormExercises(
-                    exerciseForm: exerciseForm,
+                    exerciseForm: exerciseFormProvider,
                   ),
                   Row(
-                    mainAxisAlignment: exerciseForm.firstForm
+                    mainAxisAlignment: exerciseFormProvider.firstForm
                         ? MainAxisAlignment.end
                         : MainAxisAlignment.start,
                     children: [
-                      exerciseForm.firstForm
+                      exerciseFormProvider.firstForm
                           ? TextButton(
                               onPressed: () {
-                                if (exerciseFormData.getEnableNextButton) {
-                                  exerciseForm.toggleForm(
-                                    valueForm: exerciseForm.getSecondForm,
+                                if (exerciseFormProvider.getEnableNextButton) {
+                                  exerciseFormProvider.toggleForm(
+                                    valueForm:
+                                        exerciseFormProvider.getSecondForm,
                                   );
                                 }
                               },
                               child: Text(
                                 'Proximo',
                                 style: TextStyle(
-                                  color: exerciseFormData.getEnableNextButton
+                                  color: exerciseFormProvider
+                                          .getEnableNextButton
                                       ? Theme.of(context).colorScheme.primary
                                       : Colors.grey,
                                 ),
@@ -87,8 +91,8 @@ class AddExercisePage extends StatelessWidget {
                             )
                           : TextButton(
                               onPressed: () {
-                                exerciseForm.toggleForm(
-                                  valueForm: exerciseForm.getFirstForm,
+                                exerciseFormProvider.toggleForm(
+                                  valueForm: exerciseFormProvider.getFirstForm,
                                 );
                               },
                               child: const Text('Voltar'),

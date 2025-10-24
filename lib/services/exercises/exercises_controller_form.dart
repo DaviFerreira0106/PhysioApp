@@ -6,15 +6,20 @@ enum FormExercise {
 }
 
 class ExercisesControllerForm with ChangeNotifier {
-  static List<Widget> stepsExercises = [];
+  String? titleExercise;
+  String? descriptionExercise;
+  String? titleStep;
+  String? descriptionStep;
+  List<Map<String, String>> stepsExercise = [];
+  List<String> listKeys = [];
+  List<String> listValues = [];
+  String? videoUrl;
+  int? durationVideo;
+  bool _nextForm = false;
+  bool _enableNextButton = false;
 
-  Future<void> addStep({
-    required Widget titleTextForm,
-    required Widget descriptionTextForm,
-  }) async {
-    stepsExercises.addAll([titleTextForm, descriptionTextForm]);
-    notifyListeners();
-  }
+  bool get getNextForm => _nextForm;
+  bool get getEnableNextButton => _enableNextButton;
 
   FormExercise _currentForm = FormExercise.firstForm;
   FormExercise get currentForm => _currentForm;
@@ -27,6 +32,61 @@ class ExercisesControllerForm with ChangeNotifier {
 
   void toggleForm({required FormExercise valueForm}) {
     _currentForm = valueForm;
+    notifyListeners();
+  }
+
+  void addList() {
+    for (final map in stepsExercise) {
+      for (final key in map.keys) {
+        listKeys.add(key);
+      }
+      for (final value in map.values) {
+        listValues.add(value);
+      }
+      notifyListeners();
+    }
+    print(listKeys);
+    print(listValues);
+  }
+
+  void stepAdded() {
+    print(stepsExercise.isNotEmpty);
+    if (stepsExercise.isNotEmpty) {
+      _nextForm = true;
+      addList();
+      notifyListeners();
+    }
+  }
+
+  void advanceForm() {
+    _enableNextButton = true;
+    addList();
+    notifyListeners();
+  }
+
+  void addStep({required String titleStep, required String descriptionStep}) {
+    stepsExercise.addAll([
+      {titleStep: descriptionStep}
+    ]);
+    stepAdded();
+    print(stepsExercise);
+    notifyListeners();
+  }
+
+  int _quanditySteps = 1;
+
+  int get quanditySteps => _quanditySteps;
+
+  void addLenghtListStep() {
+    _quanditySteps += 1;
+    notifyListeners();
+  }
+
+  void resetSteps() {
+    _quanditySteps = 1;
+    stepsExercise.clear();
+    listKeys.clear();
+    listValues.clear();
     notifyListeners();
   }
 }
