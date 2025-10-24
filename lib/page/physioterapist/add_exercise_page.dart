@@ -10,20 +10,22 @@ class AddExercisePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final exerciseForm = Provider.of<ExercisesControllerForm>(context);
+    final exerciseFormProvider = Provider.of<ExercisesControllerForm>(context);
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
-            exerciseForm.toggleForm(valueForm: exerciseForm.getFirstForm);
+            exerciseFormProvider.resetSteps();
+            exerciseFormProvider.toggleForm(
+                valueForm: exerciseFormProvider.getFirstForm);
           },
           icon: const Icon(
             Icons.arrow_back_ios_rounded,
           ),
         ),
-        title: const Text('Adicionar Exercíccdio'),
+        title: const Text('Adicionar Exercício'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -54,30 +56,43 @@ class AddExercisePage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  if (exerciseForm.firstForm) const FirstAddExerciseForm(),
-                  if (exerciseForm.secondForm) const SecondAddExerciseForm(),
+                  if (exerciseFormProvider.firstForm)
+                    const FirstAddExerciseForm(),
+                  if (exerciseFormProvider.secondForm)
+                    const SecondAddExerciseForm(),
                   const SizedBox(height: 10),
                   SelectFormExercises(
-                    exerciseForm: exerciseForm,
+                    exerciseForm: exerciseFormProvider,
                   ),
                   Row(
-                    mainAxisAlignment: exerciseForm.firstForm
+                    mainAxisAlignment: exerciseFormProvider.firstForm
                         ? MainAxisAlignment.end
                         : MainAxisAlignment.start,
                     children: [
-                      exerciseForm.firstForm
+                      exerciseFormProvider.firstForm
                           ? TextButton(
                               onPressed: () {
-                                exerciseForm.toggleForm(
-                                  valueForm: exerciseForm.getSecondForm,
-                                );
+                                if (exerciseFormProvider.getEnableNextButton) {
+                                  exerciseFormProvider.toggleForm(
+                                    valueForm:
+                                        exerciseFormProvider.getSecondForm,
+                                  );
+                                }
                               },
-                              child: const Text('Proximo'),
+                              child: Text(
+                                'Proximo',
+                                style: TextStyle(
+                                  color: exerciseFormProvider
+                                          .getEnableNextButton
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Colors.grey,
+                                ),
+                              ),
                             )
                           : TextButton(
                               onPressed: () {
-                                exerciseForm.toggleForm(
-                                  valueForm: exerciseForm.getFirstForm,
+                                exerciseFormProvider.toggleForm(
+                                  valueForm: exerciseFormProvider.getFirstForm,
                                 );
                               },
                               child: const Text('Voltar'),
