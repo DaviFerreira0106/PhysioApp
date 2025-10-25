@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:physioapp/components/form_components.dart';
 import 'package:physioapp/services/auth/physio/auth_form.dart';
 import 'package:physioapp/exception/auth_signup_exception.dart';
+import 'package:physioapp/utils/signup_page_form.dart';
+import 'package:provider/provider.dart';
 
 class SecondFormSignUp extends StatefulWidget {
   final void Function(AuthFormData) onSubmited;
@@ -16,10 +18,11 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
   final AuthSignupException _authException = AuthSignupException();
   final AuthFormData _authForm = AuthFormData();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _vibilityPassword = false;
-  bool _visibilityConfirmPassword = false;
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+
+  bool _vibilityPassword = false;
+  bool _visibilityConfirmPassword = false;
 
   // Metodo para submissão de formulário
   Future<void> _submit() async {
@@ -66,6 +69,7 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
 
   @override
   Widget build(BuildContext context) {
+    final pageForm = Provider.of<SignUpPageForm>(context, listen: false);
     return Form(
       key: _formKey,
       child: Column(
@@ -198,26 +202,31 @@ class SecondFormSignUpState extends State<SecondFormSignUp> {
             width: double.infinity,
             height: 60,
             margin: const EdgeInsets.only(bottom: 10, top: 10),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              onPressed: () {
-                _submit();
-              },
-              child: Text(
-                'Cadastrar',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily:
-                      Theme.of(context).textTheme.titleLarge?.fontFamily,
-                  fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
+            child: pageForm.isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                        Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    onPressed: () {
+                      _submit();
+                    },
+                    child: Text(
+                      'Cadastrar',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily:
+                            Theme.of(context).textTheme.titleLarge?.fontFamily,
+                        fontSize:
+                            Theme.of(context).textTheme.titleLarge?.fontSize,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
           ),
         ],
       ),

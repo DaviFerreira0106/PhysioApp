@@ -45,7 +45,6 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
           const SizedBox(height: 6),
           defaultTextForm(
             textForm: TextFormField(
-              initialValue: exerciseFormProvider.titleExercise,
               decoration: InputDecoration(
                 label: Text(
                   'Título do exercício',
@@ -61,7 +60,6 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
           ),
           defaultTextForm(
             textForm: TextFormField(
-              initialValue: exerciseFormProvider.descriptionExercise,
               decoration: InputDecoration(
                 label: Text(
                   'Descrição do exercício',
@@ -156,7 +154,7 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
                         descriptionStep:
                             exerciseFormProvider.descriptionStep ?? '',
                       );
-                      
+
                       exerciseFormProvider.advanceForm();
                     }
                   },

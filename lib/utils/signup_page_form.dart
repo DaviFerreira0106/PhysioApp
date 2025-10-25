@@ -6,6 +6,15 @@ enum SignUpForm {
 }
 
 class SignUpPageForm with ChangeNotifier {
+  bool _isLoadind = false;
+
+  bool get isLoading => _isLoadind;
+
+  void toggleLoadingValue() {
+    _isLoadind = !_isLoadind;
+    notifyListeners();
+  }
+
   //Configuração default do page form
   SignUpForm currentPageForm = SignUpForm.firstForm;
 

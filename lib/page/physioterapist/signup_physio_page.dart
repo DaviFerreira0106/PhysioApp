@@ -36,6 +36,8 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
     }
 
     try {
+      pageForm.toggleLoadingValue();
+
       await auth.signUp(
         physioType: authData.currentRadioValue,
         imageProfile: image!,
@@ -62,6 +64,8 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
           context: context,
         );
       }
+    } finally {
+      pageForm.toggleLoadingValue();
     }
   }
 

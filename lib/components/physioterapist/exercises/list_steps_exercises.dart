@@ -48,7 +48,6 @@ class _ListStepsExercisesState extends State<ListStepsExercises> {
           ),
           defaultTextForm(
             textForm: TextFormField(
-              // initialValue: widget.initialValueDescription ?? '',
               decoration: InputDecoration(
                 label: Text(
                   'Descrição da Etapa',
