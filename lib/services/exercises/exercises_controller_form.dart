@@ -70,7 +70,7 @@ class ExercisesControllerForm with ChangeNotifier {
     notifyListeners();
   }
 
-  int _quanditySteps = 0;
+  int _quanditySteps = 1;
 
   int get quanditySteps => _quanditySteps;
 
@@ -80,7 +80,7 @@ class ExercisesControllerForm with ChangeNotifier {
   }
 
   void resetSteps() {
-    _quanditySteps = 0;
+    _quanditySteps = 1;
     stepsExercise.clear();
     listKeys.clear();
     listValues.clear();

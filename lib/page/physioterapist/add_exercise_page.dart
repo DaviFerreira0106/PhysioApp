@@ -12,6 +12,36 @@ class AddExercisePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final exerciseFormProvider = Provider.of<ExercisesControllerForm>(context);
 
+    void showConfirmForm() {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Avançar?'),
+              content: Text(
+                  'Após processeguir você não poderá retornar a edição das etapas'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    exerciseFormProvider.toggleForm(
+                      valueForm: exerciseFormProvider.getSecondForm,
+                    );
+
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Sim'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Não'),
+                ),
+              ],
+            );
+          });
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -56,8 +86,7 @@ class AddExercisePage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  if (exerciseFormProvider.firstForm)
-                    FirstAddExerciseForm(),
+                  if (exerciseFormProvider.firstForm) FirstAddExerciseForm(),
                   if (exerciseFormProvider.secondForm)
                     const SecondAddExerciseForm(),
                   const SizedBox(height: 10),
@@ -69,34 +98,22 @@ class AddExercisePage extends StatelessWidget {
                         ? MainAxisAlignment.end
                         : MainAxisAlignment.start,
                     children: [
-                      exerciseFormProvider.firstForm
-                          ? TextButton(
-                              onPressed: () {
-                                if (exerciseFormProvider.getEnableNextButton) {
-                                  exerciseFormProvider.toggleForm(
-                                    valueForm:
-                                        exerciseFormProvider.getSecondForm,
-                                  );
-                                }
-                              },
-                              child: Text(
-                                'Proximo',
-                                style: TextStyle(
-                                  color: exerciseFormProvider
-                                          .getEnableNextButton
-                                      ? Theme.of(context).colorScheme.primary
-                                      : Colors.grey,
-                                ),
-                              ),
-                            )
-                          : TextButton(
-                              onPressed: () {
-                                exerciseFormProvider.toggleForm(
-                                  valueForm: exerciseFormProvider.getFirstForm,
-                                );
-                              },
-                              child: const Text('Voltar'),
+                      if (exerciseFormProvider.firstForm)
+                        TextButton(
+                          onPressed: () {
+                            if (exerciseFormProvider.getEnableNextButton) {
+                              showConfirmForm();
+                            }
+                          },
+                          child: Text(
+                            'Proximo',
+                            style: TextStyle(
+                              color: exerciseFormProvider.getEnableNextButton
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Colors.grey,
                             ),
+                          ),
+                        )
                     ],
                   ),
                 ],
