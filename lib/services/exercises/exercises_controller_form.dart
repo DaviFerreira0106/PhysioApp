@@ -43,14 +43,11 @@ class ExercisesControllerForm with ChangeNotifier {
       for (final value in map.values) {
         listValues.add(value);
       }
-      notifyListeners();
     }
-    print(listKeys);
-    print(listValues);
+    notifyListeners();
   }
 
   void stepAdded() {
-    print(stepsExercise.isNotEmpty);
     if (stepsExercise.isNotEmpty) {
       _nextForm = true;
       addList();
@@ -68,12 +65,12 @@ class ExercisesControllerForm with ChangeNotifier {
     stepsExercise.addAll([
       {titleStep: descriptionStep}
     ]);
+
     stepAdded();
-    print(stepsExercise);
     notifyListeners();
   }
 
-  int _quanditySteps = 1;
+  int _quanditySteps = 0;
 
   int get quanditySteps => _quanditySteps;
 
@@ -83,10 +80,14 @@ class ExercisesControllerForm with ChangeNotifier {
   }
 
   void resetSteps() {
-    _quanditySteps = 1;
+    _quanditySteps = 0;
     stepsExercise.clear();
     listKeys.clear();
     listValues.clear();
+    titleStep = '';
+    descriptionStep = '';
+    _nextForm = false;
+    _enableNextButton = false;
     notifyListeners();
   }
 }

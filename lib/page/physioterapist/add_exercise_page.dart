@@ -57,7 +57,7 @@ class AddExercisePage extends StatelessWidget {
               child: Column(
                 children: [
                   if (exerciseFormProvider.firstForm)
-                    const FirstAddExerciseForm(),
+                    FirstAddExerciseForm(),
                   if (exerciseFormProvider.secondForm)
                     const SecondAddExerciseForm(),
                   const SizedBox(height: 10),

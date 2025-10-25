@@ -44,7 +44,6 @@ class _AddVideoBoxState extends State<AddVideoBox> {
       setState(() {
         _isLoading = false;
         _controller.play();
-        print('Saiuuuu');
       });
     }
   }
@@ -52,7 +51,6 @@ class _AddVideoBoxState extends State<AddVideoBox> {
   Future<void> getVideo() async {
     setState(() {
       _isLoading = true;
-      print('Entrou!!!');
     });
     final video = await _picket.pickVideo(
       source: ImageSource.gallery,

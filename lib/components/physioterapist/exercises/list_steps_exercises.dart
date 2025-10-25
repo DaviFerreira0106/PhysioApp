@@ -3,12 +3,8 @@ import 'package:physioapp/services/exercises/exercises_controller_form.dart';
 import 'package:provider/provider.dart';
 
 class ListStepsExercises extends StatefulWidget {
-  final String? initialValueKey;
-  final String? initialValueDescription;
   const ListStepsExercises(
-      {super.key,
-      required this.initialValueKey,
-      required this.initialValueDescription});
+      {super.key,});
 
   @override
   State<ListStepsExercises> createState() => _ListStepsExercisesState();
@@ -29,7 +25,6 @@ class _ListStepsExercisesState extends State<ListStepsExercises> {
   @override
   Widget build(BuildContext context) {
     final exercisesFormProvider = Provider.of<ExercisesControllerForm>(context);
-    print(widget.initialValueKey);
     return SizedBox(
       height: 180,
       child: Column(
@@ -37,7 +32,6 @@ class _ListStepsExercisesState extends State<ListStepsExercises> {
         children: [
           defaultTextForm(
             textForm: TextFormField(
-              initialValue: widget.initialValueKey ?? '',
               decoration: InputDecoration(
                 label: Text(
                   'Título da Etapa',
@@ -54,7 +48,7 @@ class _ListStepsExercisesState extends State<ListStepsExercises> {
           ),
           defaultTextForm(
             textForm: TextFormField(
-              initialValue: widget.initialValueDescription ?? '',
+              // initialValue: widget.initialValueDescription ?? '',
               decoration: InputDecoration(
                 label: Text(
                   'Descrição da Etapa',

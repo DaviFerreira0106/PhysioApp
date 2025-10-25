@@ -50,10 +50,6 @@ class FormSignUpPatientState extends State<FormSignUpPatient> {
       return _showErrorValidate(message: 'As senhas digitadas estão divergentes!');
     }
 
-    
-    print('chegou');
-    print(_authForm.email);
-
     await AuthService().signUp(
       physioType: _authForm.currentRadioValue,
       imageProfile: File(
@@ -64,7 +60,6 @@ class FormSignUpPatientState extends State<FormSignUpPatient> {
       crefito: _authForm.password!,
     );
 
-    print('chegou2');
     Navigator.of(context).pushNamed(AppRoutes.homePagePhysio);
   }
 

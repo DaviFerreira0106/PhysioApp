@@ -93,16 +93,7 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
             child: ListView.builder(
               itemCount: exerciseFormProvider.quanditySteps,
               itemBuilder: (context, index) {
-                print(exerciseFormProvider.listKeys);
-                return ListStepsExercises(
-                  initialValueKey: exerciseFormProvider.listKeys.isNotEmpty
-                      ? exerciseFormProvider.listKeys.elementAt(index)
-                      : '',
-                  initialValueDescription:
-                      exerciseFormProvider.listValues.isNotEmpty
-                          ? exerciseFormProvider.listValues.elementAt(index)
-                          : '',
-                );
+                return ListStepsExercises();
               },
             ),
           ),
