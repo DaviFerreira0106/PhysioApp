@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 enum FormExercise {
@@ -13,7 +15,7 @@ class ExercisesControllerForm with ChangeNotifier {
   List<Map<String, String>> stepsExercise = [];
 
   String? videoUrl;
-  int? durationVideo;
+  double? durationVideo;
   bool _nextForm = false;
   bool _enableNextButton = false;
   int _quanditySteps = 1;

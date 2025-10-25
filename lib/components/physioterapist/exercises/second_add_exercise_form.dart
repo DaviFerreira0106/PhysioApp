@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/exercises/add_video_box.dart';
+import 'package:physioapp/components/physioterapist/exercises/time_input_formatter.dart';
+import 'package:physioapp/services/exercises/exercise_controller.dart';
+import 'package:physioapp/services/exercises/exercises_controller_form.dart';
+import 'package:physioapp/utils/app_routes.dart';
+import 'package:provider/provider.dart';
 
 class SecondAddExerciseForm extends StatefulWidget {
   const SecondAddExerciseForm({super.key});
@@ -9,8 +14,20 @@ class SecondAddExerciseForm extends StatefulWidget {
 }
 
 class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
+  Future<void> _submitFormAddExercise(
+      {required ExercisesControllerForm formExercise}) async {
+    final exerciseController =
+        Provider.of<ExerciseController>(context, listen: false);
+
+    exerciseController.addExercises(formExercise: formExercise);
+    formExercise.resetSteps();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final exercisesControllerProvider =
+        Provider.of<ExercisesControllerForm>(context);
+
     Widget defaultTextForm({required Widget textForm}) {
       return Container(
         padding: const EdgeInsets.only(left: 10),
@@ -35,7 +52,6 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
             ),
           ),
           const AddVideoBox(),
-          
           defaultTextForm(
             textForm: TextFormField(
               decoration: InputDecoration(
@@ -45,9 +61,16 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
                     color: Theme.of(context).textTheme.labelLarge?.color,
                   ),
                 ),
+                hintText: '00:00',
                 border: InputBorder.none,
               ),
               keyboardType: TextInputType.number,
+              inputFormatters: [
+                TimeInputFormatter(),
+              ],
+              onChanged: (videoDuration) =>
+                  exercisesControllerProvider.durationVideo =
+                      double.parse(videoDuration.replaceAll(':', '.')),
             ),
           ),
           Container(
@@ -65,7 +88,17 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                _submitFormAddExercise(
+                    formExercise: exercisesControllerProvider);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  AppRoutes.exercisesPagePhysio,
+                  (_) => false,
+                );
+
+                exercisesControllerProvider.toggleForm(
+                    valueForm: exercisesControllerProvider.getFirstForm);
+              },
               child: const Text(
                 'Adicionar Exercício',
                 style: TextStyle(

@@ -10,6 +10,7 @@ class ExercisesDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final exercise = ModalRoute.of(context)?.settings.arguments as Exercise;
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(exercise.name),

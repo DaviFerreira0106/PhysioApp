@@ -42,14 +42,14 @@ class ExercisesMockData {
     ),
   ];
 
-  static List<Exercise> exercisesList = [
+  List<Exercise> exercisesList = [
     Exercise(
       id: 'e1',
       name: 'Esticada de Perna (Quadriceps)',
       description:
           'Exercício para alongar as articulações das pernas, melhorando a mobilidade',
       videoUrl: '',
-      minute: 25,
+      videoDuration: 25.3,
       steps: [
         {
           'Posição Corporal':
@@ -80,7 +80,7 @@ class ExercisesMockData {
       description:
           'Exercício para alongar as articulações do joelho, auxiliando assim na rotação da perna',
       videoUrl: '',
-      minute: 21,
+      videoDuration: 21.3,
       steps: [
         {
           'Posição Corporal':
@@ -118,7 +118,7 @@ class ExercisesMockData {
       description:
           'Exercício para alongar as articulações das costas e membros inferiores',
       videoUrl: '',
-      minute: 13,
+      videoDuration: 13.3,
       steps: [
         {
           'Posição Corporal':
@@ -153,7 +153,7 @@ class ExercisesMockData {
       description:
           'Exercício para trabalhar as articulações das costas e aumentar a flexibilidade das pernas',
       videoUrl: '',
-      minute: 15,
+      videoDuration: 15.3,
       steps: [
         {
           'Posição Corporal':
@@ -181,7 +181,7 @@ class ExercisesMockData {
       description:
           'Exercício para alongar as articulações lombares, abdominais, membros inferiores e superiores',
       videoUrl: '',
-      minute: 17,
+      videoDuration: 17.3,
       steps: [
         {'Posição Corporal': 'Fique de quatro sobre uma superficie reta'},
         {
@@ -214,7 +214,7 @@ class ExercisesMockData {
       description:
           'Exercício fortalecer as principais articulações dos membros superiores, inferiores e posteriores',
       videoUrl: '',
-      minute: 20,
+      videoDuration: 20.3,
       steps: [
         {'Posição Corporal': 'Fique de quatro sobre uma superficie reta'},
         {

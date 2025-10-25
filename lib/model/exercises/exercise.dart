@@ -7,7 +7,7 @@ class Exercise with ChangeNotifier {
   final String description;
   final String videoUrl;
   final List<Map<String, String>> steps;
-  final int minute;
+  final double videoDuration;
   final List<CategoryId> categoryId;
   bool isFavorite;
 
@@ -16,7 +16,7 @@ class Exercise with ChangeNotifier {
     required this.name,
     required this.description,
     required this.videoUrl,
-    required this.minute,
+    required this.videoDuration,
     required this.steps,
     required this.categoryId,
     this.isFavorite = false,

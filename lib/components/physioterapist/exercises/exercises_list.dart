@@ -70,7 +70,7 @@ class ExercisesList extends StatelessWidget {
                           color: Colors.white,
                         ),
                         Text(
-                          '${exercise.minute} min',
+                          '${exercise.videoDuration.ceil()} min',
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,

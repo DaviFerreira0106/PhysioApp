@@ -15,7 +15,7 @@ class ExercisesListPage extends StatelessWidget {
     final filteredList = exercises.listExercises.where(
       (exe) => exe.categoryId.contains(category.id),
     );
-
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(category.title),
