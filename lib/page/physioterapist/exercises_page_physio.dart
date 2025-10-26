@@ -53,8 +53,10 @@ class ExercisesPagePhysio extends StatelessWidget {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     child: TextButton(
-                      onPressed: () => Navigator.of(context)
-                          .pushNamed(AppRoutes.addExercisePage),
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(AppRoutes.addExercisePage);
+                      },
                       child: Text(
                         'Adicionar exercício',
                         style: Theme.of(context).textTheme.titleSmall,

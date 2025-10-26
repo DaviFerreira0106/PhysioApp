@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 enum FormExercise {
@@ -70,9 +68,12 @@ class ExercisesControllerForm with ChangeNotifier {
 
   void resetSteps() {
     _quanditySteps = 1;
-    stepsExercise.clear();
+    stepsExercise = [];
     titleStep = '';
     descriptionStep = '';
+    titleExercise = '';
+    descriptionExercise = '';
+    durationVideo = null;
     _nextForm = false;
     _enableNextButton = false;
     notifyListeners();

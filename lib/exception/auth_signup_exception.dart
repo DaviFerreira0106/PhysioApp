@@ -1,6 +1,27 @@
 import 'package:flutter/material.dart';
 
 class AuthSignupException {
+  void showErrorSubmit(
+      {required String messageError, required BuildContext context}) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog.adaptive(
+          title: Text('Falha no envio do formulário'),
+          content: Text(messageError),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Ok'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void showErrorValidate(
       {required String message, required BuildContext context}) {
     ScaffoldMessenger.of(context).showSnackBar(

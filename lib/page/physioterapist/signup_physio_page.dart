@@ -59,8 +59,8 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
       }
     } catch (error) {
       if (mounted) {
-        return authException.showErrorValidate(
-          message: error.toString(),
+        return authException.showErrorSubmit(
+          messageError: error.toString(),
           context: context,
         );
       }

@@ -16,7 +16,7 @@ class AddExercisePage extends StatelessWidget {
       showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
+            return AlertDialog.adaptive(
               title: Text('Avançar?'),
               content: Text(
                   'Após processeguir você não poderá retornar a edição das etapas'),

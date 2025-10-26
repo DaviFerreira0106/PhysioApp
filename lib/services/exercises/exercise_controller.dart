@@ -22,13 +22,18 @@ class ExerciseController with ChangeNotifier {
   CategoryId get favoriteCategory => CategoryId.favorites;
 
   void addExercises({required ExercisesControllerForm formExercise}) {
+    final name = formExercise.titleExercise!;
+    final description = formExercise.descriptionExercise!;
+    final videoDuration = formExercise.durationVideo!;
+    final steps = formExercise.stepsExercise;
+
     final newExercise = Exercise(
       id: Random().nextDouble().toString(),
-      name: formExercise.titleExercise!,
-      description: formExercise.descriptionExercise!,
+      name: name,
+      description: description,
       videoUrl: '',
-      videoDuration: formExercise.durationVideo!,
-      steps: formExercise.stepsExercise,
+      videoDuration: videoDuration,
+      steps: steps,
       categoryId: [CategoryId.personalized],
     );
 

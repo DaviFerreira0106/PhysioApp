@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/exercises/list_steps_exercises.dart';
+import 'package:physioapp/exception/auth_signup_exception.dart';
 import 'package:physioapp/services/exercises/exercises_controller_form.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,52 @@ class FirstAddExerciseForm extends StatefulWidget {
 
 class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
   final _formKey = GlobalKey<FormState>();
+
+  void _validateForm({required ExercisesControllerForm exerciseFormProvider}) {
+    final authException = AuthSignupException();
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    if (isValid == false) {
+      return;
+    }
+
+    if (exerciseFormProvider.titleExercise!.isEmpty) {
+      return authException.showErrorValidate(
+        message: 'Digite um título para o exercício',
+        context: context,
+      );
+    }
+
+    if (exerciseFormProvider.descriptionExercise!.isEmpty) {
+      return authException.showErrorValidate(
+        message: 'Digite uma descrição para o exercício',
+        context: context,
+      );
+    }
+
+    if (exerciseFormProvider.titleStep!.isEmpty) {
+      return authException.showErrorValidate(
+        message: 'Digite um título para a etapa do exercício',
+        context: context,
+      );
+    }
+
+    if (exerciseFormProvider.descriptionStep!.isEmpty) {
+      return authException.showErrorValidate(
+        message: 'Digite uma descrição para a etapa do exercício',
+        context: context,
+      );
+    }
+
+    if (exerciseFormProvider.getNextForm == true) {
+      exerciseFormProvider.addStep(
+        titleStep: exerciseFormProvider.titleStep ?? '',
+        descriptionStep: exerciseFormProvider.descriptionStep ?? '',
+      );
+
+      exerciseFormProvider.advanceForm();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,17 +194,9 @@ class _FirstAddExerciseFormState extends State<FirstAddExerciseForm> {
                       ),
                     ),
                   ),
-                  onPressed: () {
-                    if (exerciseFormProvider.getNextForm == true) {
-                      exerciseFormProvider.addStep(
-                        titleStep: exerciseFormProvider.titleStep ?? '',
-                        descriptionStep:
-                            exerciseFormProvider.descriptionStep ?? '',
-                      );
-
-                      exerciseFormProvider.advanceForm();
-                    }
-                  },
+                  onPressed: () => _validateForm(
+                    exerciseFormProvider: exerciseFormProvider,
+                  ),
                   label: const Text(
                     'Concluir',
                     style: TextStyle(

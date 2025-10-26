@@ -3,8 +3,9 @@ import 'package:physioapp/services/exercises/exercises_controller_form.dart';
 import 'package:provider/provider.dart';
 
 class ListStepsExercises extends StatefulWidget {
-  const ListStepsExercises(
-      {super.key,});
+  const ListStepsExercises({
+    super.key,
+  });
 
   @override
   State<ListStepsExercises> createState() => _ListStepsExercisesState();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/exercises/add_video_box.dart';
 import 'package:physioapp/components/physioterapist/exercises/time_input_formatter.dart';
+import 'package:physioapp/exception/auth_signup_exception.dart';
 import 'package:physioapp/services/exercises/exercise_controller.dart';
 import 'package:physioapp/services/exercises/exercises_controller_form.dart';
 import 'package:physioapp/utils/app_routes.dart';
@@ -14,11 +15,24 @@ class SecondAddExerciseForm extends StatefulWidget {
 }
 
 class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
-  Future<void> _submitFormAddExercise(
-      {required ExercisesControllerForm formExercise}) async {
+  Future<void> _submitFormAddExercise({
+    required ExercisesControllerForm formExercise,
+  }) async {
+    final authException = AuthSignupException();
     final exerciseController =
         Provider.of<ExerciseController>(context, listen: false);
 
+    if (formExercise.durationVideo == null) {
+      return authException.showErrorValidate(
+        message: 'Digite o tempo de duração do vídeo',
+        context: context,
+      );
+    }
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      AppRoutes.exercisesPagePhysio,
+      (_) => false,
+    );
+    formExercise.toggleForm(valueForm: formExercise.getFirstForm);
     exerciseController.addExercises(formExercise: formExercise);
     formExercise.resetSteps();
   }
@@ -91,13 +105,6 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
               onPressed: () {
                 _submitFormAddExercise(
                     formExercise: exercisesControllerProvider);
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  AppRoutes.exercisesPagePhysio,
-                  (_) => false,
-                );
-
-                exercisesControllerProvider.toggleForm(
-                    valueForm: exercisesControllerProvider.getFirstForm);
               },
               child: const Text(
                 'Adicionar Exercício',
