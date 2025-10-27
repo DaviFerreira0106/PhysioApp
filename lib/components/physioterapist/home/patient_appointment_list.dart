@@ -75,7 +75,8 @@ class PatientAppointmentList extends StatelessWidget {
                             scheduleProvider.listSchedule
                                 .elementAt(index)
                                 .patient
-                                .photoUser,
+                                .imageProfile
+                                .path,
                           ),
                         ),
                         minRadius: 30,
@@ -91,7 +92,7 @@ class PatientAppointmentList extends StatelessWidget {
                           DateFormat.yMd().add_jms().format(
                                 scheduleProvider.listSchedule
                                     .elementAt(index)
-                                    .dateSchedule, 
+                                    .dateSchedule,
                               ),
                           overflow: TextOverflow.clip,
                           style: TextStyle(

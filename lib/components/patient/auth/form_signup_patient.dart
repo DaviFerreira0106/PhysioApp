@@ -1,13 +1,16 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/form_components.dart';
-import 'package:physioapp/services/auth/physio/auth_form.dart';
-import 'package:physioapp/services/auth/physio/auth_service.dart';
-import 'package:physioapp/utils/app_routes.dart';
+import 'package:physioapp/exception/auth_signup_exception.dart';
+import 'package:physioapp/services/auth/auth_form.dart';
+import 'package:physioapp/utils/signup_page_form.dart';
+import 'package:provider/provider.dart';
 
 class FormSignUpPatient extends StatefulWidget {
-  const FormSignUpPatient({super.key});
+  final void Function(AuthFormData) onSubmited;
+  const FormSignUpPatient({
+    super.key,
+    required this.onSubmited,
+  });
 
   @override
   FormSignUpPatientState createState() => FormSignUpPatientState();
@@ -16,55 +19,55 @@ class FormSignUpPatient extends StatefulWidget {
 class FormSignUpPatientState extends State<FormSignUpPatient> {
   // Atributos de controle
   final AuthFormData _authForm = AuthFormData();
+  final _authException = AuthSignupException();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _vibilityPassword = false;
   bool _visibilityConfirmPassword = false;
   final TextEditingController _passwordController = TextEditingController();
 
-  void _showErrorValidate({required String message}) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 3),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      ),
-    );
-  }
-
   // Metodo para submissão de formulário
-  Future<void> _submit() async {
+  Future<void> _validateForm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
     if (isValid == false) return;
 
     // Validação de campos
-    if(_authForm.name == null || _authForm.name!.isEmpty || _authForm.name!.length < 5) {
-      return _showErrorValidate(message: 'Digite seu nome completo!');
+    if (_authForm.name == null ||
+        _authForm.name!.isEmpty ||
+        _authForm.name!.length < 5) {
+      return _authException.showErrorValidate(
+        message: 'Digite seu nome completo!',
+        context: context,
+      );
     }
-    if(_authForm.email == null || _authForm.email!.isEmpty || !_authForm.email!.contains('@')) {
-      return _showErrorValidate(message: 'Digite um e-mail valído!');
+    if (_authForm.email == null ||
+        _authForm.email!.isEmpty ||
+        !_authForm.email!.contains('@')) {
+      return _authException.showErrorValidate(
+        message: 'Digite um e-mail valído!',
+        context: context,
+      );
     }
-    if(_authForm.password == null || _authForm.password!.isEmpty || _authForm.password!.length < 6) {
-      return _showErrorValidate(message: 'Digite uma senha com pelo menos 6 caracteres!');
+    if (_authForm.password == null ||
+        _authForm.password!.isEmpty ||
+        _authForm.password!.length < 6) {
+      return _authException.showErrorValidate(
+        message: 'Digite uma senha com pelo menos 6 caracteres!',
+        context: context,
+      );
     }
-    if(_passwordController.text != _authForm.password) {
-      return _showErrorValidate(message: 'As senhas digitadas estão divergentes!');
+    if (_passwordController.text != _authForm.password) {
+      return _authException.showErrorValidate(
+        message: 'As senhas digitadas estão divergentes!',
+        context: context,
+      );
     }
 
-    await AuthService().signUp(
-      physioType: _authForm.currentRadioValue,
-      imageProfile: File(
-          '/Users/daviferreira/Library/Developer/CoreSimulator/Devices/CF2B0CD7-8F9F-4423-BCD8-58DED4EE0F54/data/Containers/Data/Application/96C39E73-33E2-4DDA-8664-C2ED152D6687/tmp/image_picker_8F6F81B0-ABF0-4619-980C-0D3EA7E8BFDF-71021-0000094E1F1FAF08.jpg'),
-      name: _authForm.name!,
-      email: _authForm.email!,
-      password: _authForm.password!,
-      crefito: _authForm.password!,
-    );
-
-    Navigator.of(context).pushNamed(AppRoutes.homePagePhysio);
+    widget.onSubmited(_authForm);
   }
 
   @override
   Widget build(BuildContext context) {
+    final pageForm = Provider.of<SignUpPageForm>(context);
     return Form(
       key: _formKey,
       child: Column(
@@ -110,7 +113,6 @@ class FormSignUpPatientState extends State<FormSignUpPatient> {
           FormComponents(
             textForm: TextFormField(
               onChanged: (password) => _authForm.password = password,
-              controller: _passwordController,
               decoration: InputDecoration(
                 label: Text(
                   'Senha',
@@ -149,11 +151,11 @@ class FormSignUpPatientState extends State<FormSignUpPatient> {
               ),
               keyboardType: TextInputType.visiblePassword,
               obscureText: _vibilityPassword == true ? false : true,
-              
             ),
           ),
           FormComponents(
             textForm: TextFormField(
+              controller: _passwordController,
               decoration: InputDecoration(
                 label: Text(
                   'Confirmar Senha',
@@ -192,33 +194,37 @@ class FormSignUpPatientState extends State<FormSignUpPatient> {
               ),
               keyboardType: TextInputType.visiblePassword,
               obscureText: _visibilityConfirmPassword == true ? false : true,
-              
             ),
           ),
           Container(
             width: double.infinity,
             height: 60,
             margin: const EdgeInsets.symmetric(vertical: 20),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              onPressed: () {
-                _submit();
-              },
-              child: Text(
-                'Cadastrar',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily:
-                      Theme.of(context).textTheme.titleLarge?.fontFamily,
-                  fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
+            child: pageForm.isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                        Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    onPressed: () {
+                      _validateForm();
+                    },
+                    child: Text(
+                      'Cadastrar',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily:
+                            Theme.of(context).textTheme.titleLarge?.fontFamily,
+                        fontSize:
+                            Theme.of(context).textTheme.titleLarge?.fontSize,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
           ),
         ],
       ),

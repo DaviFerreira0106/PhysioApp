@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/page/patient/home_patient_page.dart';
 import 'package:physioapp/page/physioterapist/add_exercise_page.dart';
-import 'package:physioapp/services/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/auth_form.dart';
 import 'package:physioapp/services/exercises/exercise_controller.dart';
 import 'package:physioapp/services/exercises/exercises_controller_form.dart';
 import 'package:physioapp/services/exercises/phtysio/exercises_controller_component.dart';
@@ -173,6 +174,7 @@ class PhysioApp extends StatelessWidget {
           AppRoutes.exercisesDetailPage: (context) =>
               const ExercisesDetailPage(),
           AppRoutes.addExercisePage: (context) => const AddExercisePage(),
+          AppRoutes.homePatientPage: (context) => const HomePatientPage(),
         },
       ),
     );

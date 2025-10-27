@@ -4,7 +4,7 @@ import 'package:physioapp/components/physioterapist/home/consultation_calendar.d
 import 'package:physioapp/components/physioterapist/home/search_patient.dart';
 import 'package:physioapp/components/physioterapist/home/patient_appointment_list.dart';
 import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
-import 'package:physioapp/services/auth/physio/auth_service.dart';
+import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 
 class HomePhysioPage extends StatelessWidget {
   const HomePhysioPage({super.key});
@@ -12,7 +12,7 @@ class HomePhysioPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _scaffoldKey = GlobalKey<ScaffoldState>();
-    final physioUser = AuthService();
+    final physioUser = AuthPhysioService();
 
     return Scaffold(
       key: _scaffoldKey,

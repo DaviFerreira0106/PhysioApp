@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:physioapp/services/auth/physio/auth_service.dart';
+import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 import 'package:physioapp/utils/app_routes.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -9,7 +9,7 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authService = AuthService();
+    final authService = AuthPhysioService();
 
     Widget _userComponentDrawer(
         {required String name,

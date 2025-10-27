@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:physioapp/services/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/auth_form.dart';
 
 class PhysioUser {
   final String id;

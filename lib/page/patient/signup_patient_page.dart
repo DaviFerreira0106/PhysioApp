@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/patient/auth/form_signup_patient.dart';
-
+import 'package:physioapp/exception/auth_signup_exception.dart';
+import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
 import 'package:physioapp/utils/app_routes.dart';
-
+import 'package:physioapp/services/auth/auth_form.dart';
 import 'package:physioapp/components/physioterapist/auth/image_picket.dart';
+import 'package:physioapp/utils/signup_page_form.dart';
+import 'package:provider/provider.dart';
 
 class SignupPatientPage extends StatefulWidget {
   const SignupPatientPage({super.key});
@@ -13,6 +16,51 @@ class SignupPatientPage extends StatefulWidget {
 }
 
 class _SignupPatientPageState extends State<SignupPatientPage> {
+  Future<void> _submit(AuthFormData? authForm) async {
+    final auth = AuthPatientService();
+    final authException = AuthSignupException();
+    final image = AuthFormData.imageProfile;
+    final pageForm = Provider.of<SignUpPageForm>(context, listen: false);
+
+    if (authForm == null) return;
+
+    if (image == null) {
+      if (mounted) {
+        return authException.showErrorValidate(
+          message: 'Imagem não selecionada!',
+          context: context,
+        );
+      }
+    }
+
+    try {
+      pageForm.toggleLoadingValue();
+
+      await auth.signUp(
+        imageProfile: image!,
+        name: authForm.name!,
+        email: authForm.email!,
+        password: authForm.password!,
+      );
+
+      if (mounted) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          AppRoutes.homePatientPage,
+          (_) => false,
+        );
+      }
+    } catch (error) {
+      if (mounted) {
+        authException.showErrorSubmit(
+          messageError: error.toString(),
+          context: context,
+        );
+      }
+    } finally {
+      pageForm.toggleLoadingValue();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +89,7 @@ class _SignupPatientPageState extends State<SignupPatientPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-            // ImagePicket(),
+              ImagePicket(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -71,7 +119,9 @@ class _SignupPatientPageState extends State<SignupPatientPage> {
               const SizedBox(
                 height: 20,
               ),
-              const FormSignUpPatient(),
+              FormSignUpPatient(
+                onSubmited: _submit,
+              ),
               Container(
                 margin: const EdgeInsets.only(top: 24, bottom: 64),
                 child: Row(

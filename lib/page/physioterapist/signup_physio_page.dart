@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/auth/first_form_signup.dart';
 import 'package:physioapp/exception/auth_signup_exception.dart';
-import 'package:physioapp/services/auth/physio/auth_form.dart';
-import 'package:physioapp/services/auth/physio/auth_service.dart';
+import 'package:physioapp/services/auth/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 import 'package:physioapp/utils/app_routes.dart';
 import 'package:physioapp/components/physioterapist/auth/second_form_signup.dart';
 import 'package:physioapp/utils/signup_page_form.dart';
@@ -18,7 +18,7 @@ class SignupPhysioPage extends StatefulWidget {
 
 class _SignupPhysioPageState extends State<SignupPhysioPage> {
   Future<void> _dataSubmited(AuthFormData? authData) async {
-    final auth = AuthService();
+    final auth = AuthPhysioService();
     final authException = AuthSignupException();
     final image = AuthFormData.imageProfile;
     final crefito = AuthFormData.crefito;
@@ -37,7 +37,7 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
 
     try {
       pageForm.toggleLoadingValue();
-
+      print(crefito);
       await auth.signUp(
         physioType: authData.currentRadioValue,
         imageProfile: image!,

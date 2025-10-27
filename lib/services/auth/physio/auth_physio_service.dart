@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:physioapp/model/user/physio/physio_user.dart';
-import 'package:physioapp/services/auth/physio/auth_backend_service.dart';
-import 'package:physioapp/services/auth/physio/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_physio_backend_service.dart';
+import 'package:physioapp/services/auth/auth_form.dart';
 
-abstract class AuthService {
+abstract class AuthPhysioService {
   PhysioUser? get currentPhysioUser;
 
   Future<void> signUp({
@@ -20,7 +20,7 @@ abstract class AuthService {
 
   Future<void> logout();
 
-  factory AuthService() {
-    return AuthBackendService();
+  factory AuthPhysioService() {
+    return AuthPhysioBackendService();
   }
 }
