@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/exception/auth_signup_exception.dart';
+import 'package:physioapp/services/auth/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 import 'package:physioapp/utils/app_routes.dart';
+import 'package:physioapp/utils/signup_page_form.dart';
+import 'package:provider/provider.dart';
 
 enum RadioButton {
   physioOption,
@@ -18,6 +23,8 @@ class FormSignInState extends State<FormSignIn> {
   bool _vibilityPassword = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final formData = AuthFormData();
+  final authException = AuthSignupException();
   RadioButton _radioPhysioValue = RadioButton.physioOption;
   bool _physioOptionSelect() => _radioPhysioValue == RadioButton.physioOption;
 
@@ -28,14 +35,29 @@ class FormSignInState extends State<FormSignIn> {
   }
 
   Future<void> _submit() async {
-    // final isValid = _formKey.currentState?.validate() ?? false;
+    final auth = AuthPhysioService();
+    try {
+      
+      await auth.login(
+        email: formData.email!,
+        password: formData.password!,
+      );
 
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(AppRoutes.homePagePhysio, (_) => false);
+      if (mounted) {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(AppRoutes.homePagePhysio, (_) => false);
+      }
+    } catch (error) {
+      if (mounted) {
+        authException.showErrorSubmit(
+            messageError: error.toString(), context: context);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final pageForm = Provider.of<SignUpPageForm>(context);
     return Form(
       key: _formKey,
       child: Column(
@@ -51,6 +73,7 @@ class FormSignInState extends State<FormSignIn> {
                   color: const Color.fromARGB(255, 110, 125, 162), width: 1),
             ),
             child: TextFormField(
+              onChanged: (email) => formData.email = email,
               decoration: InputDecoration(
                 label: Text(
                   'Email',
@@ -79,6 +102,7 @@ class FormSignInState extends State<FormSignIn> {
                   color: const Color.fromARGB(255, 110, 125, 162), width: 1),
             ),
             child: TextFormField(
+              onChanged: (password) => formData.password = password,
               decoration: InputDecoration(
                 label: Text(
                   'Senha',
@@ -187,24 +211,29 @@ class FormSignInState extends State<FormSignIn> {
             height: 60,
             width: double.infinity,
             margin: const EdgeInsets.only(top: 20),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              onPressed: () => _submit(),
-              child: Text(
-                'Entrar',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily:
-                      Theme.of(context).textTheme.titleLarge?.fontFamily,
-                  fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
+            child: pageForm.isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                        Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    onPressed: () => _submit(),
+                    child: Text(
+                      'Entrar',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily:
+                            Theme.of(context).textTheme.titleLarge?.fontFamily,
+                        fontSize:
+                            Theme.of(context).textTheme.titleLarge?.fontSize,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
           ),
           Container(
             margin: const EdgeInsets.only(top: 20),

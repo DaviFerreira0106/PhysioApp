@@ -25,7 +25,7 @@ class AuthPatientBackendService implements AuthPatientService {
     required String password,
   }) async {
     final response = await http.post(
-      Uri.parse('http://$_url:8080/users'),
+      Uri.parse('http://$_url:8080/auth/register'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "user_type": "PATIENT",
@@ -55,7 +55,18 @@ class AuthPatientBackendService implements AuthPatientService {
   }
 
   @override
-  Future<void> login({required String email, required String password}) async {}
+  Future<void> login({required String email, required String password}) async {
+    final login = await http.post(
+      Uri.parse('http://$_url:8080/auth/login'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "email": email,
+        "password": password,
+      }),
+    );
+
+    debugPrint(login.body);
+  }
 
   @override
   Future<void> logout() async {

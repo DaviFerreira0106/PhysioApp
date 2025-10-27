@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/services/profile/physio/physio_profile_service.dart';
+import 'package:provider/provider.dart';
 
 class DataVisualization extends StatefulWidget {
   const DataVisualization({super.key});
@@ -10,10 +12,13 @@ class DataVisualization extends StatefulWidget {
 class _DataVisualizationState extends State<DataVisualization> {
   @override
   Widget build(BuildContext context) {
+    final profileProvider = Provider.of<PhysioProfileService>(context);
     return IconButton(
-      onPressed: () {},
+      onPressed: () => profileProvider.toggleVisibilty(),
       icon: Icon(
-        Icons.visibility_sharp,
+        profileProvider.isVisible
+            ? Icons.visibility_sharp
+            : Icons.visibility_off_sharp,
         color: Theme.of(context).textTheme.labelSmall?.color,
       ),
     );

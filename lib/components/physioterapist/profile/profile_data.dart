@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/model/user/physio/physio_user.dart';
+import 'package:physioapp/services/profile/physio/physio_profile_service.dart';
+import 'package:provider/provider.dart';
 
 class ProfileData extends StatelessWidget {
   final PhysioUser physioUser;
@@ -7,6 +9,7 @@ class ProfileData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profileProvider = Provider.of<PhysioProfileService>(context);
     Widget _listTileData({
       required IconData icon,
       required String title,
@@ -62,12 +65,16 @@ class ProfileData extends StatelessWidget {
         _listTileData(
           icon: Icons.person,
           title: 'Nome',
-          subtitle: physioUser.name,
+          subtitle: profileProvider.isVisible
+              ? physioUser.name
+              : physioUser.obscureText(physioUser.name),
         ),
         _listTileData(
           icon: Icons.mail,
           title: 'Email',
-          subtitle: physioUser.email,
+          subtitle: profileProvider.isVisible
+              ? physioUser.email
+              : physioUser.obscureText(physioUser.email),
         ),
       ],
     );

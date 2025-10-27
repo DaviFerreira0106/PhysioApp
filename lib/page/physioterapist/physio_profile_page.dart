@@ -4,6 +4,8 @@ import 'package:physioapp/components/physioterapist/profile/%20data_visualizatio
 import 'package:physioapp/components/physioterapist/profile/photo_profile.dart';
 import 'package:physioapp/components/physioterapist/profile/profile_data.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
+import 'package:physioapp/services/profile/physio/physio_profile_service.dart';
+import 'package:provider/provider.dart';
 
 class PhysioProfilePage extends StatelessWidget {
   const PhysioProfilePage({super.key});
@@ -11,6 +13,7 @@ class PhysioProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final physioUser = AuthPhysioService();
+    final profileProvider = Provider.of<PhysioProfileService>(context);
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -57,7 +60,10 @@ class PhysioProfilePage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            physioUser.currentPhysioUser!.name,
+                            profileProvider.isVisible
+                                ? physioUser.currentPhysioUser!.userName
+                                : physioUser.currentPhysioUser!.obscureText(
+                                    physioUser.currentPhysioUser!.userName),
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 20,
@@ -65,7 +71,10 @@ class PhysioProfilePage extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                           Text(
-                            physioUser.currentPhysioUser!.crefito,
+                            profileProvider.isVisible
+                                ? physioUser.currentPhysioUser!.crefito
+                                : physioUser.currentPhysioUser!.obscureText(
+                                    physioUser.currentPhysioUser!.crefito),
                             style: TextStyle(
                               fontWeight: FontWeight.w300,
                               color:

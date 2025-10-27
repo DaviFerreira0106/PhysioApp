@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/exception/auth_signup_exception.dart';
+import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
+import 'package:physioapp/utils/app_routes.dart';
+import 'package:physioapp/utils/signup_page_form.dart';
+import 'package:provider/provider.dart';
 
 enum RadioButton {
   physioOption,
@@ -26,8 +31,34 @@ class FormSignInPatientState extends State<FormSignInPatient> {
     });
   }
 
+  Future<void> _submit() async {
+    final auth = AuthPatientService();
+    final authException = AuthSignupException();
+    try {
+      await auth.login(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      if (mounted) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          AppRoutes.homePatientPage,
+          (_) => false,
+        );
+      }
+    } catch (error) {
+      if (mounted) {
+        authException.showErrorSubmit(
+          messageError: error.toString(),
+          context: context,
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final pageForm = Provider.of<SignUpPageForm>(context);
     return Form(
       key: _formKey,
       child: Column(
@@ -116,24 +147,29 @@ class FormSignInPatientState extends State<FormSignInPatient> {
             height: 60,
             width: double.infinity,
             margin: const EdgeInsets.only(top: 20),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              onPressed: () {},
-              child: Text(
-                'Entrar',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily:
-                      Theme.of(context).textTheme.titleLarge?.fontFamily,
-                  fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
+            child: pageForm.isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                        Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    onPressed: () => _submit(),
+                    child: Text(
+                      'Entrar',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily:
+                            Theme.of(context).textTheme.titleLarge?.fontFamily,
+                        fontSize:
+                            Theme.of(context).textTheme.titleLarge?.fontSize,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
           ),
           Container(
             margin: const EdgeInsets.only(top: 20),

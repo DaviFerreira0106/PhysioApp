@@ -8,6 +8,8 @@ import 'package:physioapp/model/user/physio/physio_user.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 
 class AuthPhysioBackendService implements AuthPhysioService {
+  String? globalToken;
+  File? image;
   // static const String _url = '10.8.121.9';
   static const String _url = '192.168.15.3';
   // static const String _url = '10.8.116.1';
@@ -26,13 +28,12 @@ class AuthPhysioBackendService implements AuthPhysioService {
     required String password,
     required String crefito,
   }) async {
-    print('crefito $crefito');
     final response = await http.post(
       Uri.parse('http://$_url:8080/auth/register'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
-        "fullname": name.toLowerCase(),
-        "email": email.toLowerCase(),
+        "fullname": name,
+        "email": email,
         "password": password,
         "user_type": "PHYSIO",
         "crefito": crefito,
@@ -40,17 +41,38 @@ class AuthPhysioBackendService implements AuthPhysioService {
     );
 
     if (response.statusCode == 201) {
-      debugPrint("ocorreu tudo bem");
-      final data = jsonDecode(response.body);
-      print(data);
-      _currentUserPhysio = PhysioUser(
-        id: data['id'].toString(),
-        crefito: data['crefito'],
-        physioType: physioType,
-        imageProfile: imageProfile,
-        name: data['fullname'],
-        email: data['email'],
+      final login = await http.post(
+        Uri.parse('http://$_url:8080/auth/login'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "email": email,
+          "password": password,
+        }),
       );
+
+      if (login.statusCode == 200) {
+        final json = jsonDecode(login.body);
+        String? token = json['token'];
+        if (token != null && token.isNotEmpty) {
+          globalToken = token;
+
+          final current = await http.get(
+            Uri.parse('http://$_url:8080/users/me'),
+            headers: {"Authorization": "Bearer $globalToken"},
+          );
+
+          final user = jsonDecode(current.body);
+          image = imageProfile;
+          _currentUserPhysio = PhysioUser(
+            id: user['id'],
+            crefito: user['crefito'],
+            physioType: physioType,
+            imageProfile: imageProfile,
+            name: user['fullname'],
+            email: user['email'],
+          );
+        }
+      }
     } else {
       debugPrint("ocorreu erro, deu ruim");
       debugPrint(response.body);
@@ -59,38 +81,48 @@ class AuthPhysioBackendService implements AuthPhysioService {
 
   @override
   Future<void> login({required String email, required String password}) async {
-    final response = await http.post(
-      Uri.parse('http://$_url:8080/auth/register'),
+    final login = await http.post(
+      Uri.parse('http://$_url:8080/auth/login'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
-        "email": email.toLowerCase(),
+        "email": email,
         "password": password,
       }),
     );
 
-    if (response.statusCode == 201) {
-      debugPrint("ocorreu tudo bem");
-      final data = jsonDecode(response.body);
+    if (login.statusCode == 200) {
+      final json = jsonDecode(login.body);
+      String? token = json['token'];
+      if (token != null && token.isNotEmpty) {
+        globalToken = token;
 
-      debugPrint(data);
+        final current = await http.get(
+          Uri.parse('http://$_url:8080/users/me'),
+          headers: {"Authorization": "Bearer $globalToken"},
+        );
 
-      // _currentUserPhysio = PhysioUser(
-      //   id: data['id'].toString(),
-      //   crefito: data['crefito'],
-      //   physioType: physioType,
-      //   imageProfile: imageProfile,
-      //   name: data['fullname'],
-      //   email: data['email'],
-      // );
+        final user = jsonDecode(current.body);
+        debugPrint('User ===> $user');
+        image = image;
+        _currentUserPhysio = PhysioUser(
+          id: user['id'],
+          crefito: user['crefito'],
+          physioType: RadioButton.physioOption,
+          imageProfile: File(image?.path ?? ''),
+          name: user['fullname'],
+          email: user['email'],
+        );
+      }
     } else {
       debugPrint("ocorreu erro, deu ruim");
-      debugPrint(response.body);
+      debugPrint(login.body);
     }
   }
 
   @override
   Future<void> logout() async {
     _currentUserPhysio = null;
+    globalToken = null;
     AuthFormData.crefito = null;
     AuthFormData.imageProfile = null;
   }

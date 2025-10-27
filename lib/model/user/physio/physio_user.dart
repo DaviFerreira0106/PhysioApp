@@ -36,4 +36,8 @@ class PhysioUser {
         nameSplitted.last.substring(1);
     return '$firstPart $lastPart';
   }
+
+  String obscureText(String text) {
+    return text.substring(0).replaceRange(0, text.length, '*****');
+  }
 }
