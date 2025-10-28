@@ -8,11 +8,11 @@ import 'package:physioapp/model/user/physio/physio_user.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 
 class AuthPhysioBackendService implements AuthPhysioService {
-  String? globalToken;
+  String? _globalToken;
   File? image;
   // static const String _url = '10.8.121.9';
-  // static const String _url = '192.168.15.3';
-  static const String _url = '10.8.116.1';
+  static const String _url = '192.168.15.3';
+  // static const String _url = '10.8.116.1';
   static PhysioUser? _currentUserPhysio;
 
   @override
@@ -54,11 +54,11 @@ class AuthPhysioBackendService implements AuthPhysioService {
         final json = jsonDecode(login.body);
         String? token = json['token'];
         if (token != null && token.isNotEmpty) {
-          globalToken = token;
+          _globalToken = token;
 
           final current = await http.get(
             Uri.parse('http://$_url:8080/users/me'),
-            headers: {"Authorization": "Bearer $globalToken"},
+            headers: {"Authorization": "Bearer $_globalToken"},
           );
 
           final user = jsonDecode(current.body);
@@ -94,11 +94,11 @@ class AuthPhysioBackendService implements AuthPhysioService {
       final json = jsonDecode(login.body);
       String? token = json['token'];
       if (token != null && token.isNotEmpty) {
-        globalToken = token;
+        _globalToken = token;
 
         final current = await http.get(
           Uri.parse('http://$_url:8080/users/me'),
-          headers: {"Authorization": "Bearer $globalToken"},
+          headers: {"Authorization": "Bearer $_globalToken"},
         );
 
         final user = jsonDecode(current.body);
@@ -122,7 +122,7 @@ class AuthPhysioBackendService implements AuthPhysioService {
   @override
   Future<void> logout() async {
     _currentUserPhysio = null;
-    globalToken = null;
+    _globalToken = null;
     AuthFormData.crefito = null;
     AuthFormData.imageProfile = null;
   }

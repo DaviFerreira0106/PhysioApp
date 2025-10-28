@@ -8,6 +8,8 @@ import 'package:physioapp/services/auth/auth_form.dart';
 import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
 
 class AuthPatientBackendService implements AuthPatientService {
+  String? _globalToken;
+  File? image;
   // static const String _url = '10.8.121.9';
   static const String _url = '192.168.15.3';
   // static const String _url = '10.8.116.1';
@@ -29,25 +31,47 @@ class AuthPatientBackendService implements AuthPatientService {
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "user_type": "PATIENT",
-        "username": name.toLowerCase(),
         "fullname": name.toLowerCase(),
         "email": email,
-        "phone": "555-1234",
         "password": password,
-        "role": "PATIENT"
       }),
     );
 
     if (response.statusCode == 201) {
       debugPrint("ocorreu tudo bem");
-      final data = jsonDecode(response.body);
-
-      _currentUserPatient = PatientUser(
-        id: data['id'].toString(),
-        imageProfile: imageProfile,
-        name: data['fullname'],
-        email: data['email'],
+      final login = await http.post(
+        Uri.parse('http://$_url:8080/auth/login'),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "email": email,
+          "password": password,
+        }),
       );
+
+      if (login.statusCode == 200) {
+        final json = jsonDecode(login.body);
+        String? token = json['token'];
+
+        if (token != null && token.isNotEmpty) {
+          _globalToken = token;
+
+          final current = await http.get(
+            Uri.parse('http://$_url:8080/users/me'),
+            headers: {"Authorization": "Bearer $_globalToken"},
+          );
+
+          final user = jsonDecode(current.body);
+
+          image = imageProfile;
+
+          _currentUserPatient = PatientUser(
+            id: user['id'].toString(),
+            imageProfile: imageProfile,
+            name: user['fullname'],
+            email: user['email'],
+          );
+        }
+      }
     } else {
       debugPrint("ocorreu erro, deu ruim");
       debugPrint(response.body);
@@ -65,12 +89,33 @@ class AuthPatientBackendService implements AuthPatientService {
       }),
     );
 
-    debugPrint(login.body);
+    if (login.statusCode == 200) {
+      final json = jsonDecode(login.body);
+      String? token = json['token'];
+      if (token != null && token.isNotEmpty) {
+        _globalToken = token;
+
+        final current = await http.get(
+          Uri.parse('http://$_url:8080/users/me'),
+          headers: {"Authorization": "Bearer $_globalToken"},
+        );
+
+        final user = jsonDecode(current.body);
+        image = image;
+        _currentUserPatient = PatientUser(
+          id: user['id'].toString(),
+          imageProfile: File(image?.path ?? ''),
+          name: user['fullname'],
+          email: user['email'],
+        );
+      }
+    }
   }
 
   @override
   Future<void> logout() async {
     _currentUserPatient = null;
+    _globalToken = null;
     AuthFormData.imageProfile = null;
   }
 }

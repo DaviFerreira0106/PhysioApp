@@ -22,19 +22,13 @@ class FormSignInPatientState extends State<FormSignInPatient> {
   bool _vibilityPassword = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  RadioButton _radioPhysioValue = RadioButton.physioOption;
-  bool _physioOptionSelect() => _radioPhysioValue == RadioButton.physioOption;
-
-  void _onChangedRadioValue({required RadioButton? value}) {
-    setState(() {
-      _radioPhysioValue = value ?? RadioButton.physioOption;
-    });
-  }
 
   Future<void> _submit() async {
     final auth = AuthPatientService();
     final authException = AuthSignupException();
+    final pageForm = Provider.of<SignUpPageForm>(context, listen: false);
     try {
+      pageForm.toggleLoadingValue();
       await auth.login(
         email: _emailController.text,
         password: _passwordController.text,
@@ -53,6 +47,8 @@ class FormSignInPatientState extends State<FormSignInPatient> {
           context: context,
         );
       }
+    } finally {
+      pageForm.toggleLoadingValue();
     }
   }
 
