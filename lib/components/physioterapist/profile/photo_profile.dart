@@ -1,4 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
+import 'package:path_provider/path_provider.dart' as syspath;
+import 'package:path/path.dart' as path;
 
 class PhotoProfile extends StatefulWidget {
   const PhotoProfile({super.key});
@@ -8,15 +14,43 @@ class PhotoProfile extends StatefulWidget {
 }
 
 class PhotoProfileState extends State<PhotoProfile> {
+  final ImagePicker _picket = ImagePicker();
+  File? _image;
+
+  Future<void> _getImage({required AuthPhysioService currentUser}) async {
+    final image = await _picket.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 600,
+    );
+
+    if (image != null) {
+      setState(() => _image = File(image.path));
+
+      // Acessando o diretorio de documentos
+      final appDir = await syspath.getApplicationDocumentsDirectory();
+
+      // Pegando o nome do arquivo em questão
+      final imageName = path.basename(_image!.path);
+
+      // Salvando o arquivo em um caminho corrente nos documentos do dispositivo
+      final saveImage = await _image!.copy('${appDir.path}/$imageName');
+
+      currentUser.currentPhysioUser!.imageProfile = File(saveImage.path);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final currentUser = AuthPhysioService();
     return SizedBox(
       height: 110,
       width: 110,
       child: Stack(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             backgroundColor: Colors.grey,
+            backgroundImage:
+                FileImage(currentUser.currentPhysioUser!.imageProfile),
             maxRadius: 50,
           ),
           Positioned(
@@ -38,7 +72,7 @@ class PhotoProfileState extends State<PhotoProfile> {
                 ],
               ),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () => _getImage(currentUser: currentUser),
                 icon: Icon(
                   Icons.camera_alt_rounded,
                   color: Theme.of(context).textTheme.labelSmall?.color,

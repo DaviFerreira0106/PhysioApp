@@ -72,6 +72,15 @@ class AppDrawer extends StatelessWidget {
               color: Colors.grey[300],
             ),
             _componentDrawer(
+              icon: Icons.person_add_alt_1_rounded,
+              title: 'Adicionar Paciente',
+              function: () =>
+                  Navigator.of(context).pushNamed(AppRoutes.addPatientPage),
+            ),
+            Divider(
+              color: Colors.grey[300],
+            ),
+            _componentDrawer(
                 icon: Icons.logout_rounded,
                 title: 'Sair',
                 function: () async {

@@ -11,8 +11,8 @@ class AuthPhysioBackendService implements AuthPhysioService {
   String? globalToken;
   File? image;
   // static const String _url = '10.8.121.9';
-  static const String _url = '192.168.15.3';
-  // static const String _url = '10.8.116.1';
+  // static const String _url = '192.168.15.3';
+  static const String _url = '10.8.116.1';
   static PhysioUser? _currentUserPhysio;
 
   @override

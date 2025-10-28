@@ -6,7 +6,7 @@ class PhysioUser {
   final String id;
   final String crefito;
   final RadioButton physioType;
-  final File imageProfile;
+  File imageProfile;
   final String name;
   final String email;
 
