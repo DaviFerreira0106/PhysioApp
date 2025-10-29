@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/components/patient/app_drawer_patient.dart';
 import 'package:physioapp/components/patient/home/scheduled_appointments.dart';
 import 'package:physioapp/components/patient/home/view_shared_exercises_patient.dart';
 import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
@@ -8,8 +9,10 @@ class HomePatientPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _scaffoldKey = GlobalKey<ScaffoldState>();
     final currentUser = AuthPatientService();
     return Scaffold(
+      key: _scaffoldKey,
       body: SafeArea(
         child: Stack(
           children: [
@@ -27,13 +30,17 @@ class HomePatientPage extends StatelessWidget {
                             children: [
                               Container(
                                 margin: const EdgeInsets.only(left: 20),
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.grey,
-                                  backgroundImage: FileImage(
-                                    currentUser
-                                        .currentPatientUser!.imageProfile,
+                                child: GestureDetector(
+                                  onTap: () =>
+                                      _scaffoldKey.currentState?.openDrawer(),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.grey,
+                                    backgroundImage: FileImage(
+                                      currentUser
+                                          .currentPatientUser!.imageProfile,
+                                    ),
+                                    minRadius: 30,
                                   ),
-                                  minRadius: 30,
                                 ),
                               ),
                               Container(
@@ -90,6 +97,7 @@ class HomePatientPage extends StatelessWidget {
           ],
         ),
       ),
+      drawer: const AppDrawerPatient(),
     );
   }
 }
