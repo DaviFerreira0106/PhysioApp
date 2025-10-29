@@ -15,6 +15,7 @@ class AppRoutes {
   static const String exercisesListPage = '/exercises-list-page';
   static const String exercisesDetailPage = '/exercises-detail-page';
   static const String addExercisePage = '/add-exercise-page';
-  static const String homePatientPage = '/home-patient-page';
+  static const String tabPagePatient = '/tab-pagep-patient';
   static const String addPatientPage = '/add-patient-page';
+  static const String addPhysioPage = '/add-physio-page';
 }

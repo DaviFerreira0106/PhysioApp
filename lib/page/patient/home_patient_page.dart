@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/patient/app_drawer_patient.dart';
+
 import 'package:physioapp/components/patient/home/scheduled_appointments.dart';
 import 'package:physioapp/components/patient/home/view_shared_exercises_patient.dart';
 import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
@@ -15,6 +16,7 @@ class HomePatientPage extends StatelessWidget {
       key: _scaffoldKey,
       body: SafeArea(
         child: Stack(
+          alignment: Alignment.center,
           children: [
             SingleChildScrollView(
               child: Column(

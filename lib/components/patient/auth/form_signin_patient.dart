@@ -36,7 +36,7 @@ class FormSignInPatientState extends State<FormSignInPatient> {
 
       if (mounted) {
         Navigator.of(context).pushNamedAndRemoveUntil(
-          AppRoutes.homePatientPage,
+          AppRoutes.tabPagePatient,
           (_) => false,
         );
       }

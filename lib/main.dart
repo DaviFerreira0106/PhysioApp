@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/page/patient/home_patient_page.dart';
+import 'package:physioapp/page/patient/add_physio_page.dart';
+import 'package:physioapp/page/patient/tab_page.dart';
 import 'package:physioapp/page/physioterapist/add_exercise_page.dart';
 import 'package:physioapp/page/physioterapist/add_patient_page.dart';
 import 'package:physioapp/services/auth/auth_form.dart';
@@ -7,6 +8,7 @@ import 'package:physioapp/services/exercises/physio/exercise_controller.dart';
 import 'package:physioapp/services/exercises/physio/exercises_controller_form.dart';
 import 'package:physioapp/services/exercises/physio/exercises_controller_component.dart';
 import 'package:physioapp/services/navigation/bottom_nav_bar_controller.dart';
+import 'package:physioapp/services/navigation/bottom_nav_bar_patient_controller.dart';
 import 'package:physioapp/services/profile/physio/physio_profile_service.dart';
 import 'package:physioapp/services/schedule/schedule_appointment_controller.dart';
 import 'package:physioapp/services/schedule/schedule_appointment_form.dart';
@@ -50,6 +52,9 @@ class PhysioApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BottomNavBarController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BottomNavBarPatientController(),
         ),
         ChangeNotifierProvider(
           create: (context) => ScheduleAppointmentForm(),
@@ -179,8 +184,9 @@ class PhysioApp extends StatelessWidget {
           AppRoutes.exercisesDetailPage: (context) =>
               const ExercisesDetailPage(),
           AppRoutes.addExercisePage: (context) => const AddExercisePage(),
-          AppRoutes.homePatientPage: (context) => const HomePatientPage(),
+          AppRoutes.tabPagePatient: (context) => const TabPage(),
           AppRoutes.addPatientPage: (context) => const AddPatientPage(),
+          AppRoutes.addPhysioPage: (context) => const AddPhysioPage(),
         },
       ),
     );

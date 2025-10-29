@@ -75,7 +75,7 @@ class AppDrawerPatient extends StatelessWidget {
               icon: Icons.person_add_alt_1_rounded,
               title: 'Adicionar Fisioterapeuta',
               function: () =>
-                  Navigator.of(context).pushNamed(AppRoutes.addPatientPage),
+                  Navigator.of(context).pushNamed(AppRoutes.addPhysioPage),
             ),
             Divider(
               color: Colors.grey[300],

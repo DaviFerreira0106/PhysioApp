@@ -45,7 +45,7 @@ class _SignupPatientPageState extends State<SignupPatientPage> {
 
       if (mounted) {
         Navigator.of(context).pushNamedAndRemoveUntil(
-          AppRoutes.homePatientPage,
+          AppRoutes.tabPagePatient,
           (_) => false,
         );
       }
