@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/exercises/list_steps_exercises.dart';
 import 'package:physioapp/exception/auth_signup_exception.dart';
-import 'package:physioapp/services/exercises/exercises_controller_form.dart';
+import 'package:physioapp/services/exercises/physio/exercises_controller_form.dart';
 import 'package:provider/provider.dart';
 
 class FirstAddExerciseForm extends StatefulWidget {

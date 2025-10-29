@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/model/exercises/exercise.dart';
-import 'package:physioapp/services/exercises/exercise_controller.dart';
+import 'package:physioapp/services/exercises/physio/exercise_controller.dart';
 import 'package:physioapp/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 

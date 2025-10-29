@@ -12,14 +12,13 @@ class _SharedExerciseItemPatientState extends State<SharedExerciseItemPatient> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blue,
-      height: 220,
-      width: 280,
+      width: 240,
+      margin: const EdgeInsets.symmetric(horizontal: 3),
       child: Card(
         child: Column(
           children: [
             ClipRRect(
-              borderRadius: BorderRadiusGeometry.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),

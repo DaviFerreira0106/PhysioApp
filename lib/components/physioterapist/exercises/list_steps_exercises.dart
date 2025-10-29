@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/services/exercises/exercises_controller_form.dart';
+import 'package:physioapp/services/exercises/physio/exercises_controller_form.dart';
 import 'package:provider/provider.dart';
 
 class ListStepsExercises extends StatefulWidget {

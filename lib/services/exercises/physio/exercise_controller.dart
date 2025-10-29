@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:physioapp/model/exercises/category.dart';
 import 'package:physioapp/model/exercises/exercise.dart';
 import 'package:physioapp/data/exercises_mock_data.dart';
-import 'package:physioapp/services/exercises/exercises_controller_form.dart';
+import 'package:physioapp/services/exercises/physio/exercises_controller_form.dart';
 
 class ExerciseController with ChangeNotifier {
   final List<Exercise> _listExercises = ExercisesMockData().exercisesList;

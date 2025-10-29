@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/exercises/box_exercises_type.dart';
-import 'package:physioapp/services/exercises/category_controller.dart';
+import 'package:physioapp/services/exercises/physio/category_controller.dart';
 
 class GridViewExercises extends StatelessWidget {
   const GridViewExercises({super.key});

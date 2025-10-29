@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/exercises/exercises_list.dart';
 import 'package:physioapp/model/exercises/category.dart';
-import 'package:physioapp/services/exercises/exercise_controller.dart';
+import 'package:physioapp/services/exercises/physio/exercise_controller.dart';
 import 'package:provider/provider.dart';
 
 class ExercisesListPage extends StatelessWidget {

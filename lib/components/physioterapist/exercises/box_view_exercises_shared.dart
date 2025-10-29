@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/services/exercises/phtysio/exercises_controller_component.dart';
+import 'package:physioapp/services/exercises/physio/exercises_controller_component.dart';
 import 'package:provider/provider.dart';
 
 class BoxViewExercisesShared extends StatelessWidget {

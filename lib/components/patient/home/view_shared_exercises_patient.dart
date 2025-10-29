@@ -14,8 +14,8 @@ class _ViewSharedExercisesPatientState
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.amber,
-      height: 300,
+      height: 260,
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,12 +28,12 @@ class _ViewSharedExercisesPatientState
               ),
             ],
           ),
-          Container(
-            width: double.infinity,
-            height: double.infinity,
+          Flexible(
+            fit: FlexFit.loose,
             child: ListView.builder(
+              scrollDirection: Axis.horizontal,
               shrinkWrap: true,
-              itemCount: 1,
+              itemCount: 2,
               itemBuilder: (context, index) {
                 return SharedExerciseItemPatient();
               },
