@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/page/patient/add_physio_page.dart';
-import 'package:physioapp/page/patient/tab_page.dart';
+import 'package:physioapp/page/patient/tabs_page_patient.dart';
 import 'package:physioapp/page/physioterapist/add_exercise_page.dart';
 import 'package:physioapp/page/physioterapist/add_patient_page.dart';
+import 'package:physioapp/page/physioterapist/exercises_page_physio.dart';
+import 'package:physioapp/page/physioterapist/tabs_page_physio.dart';
 import 'package:physioapp/services/auth/auth_form.dart';
 import 'package:physioapp/services/exercises/physio/exercise_controller.dart';
 import 'package:physioapp/services/exercises/physio/exercises_controller_form.dart';
@@ -17,13 +19,8 @@ import 'package:physioapp/page/patient/signin_patient_page.dart';
 import 'package:physioapp/page/patient/signup_patient_page.dart';
 import 'package:physioapp/page/physioterapist/exercises_detail_page.dart';
 import 'package:physioapp/page/physioterapist/exercises_list_page.dart';
-import 'package:physioapp/page/physioterapist/home_physio_page.dart';
 import 'package:physioapp/page/physioterapist/message_page.dart';
 import 'package:physioapp/utils/app_routes.dart';
-import 'package:physioapp/page/physioterapist/exercises_page_physio.dart';
-import 'package:physioapp/page/physioterapist/chat_page_physio.dart';
-import 'package:physioapp/page/physioterapist/physio_profile_page.dart';
-import 'package:physioapp/page/physioterapist/schedule_appointment_page.dart';
 import 'package:physioapp/page/physio_or_patient_page.dart';
 import 'package:physioapp/page/physioterapist/auth_physio_page.dart';
 import 'package:physioapp/page/patient/auth_patient_page.dart';
@@ -52,7 +49,7 @@ class PhysioApp extends StatelessWidget {
           create: (context) => ExercisesControllerComponent(),
         ),
         ChangeNotifierProvider(
-          create: (context) => BottomNavBarController(),
+          create: (context) => BottomNavBarPhysioController(),
         ),
         ChangeNotifierProvider(
           create: (context) => BottomNavBarPatientController(),
@@ -170,13 +167,6 @@ class PhysioApp extends StatelessWidget {
         home: const PhysioOrPatientPage(),
         initialRoute: AppRoutes.initialAppPage,
         routes: {
-          AppRoutes.homePagePhysio: (context) => const HomePhysioPage(),
-          AppRoutes.exercisesPagePhysio: (context) =>
-              const ExercisesPagePhysio(),
-          AppRoutes.chatPagePhysio: (context) => const ChatPagePhysio(),
-          AppRoutes.physioProfilePage: (context) => const PhysioProfilePage(),
-          AppRoutes.scheduleAppointmentPage: (context) =>
-              const ScheduleAppointmentPage(),
           AppRoutes.authPhysioPage: (context) => const AuthPhysioPage(),
           AppRoutes.authPatientPage: (context) => const AuthPatientPage(),
           AppRoutes.signInPhysioPage: (context) => const SigninPhysioPage(),
@@ -188,9 +178,12 @@ class PhysioApp extends StatelessWidget {
           AppRoutes.exercisesDetailPage: (context) =>
               const ExercisesDetailPage(),
           AppRoutes.addExercisePage: (context) => const AddExercisePage(),
-          AppRoutes.tabPagePatient: (context) => const TabPage(),
+          AppRoutes.tabPagePatient: (context) => const TabsPagePatient(),
           AppRoutes.addPatientPage: (context) => const AddPatientPage(),
           AppRoutes.addPhysioPage: (context) => const AddPhysioPage(),
+          AppRoutes.tabPagePhysio: (context) => const TabsPagePhysio(),
+          AppRoutes.exercisesPagePhysio: (context) =>
+              const ExercisesPagePhysio()
         },
       ),
     );

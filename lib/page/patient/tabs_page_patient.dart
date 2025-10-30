@@ -7,14 +7,14 @@ import 'package:physioapp/page/patient/patient_profile_page.dart';
 import 'package:physioapp/services/navigation/bottom_nav_bar_patient_controller.dart';
 import 'package:provider/provider.dart';
 
-class TabPage extends StatefulWidget {
-  const TabPage({super.key});
+class TabsPagePatient extends StatefulWidget {
+  const TabsPagePatient({super.key});
 
   @override
-  State<TabPage> createState() => _TabPageState();
+  State<TabsPagePatient> createState() => _TabsPagePatientState();
 }
 
-class _TabPageState extends State<TabPage> {
+class _TabsPagePatientState extends State<TabsPagePatient> {
   final List<Map<String, Object>> _indexScreen = [
     {
       'title': '',
@@ -29,7 +29,7 @@ class _TabPageState extends State<TabPage> {
       'screen': const PatientProfilePage(),
     },
     {
-      'title': 'Seus Exercícios',
+      'title': '',
       'screen': const ExercisesPage(),
     }
   ];

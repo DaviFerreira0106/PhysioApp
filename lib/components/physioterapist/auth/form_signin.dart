@@ -45,7 +45,7 @@ class FormSignInState extends State<FormSignIn> {
 
       if (mounted) {
         Navigator.of(context)
-            .pushNamedAndRemoveUntil(AppRoutes.homePagePhysio, (_) => false);
+            .pushNamedAndRemoveUntil(AppRoutes.tabPagePhysio, (_) => false);
       }
     } catch (error) {
       if (mounted) {

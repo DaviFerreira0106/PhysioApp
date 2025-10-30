@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
 
-enum IndexPage {
-  home,
-  chat,
-  exercises,
-  profile,
-  addQuery,
-}
+class BottomNavBarPhysioController with ChangeNotifier{
+  int _index = 0;
 
-class BottomNavBarController with ChangeNotifier {
-  IndexPage _currentPage = IndexPage.home;
+  int get index => _index;
 
-  IndexPage get getCurrentPage => _currentPage;
-
-  void setCurrentPage({required IndexPage indexPage}) {
-    _currentPage = indexPage;
+  void toggleIndex({required int index}) {
+    _index = index;
     notifyListeners();
   }
 }

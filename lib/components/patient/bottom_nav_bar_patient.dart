@@ -41,7 +41,7 @@ class BottomNavBarPatientState extends State<BottomNavBarPatient> {
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = Provider.of<BottomNavBarPatientController>(context);
+    final currentPage = Provider.of<BottomNavBarPatientController>(context);
     return Container(
       width: 380,
       height: 76,
@@ -57,22 +57,22 @@ class BottomNavBarPatientState extends State<BottomNavBarPatient> {
           _buttomIcons(
             icon: Icons.home_filled,
             indexPage: 0,
-            currentIndex: currentIndex,
+            currentIndex: currentPage,
           ),
           _buttomIcons(
             icon: Icons.chat_bubble_rounded,
             indexPage: 1,
-            currentIndex: currentIndex,
+            currentIndex: currentPage,
           ),
           _buttomIcons(
             icon: Icons.person,
             indexPage: 2,
-            currentIndex: currentIndex,
+            currentIndex: currentPage,
           ),
           _buttomIcons(
             icon: Icons.auto_awesome_mosaic_rounded,
             indexPage: 3,
-            currentIndex: currentIndex,
+            currentIndex: currentPage,
           ),
         ],
       ),

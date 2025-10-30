@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
 import 'package:physioapp/components/physioterapist/exercises/grid_view_exercises.dart';
 import 'package:physioapp/components/physioterapist/exercises/shared_exercises_view.dart';
 import 'package:physioapp/services/exercises/physio/exercises_controller_component.dart';
@@ -25,55 +24,46 @@ class ExercisesPagePhysio extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  if (exercisesProvider.listComponent.isNotEmpty)
-                    const SharedExercisesView(),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.74,
-                    width: double.infinity,
-                    child: const Padding(
-                      padding: EdgeInsets.only(
-                        right: 10,
-                        left: 10,
-                      ),
-                      child: GridViewExercises(),
-                    ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              if (exercisesProvider.listComponent.isNotEmpty)
+                const SharedExercisesView(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.74,
+                width: double.infinity,
+                child: const Padding(
+                  padding: EdgeInsets.only(
+                    right: 10,
+                    left: 10,
                   ),
-                  Container(
-                    height: 50,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.of(context)
-                            .pushNamed(AppRoutes.addExercisePage);
-                      },
-                      child: Text(
-                        'Adicionar exercício',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 120,
-                  ),
-                ],
+                  child: GridViewExercises(),
+                ),
               ),
-            ),
-            const Positioned(
-              bottom: 24,
-              child: BottomNavBar(),
-            ),
-          ],
+              Container(
+                height: 50,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(AppRoutes.addExercisePage);
+                  },
+                  child: Text(
+                    'Adicionar exercício',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 120,
+              ),
+            ],
+          ),
         ),
       ),
     );

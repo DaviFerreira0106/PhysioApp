@@ -53,7 +53,7 @@ class _SignupPhysioPageState extends State<SignupPhysioPage> {
         );
 
         Navigator.of(context).pushNamedAndRemoveUntil(
-          AppRoutes.homePagePhysio,
+          AppRoutes.tabPagePhysio,
           (_) => false,
         );
       }

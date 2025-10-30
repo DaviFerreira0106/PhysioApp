@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:physioapp/components/physioterapist/bottom_nav_bar.dart';
 import 'package:physioapp/components/physioterapist/chat/list_patient.dart';
 import 'package:physioapp/components/physioterapist/chat/search_patient.dart';
 import 'package:physioapp/components/physioterapist/chat/select_patient_photo.dart';
@@ -18,36 +17,28 @@ class ChatPagePhysio extends StatelessWidget {
       body: SafeArea(
         child: SizedBox(
           height: double.infinity,
-          child: Stack(
+          child: Column(
             children: [
-              Column(
-                children: [
-                  const SearchPatient(),
-                  SelectPatientPhoto(
-                    imagePatient: File(
-                        ''),
-                    patientCount: 15,
-                  ),
-                  ListPatient(
-                    namePatient:
-                        'Davi ferreira da silva de oliveira cavalcante',
-                    message: 'Preview message',
-                    dateTime: DateTime.now(),
-                    messageQuantity: 2,
-                  ),
-                  ListPatient(
-                    namePatient:
-                        'Davi ferreira da silva de oliveira cavalcante',
-                    message: 'Preview message',
-                    dateTime: DateTime.now(),
-                    messageQuantity: 3,
-                  ),
-                ],
+              const SearchPatient(),
+              SelectPatientPhoto(
+                imagePatient: File(
+                    ''),
+                patientCount: 15,
               ),
-              const Positioned(
-                bottom: 24,
-                child: BottomNavBar(),
-              )
+              ListPatient(
+                namePatient:
+                    'Davi ferreira da silva de oliveira cavalcante',
+                message: 'Preview message',
+                dateTime: DateTime.now(),
+                messageQuantity: 2,
+              ),
+              ListPatient(
+                namePatient:
+                    'Davi ferreira da silva de oliveira cavalcante',
+                message: 'Preview message',
+                dateTime: DateTime.now(),
+                messageQuantity: 3,
+              ),
             ],
           ),
         ),
