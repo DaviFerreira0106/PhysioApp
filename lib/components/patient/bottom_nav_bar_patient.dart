@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/services/navigation/bottom_nav_bar_patient_controller.dart';
-import 'package:physioapp/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
 class BottomNavBarPatient extends StatefulWidget {
@@ -15,7 +14,6 @@ class BottomNavBarPatient extends StatefulWidget {
 class BottomNavBarPatientState extends State<BottomNavBarPatient> {
   Widget _buttomIcons({
     required IconData icon,
-    required String routePage,
     required int indexPage,
   }) {
     final bottomNavProvider = Provider.of<BottomNavBarPatientController>(
@@ -47,7 +45,6 @@ class BottomNavBarPatientState extends State<BottomNavBarPatient> {
 
   @override
   Widget build(BuildContext context) {
-    final indexProvider = Provider.of<BottomNavBarPatientController>(context);
     return Container(
       width: 380,
       height: 76,
@@ -62,24 +59,20 @@ class BottomNavBarPatientState extends State<BottomNavBarPatient> {
         children: [
           _buttomIcons(
             icon: Icons.home_filled,
-            routePage: AppRoutes.homePagePhysio,
             indexPage: 0,
           ),
           _buttomIcons(
             icon: Icons.chat_bubble_rounded,
-            routePage: AppRoutes.chatPagePhysio,
             indexPage: 1,
           ),
-          // _buttomIcons(
-          //   icon: Icons.person,
-          //   routePage: AppRoutes.physioProfilePage,
-          //   indexPage: indexProvider.toggleIndex(index: 3),
-          // ),
-          // _buttomIcons(
-          //   icon: Icons.auto_awesome_mosaic_rounded,
-          //   routePage: AppRoutes.exercisesPagePhysio,
-          //   indexPage: indexProvider.toggleIndex(index: 4),
-          // ),
+          _buttomIcons(
+            icon: Icons.person,
+            indexPage: 2,
+          ),
+          _buttomIcons(
+            icon: Icons.auto_awesome_mosaic_rounded,
+            indexPage: 3,
+          ),
         ],
       ),
     );

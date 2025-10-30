@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/patient/bottom_nav_bar_patient.dart';
 import 'package:physioapp/page/patient/chat_patient_page.dart';
+import 'package:physioapp/page/patient/exercises_page.dart';
 import 'package:physioapp/page/patient/home_patient_page.dart';
+import 'package:physioapp/page/patient/patient_profile_page.dart';
 import 'package:physioapp/services/navigation/bottom_nav_bar_patient_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -13,15 +15,23 @@ class TabPage extends StatefulWidget {
 }
 
 class _TabPageState extends State<TabPage> {
-  final _indexScreen = [
+  final List<Map<String, Object>> _indexScreen = [
     {
       'title': '',
-      'screen': HomePatientPage(),
+      'screen': const HomePatientPage(),
     },
     {
       'title': '',
-      'screen': ChatPatientPage(),
+      'screen': const ChatPatientPage(),
     },
+    {
+      'title': '',
+      'screen': const PatientProfilePage(),
+    },
+    {
+      'title': 'Seus Exercícios',
+      'screen': const ExercisesPage(),
+    }
   ];
 
   @override
