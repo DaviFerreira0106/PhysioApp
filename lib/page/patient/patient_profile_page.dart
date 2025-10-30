@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/patient/profile/profile_data_patient.dart';
 import 'package:physioapp/components/physioterapist/profile/%20data_visualization.dart';
-import 'package:physioapp/components/photo_profile.dart';
+import 'package:physioapp/components/patient/profile/photo_profile_patient.dart';
 import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
 import 'package:physioapp/services/profile/patient/patient_profile_service.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +45,7 @@ class PatientProfilePage extends StatelessWidget {
                         child: const Stack(
                           children: [
                             Center(
-                              child: PhotoProfile(),
+                              child: PhotoProfilePatient(),
                             ),
                             Positioned(
                               right: 1,

@@ -34,10 +34,10 @@ class FormSignInState extends State<FormSignIn> {
     });
   }
 
-  Future<void> _submit() async {
+  Future<void> _submit({required SignUpPageForm pageForm}) async {
     final auth = AuthPhysioService();
     try {
-      
+      pageForm.toggleLoadingValue();
       await auth.login(
         email: formData.email!,
         password: formData.password!,
@@ -52,6 +52,8 @@ class FormSignInState extends State<FormSignIn> {
         authException.showErrorSubmit(
             messageError: error.toString(), context: context);
       }
+    } finally {
+      pageForm.toggleLoadingValue();
     }
   }
 
@@ -221,7 +223,7 @@ class FormSignInState extends State<FormSignIn> {
                         Theme.of(context).colorScheme.primary,
                       ),
                     ),
-                    onPressed: () => _submit(),
+                    onPressed: () => _submit(pageForm: pageForm),
                     child: Text(
                       'Entrar',
                       style: TextStyle(

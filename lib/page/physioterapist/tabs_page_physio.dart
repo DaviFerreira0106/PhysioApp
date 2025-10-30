@@ -27,11 +27,11 @@ class _TabsPagePhysioState extends State<TabsPagePhysio> {
     },
     {
       'title': '',
-      'screen': const PhysioProfilePage(),
+      'screen': const ExercisesPagePhysio(),
     },
     {
       'title': '',
-      'screen': const ExercisesPagePhysio(),
+      'screen': const PhysioProfilePage(),
     },
     {
       'title': '',
