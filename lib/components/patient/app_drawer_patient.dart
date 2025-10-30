@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
+import 'package:physioapp/services/navigation/bottom_nav_bar_patient_controller.dart';
 import 'package:physioapp/utils/app_routes.dart';
+import 'package:provider/provider.dart';
 
 class AppDrawerPatient extends StatelessWidget {
   const AppDrawerPatient({super.key});
@@ -10,11 +12,13 @@ class AppDrawerPatient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentUser = AuthPatientService();
+    final currentPage = Provider.of<BottomNavBarPatientController>(context);
 
-    Widget _userComponentDrawer(
-        {required String name,
-        required String email,
-        required File imageProfile}) {
+    Widget _userComponentDrawer({
+      required String name,
+      required String email,
+      required File imageProfile,
+    }) {
       return Container(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
@@ -63,11 +67,9 @@ class AppDrawerPatient extends StatelessWidget {
               color: Colors.grey[300],
             ),
             _componentDrawer(
-              icon: Icons.account_circle_rounded,
-              title: 'Minha Conta',
-              function: () => Navigator.of(context)
-                  .pushReplacementNamed(AppRoutes.physioProfilePage),
-            ),
+                icon: Icons.account_circle_rounded,
+                title: 'Minha Conta',
+                function: () => currentPage.toggleIndex(index: 2)),
             Divider(
               color: Colors.grey[300],
             ),

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
+import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
 import 'package:path_provider/path_provider.dart' as syspath;
 import 'package:path/path.dart' as path;
 
@@ -17,7 +17,7 @@ class PhotoProfileState extends State<PhotoProfile> {
   final ImagePicker _picket = ImagePicker();
   File? _image;
 
-  Future<void> _getImage({required AuthPhysioService currentUser}) async {
+  Future<void> _getImage({required AuthPatientService currentUser}) async {
     final image = await _picket.pickImage(
       source: ImageSource.gallery,
       maxWidth: 600,
@@ -35,13 +35,13 @@ class PhotoProfileState extends State<PhotoProfile> {
       // Salvando o arquivo em um caminho corrente nos documentos do dispositivo
       final saveImage = await _image!.copy('${appDir.path}/$imageName');
 
-      currentUser.currentPhysioUser!.imageProfile = File(saveImage.path);
+      currentUser.currentPatientUser!.imageProfile = File(saveImage.path);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = AuthPhysioService();
+    final currentUser = AuthPatientService();
     return SizedBox(
       height: 110,
       width: 110,
@@ -50,7 +50,7 @@ class PhotoProfileState extends State<PhotoProfile> {
           CircleAvatar(
             backgroundColor: Colors.grey,
             backgroundImage:
-                FileImage(currentUser.currentPhysioUser!.imageProfile),
+                FileImage(currentUser.currentPatientUser!.imageProfile),
             maxRadius: 50,
           ),
           Positioned(

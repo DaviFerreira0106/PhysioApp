@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/services/profile/physio/physio_profile_service.dart';
+import 'package:physioapp/services/profile/patient/patient_profile_service.dart';
 import 'package:provider/provider.dart';
 
 class DataVisualization extends StatefulWidget {
@@ -12,7 +12,7 @@ class DataVisualization extends StatefulWidget {
 class _DataVisualizationState extends State<DataVisualization> {
   @override
   Widget build(BuildContext context) {
-    final profileProvider = Provider.of<PhysioProfileService>(context);
+    final profileProvider = Provider.of<PatientProfileService>(context);
     return IconButton(
       onPressed: () => profileProvider.toggleVisibilty(),
       icon: Icon(

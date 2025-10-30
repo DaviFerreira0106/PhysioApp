@@ -12,30 +12,26 @@ class BottomNavBarPatient extends StatefulWidget {
 }
 
 class BottomNavBarPatientState extends State<BottomNavBarPatient> {
-  Widget _buttomIcons({
-    required IconData icon,
-    required int indexPage,
-  }) {
-    final bottomNavProvider = Provider.of<BottomNavBarPatientController>(
-      context,
-      listen: false,
-    );
+  Widget _buttomIcons(
+      {required IconData icon,
+      required int indexPage,
+      required BottomNavBarPatientController currentIndex}) {
     return Container(
       padding: const EdgeInsets.all(5),
       margin: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
-        color: bottomNavProvider.index == indexPage
+        color: currentIndex.index == indexPage
             ? Theme.of(context).primaryColor
             : Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(20),
       ),
       child: IconButton(
         onPressed: () {
-          bottomNavProvider.toggleIndex(index: indexPage);
+          currentIndex.toggleIndex(index: indexPage);
         },
         icon: Icon(
           icon,
-          color: bottomNavProvider.index == indexPage
+          color: currentIndex.index == indexPage
               ? Colors.white
               : Theme.of(context).textTheme.labelLarge?.color,
         ),
@@ -45,6 +41,7 @@ class BottomNavBarPatientState extends State<BottomNavBarPatient> {
 
   @override
   Widget build(BuildContext context) {
+    final currentIndex = Provider.of<BottomNavBarPatientController>(context);
     return Container(
       width: 380,
       height: 76,
@@ -60,18 +57,22 @@ class BottomNavBarPatientState extends State<BottomNavBarPatient> {
           _buttomIcons(
             icon: Icons.home_filled,
             indexPage: 0,
+            currentIndex: currentIndex,
           ),
           _buttomIcons(
             icon: Icons.chat_bubble_rounded,
             indexPage: 1,
+            currentIndex: currentIndex,
           ),
           _buttomIcons(
             icon: Icons.person,
             indexPage: 2,
+            currentIndex: currentIndex,
           ),
           _buttomIcons(
             icon: Icons.auto_awesome_mosaic_rounded,
             indexPage: 3,
+            currentIndex: currentIndex,
           ),
         ],
       ),

@@ -4,9 +4,9 @@ class PatientUser {
   final String id;
   final String name;
   final String email;
-  final File imageProfile;
+  File imageProfile;
 
-  const PatientUser({
+  PatientUser({
     required this.id,
     required this.name,
     required this.email,
