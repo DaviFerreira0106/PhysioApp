@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:physioapp/services/profile/patient/patient_profile_service.dart';
 import 'package:provider/provider.dart';
 
-class DataVisualization extends StatefulWidget {
-  const DataVisualization({super.key});
+class DataVisualizationPatient extends StatefulWidget {
+  const DataVisualizationPatient({super.key});
 
   @override
-  State<DataVisualization> createState() => _DataVisualizationState();
+  State<DataVisualizationPatient> createState() => _DataVisualizationPatientState();
 }
 
-class _DataVisualizationState extends State<DataVisualization> {
+class _DataVisualizationPatientState extends State<DataVisualizationPatient> {
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<PatientProfileService>(context);

@@ -11,8 +11,8 @@ class AuthPhysioBackendService implements AuthPhysioService {
   String? _globalToken;
   File? image;
   // static const String _url = '10.8.121.9';
-  // static const String _url = '192.168.15.3';
-  static const String _url = '10.8.116.1';
+  static const String _url = '192.168.15.3';
+  // static const String _url = '10.8.116.1';
   static PhysioUser? _currentUserPhysio;
 
   @override
@@ -28,17 +28,21 @@ class AuthPhysioBackendService implements AuthPhysioService {
     required String password,
     required String crefito,
   }) async {
-    final response = await http.post(
-      Uri.parse('http://$_url:8080/auth/register'),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({
-        "fullname": name,
-        "email": email,
-        "password": password,
-        "user_type": "PHYSIO",
-        "crefito": crefito,
-      }),
-    );
+    final response = await http
+        .post(
+          Uri.parse('http://$_url:8080/auth/register'),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({
+            "fullname": name,
+            "email": email,
+            "password": password,
+            "user_type": "PHYSIO",
+            "crefito": crefito,
+          }),
+        )
+        .timeout(
+          const Duration(seconds: 5),
+        );
 
     if (response.statusCode == 201) {
       final login = await http.post(
@@ -81,14 +85,18 @@ class AuthPhysioBackendService implements AuthPhysioService {
 
   @override
   Future<void> login({required String email, required String password}) async {
-    final login = await http.post(
-      Uri.parse('http://$_url:8080/auth/login'),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({
-        "email": email,
-        "password": password,
-      }),
-    );
+    final login = await http
+        .post(
+          Uri.parse('http://$_url:8080/auth/login'),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({
+            "email": email,
+            "password": password,
+          }),
+        )
+        .timeout(
+          const Duration(seconds: 5),
+        );
 
     if (login.statusCode == 200) {
       final json = jsonDecode(login.body);
