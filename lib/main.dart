@@ -4,6 +4,7 @@ import 'package:physioapp/page/patient/tabs_page_patient.dart';
 import 'package:physioapp/page/physioterapist/add_exercise_page.dart';
 import 'package:physioapp/page/physioterapist/add_patient_page.dart';
 import 'package:physioapp/page/physioterapist/exercises_page_physio.dart';
+import 'package:physioapp/page/physioterapist/policy_privacy_page.dart';
 import 'package:physioapp/page/physioterapist/tabs_page_physio.dart';
 import 'package:physioapp/services/auth/auth_form.dart';
 import 'package:physioapp/services/exercises/physio/exercise_controller.dart';
@@ -183,7 +184,8 @@ class PhysioApp extends StatelessWidget {
           AppRoutes.addPhysioPage: (context) => const AddPhysioPage(),
           AppRoutes.tabPagePhysio: (context) => const TabsPagePhysio(),
           AppRoutes.exercisesPagePhysio: (context) =>
-              const ExercisesPagePhysio()
+              const ExercisesPagePhysio(),
+          AppRoutes.policyPrivacyPage: (context) => const PolicyPrivacyPage(),
         },
       ),
     );

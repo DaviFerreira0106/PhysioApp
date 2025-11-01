@@ -4,6 +4,7 @@ import 'package:physioapp/components/physioterapist/exercises/time_input_formatt
 import 'package:physioapp/exception/auth_signup_exception.dart';
 import 'package:physioapp/services/exercises/physio/exercise_controller.dart';
 import 'package:physioapp/services/exercises/physio/exercises_controller_form.dart';
+import 'package:physioapp/services/navigation/bottom_nav_bar_controller.dart';
 import 'package:physioapp/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,8 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
     final authException = AuthSignupException();
     final exerciseController =
         Provider.of<ExerciseController>(context, listen: false);
+    final navigationPage =
+        Provider.of<BottomNavBarPhysioController>(context, listen: false);
 
     if (formExercise.durationVideo == null) {
       return authException.showErrorValidate(
@@ -30,9 +33,10 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
     }
 
     Navigator.of(context).pushNamedAndRemoveUntil(
-      AppRoutes.exercisesPagePhysio,
+      AppRoutes.tabPagePhysio,
       (_) => false,
     );
+    navigationPage.toggleIndex(index: 2);
     formExercise.toggleForm(valueForm: formExercise.getFirstForm);
     exerciseController.addExercises(formExercise: formExercise);
     formExercise.resetSteps();

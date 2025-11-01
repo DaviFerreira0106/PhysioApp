@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/profile/data_visualization_physio.dart';
+import 'package:physioapp/components/physioterapist/profile/other_options.dart';
 import 'package:physioapp/components/physioterapist/profile/photo_profile_physio.dart';
 import 'package:physioapp/components/physioterapist/profile/profile_data.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
@@ -13,6 +14,7 @@ class PhysioProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final physioUser = AuthPhysioService();
     final profileProvider = Provider.of<PhysioProfileService>(context);
+
     return Scaffold(
       body: SafeArea(
         child: SizedBox(
@@ -24,8 +26,7 @@ class PhysioProfilePage extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(24.0),
-                  margin:
-                      const EdgeInsets.only(left: 20, right: 20, top: 60),
+                  margin: const EdgeInsets.only(left: 20, right: 20, top: 60),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
                       begin: Alignment.topCenter,
@@ -73,8 +74,7 @@ class PhysioProfilePage extends StatelessWidget {
                                 physioUser.currentPhysioUser!.crefito),
                         style: TextStyle(
                           fontWeight: FontWeight.w300,
-                          color:
-                              Theme.of(context).textTheme.labelSmall?.color,
+                          color: Theme.of(context).textTheme.labelSmall?.color,
                           fontSize: 14,
                         ),
                       ),
@@ -84,6 +84,40 @@ class PhysioProfilePage extends StatelessWidget {
                       ProfileData(
                         physioUser: physioUser.currentPhysioUser!,
                       ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(10.0),
+                  margin: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 60,
+                    bottom: 150,
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.fromARGB(255, 223, 224, 234),
+                        Color.fromARGB(255, 233, 235, 240),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(26),
+                  ),
+                  child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Outros',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      OtherOptions(),
                     ],
                   ),
                 ),
