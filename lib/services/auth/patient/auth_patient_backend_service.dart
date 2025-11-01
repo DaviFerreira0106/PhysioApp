@@ -33,7 +33,7 @@ class AuthPatientBackendService implements AuthPatientService {
           body: jsonEncode({
             "user_type": "PATIENT",
             "fullname": name.toLowerCase(),
-            "email": email,
+            "email": email.toLowerCase(),
             "password": password,
           }),
         )
@@ -89,7 +89,7 @@ class AuthPatientBackendService implements AuthPatientService {
           Uri.parse('http://$_url:8080/auth/login'),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({
-            "email": email,
+            "email": email.toLowerCase(),
             "password": password,
           }),
         )

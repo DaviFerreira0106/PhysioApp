@@ -3,6 +3,8 @@ import 'package:physioapp/components/physioterapist/exercises/first_add_exercise
 import 'package:physioapp/components/physioterapist/exercises/second_add_exercise_form.dart';
 import 'package:physioapp/components/physioterapist/exercises/select_form_exercises.dart';
 import 'package:physioapp/services/exercises/physio/exercises_controller_form.dart';
+import 'package:physioapp/services/navigation/bottom_nav_bar_controller.dart';
+import 'package:physioapp/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
 class AddExercisePage extends StatelessWidget {
@@ -11,6 +13,7 @@ class AddExercisePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final exerciseFormProvider = Provider.of<ExercisesControllerForm>(context);
+    final navigationPage = Provider.of<BottomNavBarPhysioController>(context);
 
     void showConfirmForm() {
       showDialog(
@@ -46,7 +49,11 @@ class AddExercisePage extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              AppRoutes.tabPagePhysio,
+              (route) => false,
+            );
+            navigationPage.toggleIndex(index: 2);
             exerciseFormProvider.resetSteps();
             exerciseFormProvider.toggleForm(
                 valueForm: exerciseFormProvider.getFirstForm);

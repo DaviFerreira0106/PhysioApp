@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/components/physioterapist/bottom_nav_bar_physio.dart';
+import 'package:physioapp/components/physioterapist/navigation/bottom_nav_bar_physio.dart';
 import 'package:physioapp/page/physioterapist/chat_page_physio.dart';
 import 'package:physioapp/page/physioterapist/exercises_page_physio.dart';
 import 'package:physioapp/page/physioterapist/home_physio_page.dart';

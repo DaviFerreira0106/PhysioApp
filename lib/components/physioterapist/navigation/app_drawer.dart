@@ -68,7 +68,7 @@ class AppDrawer extends StatelessWidget {
             _componentDrawer(
               icon: Icons.account_circle_rounded,
               title: 'Minha Conta',
-              function: () => currentPage.toggleIndex(index: 2),
+              function: () => currentPage.toggleIndex(index: 3),
             ),
             Divider(
               color: Colors.grey[300],

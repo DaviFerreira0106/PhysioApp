@@ -58,6 +58,7 @@ class ExercisesControllerForm with ChangeNotifier {
     }
 
     stepAdded();
+    _enableNextButton = false;
     notifyListeners();
   }
 

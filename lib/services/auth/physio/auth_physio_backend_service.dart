@@ -33,8 +33,8 @@ class AuthPhysioBackendService implements AuthPhysioService {
           Uri.parse('http://$_url:8080/auth/register'),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({
-            "fullname": name,
-            "email": email,
+            "fullname": name.toLowerCase(),
+            "email": email.toLowerCase(),
             "password": password,
             "user_type": "PHYSIO",
             "crefito": crefito,
@@ -90,7 +90,7 @@ class AuthPhysioBackendService implements AuthPhysioService {
           Uri.parse('http://$_url:8080/auth/login'),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({
-            "email": email,
+            "email": email.toLowerCase(),
             "password": password,
           }),
         )
