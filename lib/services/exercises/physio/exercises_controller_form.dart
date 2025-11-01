@@ -11,6 +11,7 @@ class ExercisesControllerForm with ChangeNotifier {
   String? titleStep;
   String? descriptionStep;
   List<Map<String, String>> stepsExercise = [];
+  bool _selectedVideo = false;
 
   String? videoUrl;
   double? durationVideo;
@@ -23,6 +24,8 @@ class ExercisesControllerForm with ChangeNotifier {
   bool get getNextForm => _nextForm;
   bool get getEnableNextButton => _enableNextButton;
 
+  bool get videoSelected => _selectedVideo;
+
   FormExercise _currentForm = FormExercise.firstForm;
   FormExercise get currentForm => _currentForm;
 
@@ -31,6 +34,11 @@ class ExercisesControllerForm with ChangeNotifier {
 
   bool get firstForm => _currentForm == FormExercise.firstForm;
   bool get secondForm => _currentForm == FormExercise.secondForm;
+
+  void toggleValueVideo() {
+    _selectedVideo = true;
+    notifyListeners();
+  }
 
   void toggleForm({required FormExercise valueForm}) {
     _currentForm = valueForm;
@@ -77,6 +85,7 @@ class ExercisesControllerForm with ChangeNotifier {
     durationVideo = null;
     _nextForm = false;
     _enableNextButton = false;
+    _selectedVideo = false;
     notifyListeners();
   }
 }

@@ -28,6 +28,7 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
         context: context,
       );
     }
+
     Navigator.of(context).pushNamedAndRemoveUntil(
       AppRoutes.exercisesPagePhysio,
       (_) => false,
@@ -65,7 +66,7 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
               color: Theme.of(context).textTheme.labelLarge?.color,
             ),
           ),
-          const AddVideoBox(),
+          AddVideoBox(formProvider: exercisesControllerProvider),
           defaultTextForm(
             textForm: TextFormField(
               decoration: InputDecoration(
@@ -94,7 +95,9 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(
-                  Theme.of(context).colorScheme.tertiary,
+                  exercisesControllerProvider.videoSelected
+                      ? Theme.of(context).colorScheme.tertiary
+                      : Colors.grey,
                 ),
                 shape: WidgetStatePropertyAll(
                   RoundedRectangleBorder(
@@ -103,8 +106,10 @@ class _SecondAddExerciseFormState extends State<SecondAddExerciseForm> {
                 ),
               ),
               onPressed: () {
-                _submitFormAddExercise(
-                    formExercise: exercisesControllerProvider);
+                if (exercisesControllerProvider.videoSelected) {
+                  _submitFormAddExercise(
+                      formExercise: exercisesControllerProvider);
+                }
               },
               child: const Text(
                 'Adicionar Exercício',

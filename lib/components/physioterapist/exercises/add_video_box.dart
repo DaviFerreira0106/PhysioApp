@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:physioapp/services/exercises/physio/exercises_controller_form.dart';
 import 'package:video_player/video_player.dart';
 
 class AddVideoBox extends StatefulWidget {
-  const AddVideoBox({super.key});
+  final ExercisesControllerForm formProvider;
+  const AddVideoBox({super.key, required this.formProvider});
 
   @override
   State<AddVideoBox> createState() => _AddVideoBoxState();
@@ -45,6 +47,7 @@ class _AddVideoBoxState extends State<AddVideoBox> {
       setState(() {
         _isLoading = false;
         _controller.play();
+        widget.formProvider.toggleValueVideo();
       });
     }
   }
