@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 import 'package:physioapp/utils/app_routes.dart';
+import 'package:provider/provider.dart';
 
 class OtherOptions extends StatefulWidget {
   const OtherOptions({super.key});
@@ -148,11 +150,19 @@ class _OtherOptionsState extends State<OtherOptions> {
             ),
             actions: [
               TextButton(
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).pop(),
                 child: Text('Não'),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  final currentUser = AuthPhysioService();
+
+                  currentUser.deleteAccount(
+                      currentUser: currentUser.currentPhysioUser!);
+
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRoutes.initialAppPage, (_) => false);
+                },
                 child: Text('Sim'),
               ),
             ],

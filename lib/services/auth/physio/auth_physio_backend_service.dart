@@ -8,7 +8,7 @@ import 'package:physioapp/model/user/physio/physio_user.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 
 class AuthPhysioBackendService implements AuthPhysioService {
-  String? _globalToken;
+  static String? _globalToken;
   File? image;
   // static const String _url = '10.8.121.9';
   static const String _url = '192.168.15.3';
@@ -85,7 +85,6 @@ class AuthPhysioBackendService implements AuthPhysioService {
 
   @override
   Future<void> login({required String email, required String password}) async {
-    
     final login = await http
         .post(
           Uri.parse('http://$_url:8080/auth/login'),
@@ -125,7 +124,22 @@ class AuthPhysioBackendService implements AuthPhysioService {
     } else {
       debugPrint("ocorreu erro, deu ruim");
       debugPrint(login.body);
+    }
+  }
 
+  @override
+  Future<void> deleteAccount({required PhysioUser currentUser}) async {
+    debugPrint(currentUser.id);
+    debugPrint(_globalToken);
+    final response = await http.delete(
+      Uri.parse('http://$_url:8080/users/${currentUser.id}'),
+      headers: {"Authorization": "Bearer $_globalToken"},
+    );
+
+    if (response.statusCode == 204) {
+      debugPrint('Deu tudo certo');
+    } else {
+      debugPrint(response.toString());
     }
   }
 
