@@ -85,6 +85,7 @@ class AuthPhysioBackendService implements AuthPhysioService {
 
   @override
   Future<void> login({required String email, required String password}) async {
+    
     final login = await http
         .post(
           Uri.parse('http://$_url:8080/auth/login'),
@@ -124,6 +125,7 @@ class AuthPhysioBackendService implements AuthPhysioService {
     } else {
       debugPrint("ocorreu erro, deu ruim");
       debugPrint(login.body);
+
     }
   }
 

@@ -9,7 +9,7 @@ class OtherOptions extends StatelessWidget {
     Widget componentListTile(
         {required IconData icon,
         required String text,
-        required String route,
+        required void Function() function,
         Color? color}) {
       return ListTile(
         leading: Icon(
@@ -24,7 +24,7 @@ class OtherOptions extends StatelessWidget {
               color: color ?? Theme.of(context).textTheme.labelLarge?.color),
         ),
         trailing: IconButton(
-          onPressed: () => Navigator.of(context).pushNamed(route),
+          onPressed: () => function(),
           icon: Icon(
             Icons.arrow_forward_ios_rounded,
             color: color ?? Theme.of(context).textTheme.labelLarge?.color,
@@ -33,22 +33,51 @@ class OtherOptions extends StatelessWidget {
       );
     }
 
+    Future<void> showChagePassword() async {
+      showBottomSheet(
+        context: context,
+        builder: (context) {
+          return Column(
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  label: Text('Nova senha'),
+                ),
+              )
+            ],
+          );
+        },
+      );
+    }
+
+    Future<void> showDeleteAccount() async {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog.adaptive(
+            title: Text('Excluir Conta'),
+          );
+        },
+      );
+    }
+
     return Column(
       children: [
         componentListTile(
           icon: Icons.privacy_tip_rounded,
           text: 'Política de Privacidade',
-          route: AppRoutes.policyPrivacyPage,
+          function: () =>
+              Navigator.of(context).pushNamed(AppRoutes.policyPrivacyPage),
         ),
         componentListTile(
           icon: Icons.lock,
           text: 'Mudar Senha',
-          route: '',
+          function: () => showChagePassword,
         ),
         componentListTile(
           icon: Icons.delete,
           text: 'Excluir Conta',
-          route: '',
+          function: () => showDeleteAccount,
           color: const Color.fromARGB(255, 255, 0, 16),
         ),
       ],
