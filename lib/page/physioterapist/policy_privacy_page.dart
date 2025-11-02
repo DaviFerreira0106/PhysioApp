@@ -44,7 +44,7 @@ class PolicyPrivacyPage extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(26),
               ),
-              child: Column(
+              child: const Column(
                 children: [
                   DataRetention(),
                 ],
