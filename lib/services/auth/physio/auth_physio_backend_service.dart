@@ -129,8 +129,6 @@ class AuthPhysioBackendService implements AuthPhysioService {
 
   @override
   Future<void> deleteAccount({required PhysioUser currentUser}) async {
-    debugPrint(currentUser.id);
-    debugPrint(_globalToken);
     final response = await http.delete(
       Uri.parse('http://$_url:8080/users/${currentUser.id}'),
       headers: {"Authorization": "Bearer $_globalToken"},
@@ -140,6 +138,29 @@ class AuthPhysioBackendService implements AuthPhysioService {
       debugPrint('Deu tudo certo');
     } else {
       debugPrint(response.toString());
+    }
+  }
+
+  @override
+  Future<void> updateUser({PhysioUser? currentUser, String? password}) async {
+    debugPrint(_globalToken);
+    final response = await http.put(
+      Uri.parse('http://$_url:8080/users/${currentUser?.id}'),
+      headers: {"Authorization": "Bearer $_globalToken"},
+      body: jsonEncode({
+        "fullname": currentUser?.name.toLowerCase(),
+        "email": currentUser?.email.toLowerCase(),
+        "password": password,
+        "user_type": "PHYSIO",
+        "crefito": currentUser?.crefito,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      debugPrint('deu bom');
+    } else {
+      debugPrint(response.statusCode.toString());
+      debugPrint('deu ruim');
     }
   }
 

@@ -125,29 +125,18 @@ class FormSignUpPatientState extends State<FormSignUpPatient> {
                   ),
                 ),
                 border: InputBorder.none,
-                suffixIcon: _vibilityPassword == true
-                    ? GestureDetector(
-                        onTap: () {
-                          setState(
-                              () => _vibilityPassword = !_vibilityPassword);
-                        },
-                        child: Icon(
-                          Icons.visibility_outlined,
-                          color: Theme.of(context).textTheme.labelLarge?.color,
-                          size: 22,
-                        ),
-                      )
-                    : GestureDetector(
-                        onTap: () {
-                          setState(
-                              () => _vibilityPassword = !_vibilityPassword);
-                        },
-                        child: Icon(
-                          Icons.visibility_off_outlined,
-                          color: Theme.of(context).textTheme.labelLarge?.color,
-                          size: 22,
-                        ),
-                      ),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() => _vibilityPassword = !_vibilityPassword);
+                  },
+                  child: Icon(
+                    _vibilityPassword == true
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    color: Theme.of(context).textTheme.labelLarge?.color,
+                    size: 22,
+                  ),
+                ),
               ),
               keyboardType: TextInputType.visiblePassword,
               obscureText: _vibilityPassword == true ? false : true,
@@ -168,29 +157,21 @@ class FormSignUpPatientState extends State<FormSignUpPatient> {
                   ),
                 ),
                 border: InputBorder.none,
-                suffixIcon: _visibilityConfirmPassword == true
-                    ? GestureDetector(
-                        onTap: () {
-                          setState(() => _visibilityConfirmPassword =
-                              !_visibilityConfirmPassword);
-                        },
-                        child: Icon(
-                          Icons.visibility_outlined,
-                          color: Theme.of(context).textTheme.labelLarge?.color,
-                          size: 22,
-                        ),
-                      )
-                    : GestureDetector(
-                        onTap: () {
-                          setState(() => _visibilityConfirmPassword =
-                              !_visibilityConfirmPassword);
-                        },
-                        child: Icon(
-                          Icons.visibility_off_outlined,
-                          color: Theme.of(context).textTheme.labelLarge?.color,
-                          size: 22,
-                        ),
-                      ),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(
+                      () => _visibilityConfirmPassword =
+                          !_visibilityConfirmPassword,
+                    );
+                  },
+                  child: Icon(
+                    _visibilityConfirmPassword == true
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    color: Theme.of(context).textTheme.labelLarge?.color,
+                    size: 22,
+                  ),
+                ),
               ),
               keyboardType: TextInputType.visiblePassword,
               obscureText: _visibilityConfirmPassword == true ? false : true,

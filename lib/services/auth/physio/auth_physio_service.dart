@@ -20,6 +20,8 @@ abstract class AuthPhysioService {
 
   Future<void> deleteAccount({required PhysioUser currentUser});
 
+  Future<void> updateUser({PhysioUser? currentUser, String? password});
+
   Future<void> logout();
 
   factory AuthPhysioService() {
