@@ -15,6 +15,10 @@ abstract class AuthPatientService {
 
   Future<void> login({required String email, required String password});
 
+  Future<void> deleteAccount({required PatientUser currentUser});
+
+  Future<void> updateUser({PatientUser? currentUser, String? password});
+
   Future<void> logout();
 
   factory AuthPatientService() {

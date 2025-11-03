@@ -122,6 +122,41 @@ class AuthPatientBackendService implements AuthPatientService {
   }
 
   @override
+  Future<void> deleteAccount({required PatientUser currentUser}) async {
+    final response = await http.delete(
+      Uri.parse('http://$_url:8080/users/${currentUser.id}'),
+      headers: {"Authorization": "Bearer $_globalToken"},
+    );
+
+    if (response.statusCode == 204) {
+      debugPrint('Deu tudo certo');
+    } else {
+      debugPrint(response.toString());
+    }
+  }
+
+  @override
+  Future<void> updateUser({PatientUser? currentUser, String? password}) async {
+    debugPrint(_globalToken);
+    final response = await http.put(
+      Uri.parse('http://$_url:8080/users/${currentUser?.id}'),
+      headers: {"Authorization": "Bearer $_globalToken"},
+      body: jsonEncode({
+        "fullname": currentUser?.name.toLowerCase(),
+        "email": currentUser?.email.toLowerCase(),
+        "password": password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      debugPrint('deu bom');
+    } else {
+      debugPrint(response.statusCode.toString());
+      debugPrint('deu ruim');
+    }
+  }
+
+  @override
   Future<void> logout() async {
     _currentUserPatient = null;
     _globalToken = null;
