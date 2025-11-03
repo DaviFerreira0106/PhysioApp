@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/patient/profile/data_visualization_patient.dart';
+import 'package:physioapp/components/patient/profile/other_options_patient.dart';
 import 'package:physioapp/components/patient/profile/profile_data_patient.dart';
 import 'package:physioapp/components/patient/profile/photo_profile_patient.dart';
 import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
@@ -71,6 +72,40 @@ class PatientProfilePage extends StatelessWidget {
                       ProfileDataPatient(
                         patientUser: patientUser.currentPatientUser!,
                       ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(10.0),
+                  margin: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 60,
+                    bottom: 150,
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.fromARGB(255, 223, 224, 234),
+                        Color.fromARGB(255, 233, 235, 240),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(26),
+                  ),
+                  child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Outros',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      OtherOptionsPatient(),
                     ],
                   ),
                 ),

@@ -78,7 +78,8 @@ class AuthPatientBackendService implements AuthPatientService {
       }
     } else {
       debugPrint("ocorreu erro, deu ruim");
-      debugPrint(response.body);
+      debugPrint(response.statusCode.toString());
+      throw Exception('Erro de acesso ao usuário');
     }
   }
 

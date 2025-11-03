@@ -123,7 +123,8 @@ class AuthPhysioBackendService implements AuthPhysioService {
       }
     } else {
       debugPrint("ocorreu erro, deu ruim");
-      debugPrint(login.body);
+      debugPrint(login.statusCode.toString());
+      throw Exception('Erro de acesso ao usuário');
     }
   }
 
@@ -151,8 +152,6 @@ class AuthPhysioBackendService implements AuthPhysioService {
         "fullname": currentUser?.name.toLowerCase(),
         "email": currentUser?.email.toLowerCase(),
         "password": password,
-        "user_type": "PHYSIO",
-        "crefito": currentUser?.crefito,
       }),
     );
 

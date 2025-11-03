@@ -3,14 +3,14 @@ import 'package:physioapp/components/physioterapist/profile/alert_delete_account
 import 'package:physioapp/components/physioterapist/profile/change_password_form.dart';
 import 'package:physioapp/utils/app_routes.dart';
 
-class OtherOptions extends StatefulWidget {
-  const OtherOptions({super.key});
+class OtherOptionsPatient extends StatefulWidget {
+  const OtherOptionsPatient({super.key});
 
   @override
-  State<OtherOptions> createState() => _OtherOptionsState();
+  State<OtherOptionsPatient> createState() => _OtherOptionsPatientState();
 }
 
-class _OtherOptionsState extends State<OtherOptions> {
+class _OtherOptionsPatientState extends State<OtherOptionsPatient> {
   void _showChagePassword(BuildContext context) {
     showModalBottomSheet(
       context: context,

@@ -5,9 +5,15 @@ import 'package:physioapp/components/physioterapist/schedule_appointment/select_
 import 'package:physioapp/services/schedule/schedule_appointment_form.dart';
 import 'package:provider/provider.dart';
 
-class ScheduleAppointmentPage extends StatelessWidget {
+class ScheduleAppointmentPage extends StatefulWidget {
   const ScheduleAppointmentPage({super.key});
 
+  @override
+  State<ScheduleAppointmentPage> createState() =>
+      _ScheduleAppointmentPageState();
+}
+
+class _ScheduleAppointmentPageState extends State<ScheduleAppointmentPage> {
   @override
   Widget build(BuildContext context) {
     final scheduleProvider = Provider.of<ScheduleAppointmentForm>(context);
@@ -27,8 +33,8 @@ class ScheduleAppointmentPage extends StatelessWidget {
               children: [
                 Container(
                   width: double.infinity,
-                  margin: const EdgeInsets.only(
-                      left: 20, right: 20, bottom: 120),
+                  margin:
+                      const EdgeInsets.only(left: 20, right: 20, bottom: 120),
                   padding: const EdgeInsets.only(
                     left: 20.0,
                     right: 20.0,
@@ -106,7 +112,7 @@ class ScheduleAppointmentPage extends StatelessWidget {
                               valueForm: scheduleProvider.getFirstForm,
                             );
                           },
-                          child: Text('Voltar'),
+                          child: const Text('Voltar'),
                         ),
                     ],
                   ),

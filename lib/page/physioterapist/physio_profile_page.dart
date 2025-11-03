@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/profile/data_visualization_physio.dart';
-import 'package:physioapp/components/physioterapist/profile/other_options.dart';
+import 'package:physioapp/components/physioterapist/profile/other_options_physio.dart';
 import 'package:physioapp/components/physioterapist/profile/photo_profile_physio.dart';
 import 'package:physioapp/components/physioterapist/profile/profile_data.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
@@ -117,7 +117,7 @@ class PhysioProfilePage extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      OtherOptions(),
+                      OtherOptionsPhysio(),
                     ],
                   ),
                 ),
