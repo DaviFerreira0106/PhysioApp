@@ -11,8 +11,8 @@ class AuthPatientBackendService implements AuthPatientService {
   String? _globalToken;
   File? image;
   // static const String _url = '10.8.121.9';
-  static const String _url = '192.168.15.3';
-  // static const String _url = '10.8.116.1';
+  // static const String _url = '192.168.15.3';
+  static const String _url = '10.8.116.1';
   static PatientUser? _currentUserPatient;
 
   @override
@@ -79,7 +79,6 @@ class AuthPatientBackendService implements AuthPatientService {
     } else {
       debugPrint("ocorreu erro, deu ruim");
       debugPrint(response.statusCode.toString());
-      throw Exception('Erro de acesso ao usuário');
     }
   }
 
@@ -118,6 +117,8 @@ class AuthPatientBackendService implements AuthPatientService {
           email: user['email'],
         );
       }
+    } else {
+      throw Exception('Erro de acesso, verifique se o endereço de e-mail está correto');
     }
   }
 

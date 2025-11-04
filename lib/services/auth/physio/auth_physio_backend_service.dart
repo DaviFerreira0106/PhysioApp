@@ -11,8 +11,8 @@ class AuthPhysioBackendService implements AuthPhysioService {
   static String? _globalToken;
   File? image;
   // static const String _url = '10.8.121.9';
-  static const String _url = '192.168.15.3';
-  // static const String _url = '10.8.116.1';
+  // static const String _url = '192.168.15.3';
+  static const String _url = '10.8.116.1';
   static PhysioUser? _currentUserPhysio;
 
   @override
@@ -124,7 +124,8 @@ class AuthPhysioBackendService implements AuthPhysioService {
     } else {
       debugPrint("ocorreu erro, deu ruim");
       debugPrint(login.statusCode.toString());
-      throw Exception('Erro de acesso ao usuário');
+      throw Exception(
+          'Erro de acesso, verifique se o endereço de e-mail está correto');
     }
   }
 
@@ -143,11 +144,15 @@ class AuthPhysioBackendService implements AuthPhysioService {
   }
 
   @override
-  Future<void> updateUser({PhysioUser? currentUser, String? password}) async {
+  Future<void> updateUser({PhysioUser? currentUser, String? password, String? name, String? email}) async {
     debugPrint(_globalToken);
+    debugPrint(currentUser?.id);
     final response = await http.put(
       Uri.parse('http://$_url:8080/users/${currentUser?.id}'),
-      headers: {"Authorization": "Bearer $_globalToken"},
+      headers: {
+        "Authorization": "Bearer $_globalToken",
+        "Content-Type": "application/json",
+      },
       body: jsonEncode({
         "fullname": currentUser?.name.toLowerCase(),
         "email": currentUser?.email.toLowerCase(),

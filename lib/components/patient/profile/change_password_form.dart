@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
+import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
 
 class ChangePasswordForm extends StatefulWidget {
   const ChangePasswordForm({super.key});
@@ -42,14 +42,17 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
 
   Future<void> _submit() async {
     final isValid = _formKey.currentState?.validate() ?? false;
-    final currentUser = AuthPhysioService();
+    final currentUser = AuthPatientService();
 
     if (!isValid) {
       return;
     }
 
     try {
-      await currentUser.updateUser(password: _passwordController.text);
+      await currentUser.updateUser(
+        currentUser: currentUser.currentPatientUser,
+        password: _passwordController.text,
+      );
 
       _showDialog(
           title: 'Sucesso', content: 'Alteração realizada com sucesso!');
