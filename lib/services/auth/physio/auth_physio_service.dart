@@ -1,11 +1,10 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:physioapp/model/user/physio/physio_user.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_backend_service.dart';
 import 'package:physioapp/services/auth/auth_form.dart';
 
-abstract class AuthPhysioService with ChangeNotifier{
+abstract class AuthPhysioService {
   PhysioUser? get currentPhysioUser;
 
   Future<void> signUp({

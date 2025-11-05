@@ -7,13 +7,22 @@ import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 import 'package:physioapp/services/profile/physio/physio_profile_service.dart';
 import 'package:provider/provider.dart';
 
-class PhysioProfilePage extends StatelessWidget {
+class PhysioProfilePage extends StatefulWidget {
   const PhysioProfilePage({super.key});
 
+  @override
+  State<PhysioProfilePage> createState() => _PhysioProfilePageState();
+}
+
+class _PhysioProfilePageState extends State<PhysioProfilePage> {
   @override
   Widget build(BuildContext context) {
     final physioUser = AuthPhysioService();
     final profileProvider = Provider.of<PhysioProfileService>(context);
+
+    void refreshPage() {
+      setState(() {});
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -82,6 +91,7 @@ class PhysioProfilePage extends StatelessWidget {
                         height: 10,
                       ),
                       ProfileData(
+                        refreshPage: refreshPage,
                         physioUser: physioUser.currentPhysioUser!,
                       ),
                     ],

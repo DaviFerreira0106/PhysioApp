@@ -7,14 +7,12 @@ import 'package:http/http.dart' as http;
 import 'package:physioapp/model/user/physio/physio_user.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 
-class AuthPhysioBackendService
-    with ChangeNotifier
-    implements AuthPhysioService {
+class AuthPhysioBackendService implements AuthPhysioService {
   static String? _globalToken;
   File? image;
   // static const String _url = '10.8.121.9';
-  static const String _url = '192.168.15.3';
-  // static const String _url = '10.8.116.1';
+  // static const String _url = '192.168.15.3';
+  static const String _url = '10.8.116.1';
   static PhysioUser? _currentUserPhysio;
 
   @override
@@ -179,7 +177,7 @@ class AuthPhysioBackendService
 
       final user = jsonDecode(current.body);
 
-      _currentUserPhysio = PhysioUser(
+      final updateUser = PhysioUser(
         id: user['id'],
         crefito: user['crefito'],
         physioType: RadioButton.physioOption,
@@ -187,7 +185,9 @@ class AuthPhysioBackendService
         name: user['fullname'],
         email: user['email'],
       );
-      notifyListeners();
+
+      _currentUserPhysio = updateUser;
+      currentUser = updateUser;
     } else {
       debugPrint(response.statusCode.toString());
       debugPrint('deu ruim');

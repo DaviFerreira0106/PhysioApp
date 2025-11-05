@@ -3,7 +3,8 @@ import 'package:physioapp/exception/profile/change_data_profile_exception.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 
 class ChangeEmailForm extends StatefulWidget {
-  const ChangeEmailForm({super.key});
+  final void Function() refreshPage;
+  const ChangeEmailForm({super.key, required this.refreshPage});
 
   @override
   State<ChangeEmailForm> createState() => _ChangeEmailFormState();
@@ -57,6 +58,8 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
     } finally {
       setState(() => _isLoading = false);
       Navigator.of(context).pop();
+
+      widget.refreshPage();
     }
   }
 

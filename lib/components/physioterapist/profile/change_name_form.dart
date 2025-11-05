@@ -3,7 +3,8 @@ import 'package:physioapp/exception/profile/change_data_profile_exception.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 
 class ChangeNameForm extends StatefulWidget {
-  const ChangeNameForm({super.key});
+  final void Function() refreshPage;
+  const ChangeNameForm({super.key, required this.refreshPage});
 
   @override
   State<ChangeNameForm> createState() => _ChangeNameFormState();
@@ -55,6 +56,8 @@ class _ChangeNameFormState extends State<ChangeNameForm> {
     } finally {
       setState(() => _isLoading = false);
       Navigator.of(context).pop();
+
+      widget.refreshPage();
     }
   }
 
