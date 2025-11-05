@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/exception/profile/change_data_profile_exception.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 
 class ChangePasswordForm extends StatefulWidget {
@@ -13,6 +14,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
   final _passwordController = TextEditingController();
   bool _vibilityPassword = false;
   bool _visibilityConfirmPassword = false;
+  bool _isLoading = false;
 
   Widget _defaultTextForm({required Widget textForm}) {
     return Container(
@@ -26,45 +28,39 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
     );
   }
 
-  void _showDialog({required String title, required String content}) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog.adaptive(
-        title: Text(title),
-        content: Text(content),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.of(context).pop(), child: Text('Ok'))
-        ],
-      ),
-    );
-  }
-
-  Future<void> _submit() async {
+  Future<void> _submit({required BuildContext context}) async {
     final isValid = _formKey.currentState?.validate() ?? false;
     final currentUser = AuthPhysioService();
+    final exception = ChangeDataProfileException();
 
     if (!isValid) {
       return;
     }
 
     try {
+      setState(() => _isLoading = true);
+
       await currentUser.updateUser(
         currentUser: currentUser.currentPhysioUser,
         password: _passwordController.text,
       );
 
-      _showDialog(
-          title: 'Sucesso', content: 'Alteração realizada com sucesso!');
-
-      Navigator.of(context).pop();
+      await exception.showSucessMessageDialog(
+        title: 'Sucesso',
+        message: 'Senha atualizada com sucesso!',
+        context: context,
+      );
     } catch (error) {
-      _showDialog(
-          title: 'Erro',
-          content: 'Alteração não realizada! ${error.toString()}');
+      await exception.showFailedMessageDialog(
+        title: 'Erro',
+        message: 'Não foi possivel alterar sua senha! ${error.toString()}',
+        context: context,
+      );
+    } finally {
+      setState(() => _isLoading = true);
+      Navigator.of(context).pop();
     }
   }
-//"$2a$10$VXMX5gAWlB0lmfE6jJ4GQOKjQ7CGZr4nRirhUeBBb/YNsvaoKw/O6"
 
   @override
   Widget build(BuildContext context) {
@@ -160,23 +156,29 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(
-                    Theme.of(context).colorScheme.tertiary,
-                  ),
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+              height: 40,
+              width: 120,
+              child: _isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          Theme.of(context).colorScheme.tertiary,
+                        ),
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      onPressed: () => _submit(context: context),
+                      child: const Text(
+                        'Concluir',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                  ),
-                ),
-                onPressed: () => _submit(),
-                child: const Text(
-                  'Concluir',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
             ),
           ],
         ),

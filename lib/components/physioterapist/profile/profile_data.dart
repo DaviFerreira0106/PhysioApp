@@ -3,6 +3,8 @@ import 'package:physioapp/components/physioterapist/profile/change_email_form.da
 import 'package:physioapp/components/physioterapist/profile/change_name_form.dart';
 import 'package:physioapp/components/physioterapist/profile/list_tile_component.dart';
 import 'package:physioapp/model/user/physio/physio_user.dart';
+import 'package:physioapp/services/auth/physio/auth_physio_backend_service.dart';
+import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 import 'package:physioapp/services/profile/physio/physio_profile_service.dart';
 import 'package:provider/provider.dart';
 
@@ -48,6 +50,7 @@ class ProfileData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<PhysioProfileService>(context);
+    final currentUser = Provider.of<AuthPhysioService>(context);
 
     return Column(
       children: [
@@ -57,8 +60,9 @@ class ProfileData extends StatelessWidget {
           title: 'Nome',
           fn: (context) => _showChangNameForm(context: context),
           subtitle: profileProvider.isVisible
-              ? physioUser.name
-              : physioUser.obscureText(physioUser.name),
+              ? currentUser.currentPhysioUser!.name
+              : currentUser.currentPhysioUser!
+                  .obscureText(currentUser.currentPhysioUser!.name),
         ),
         _listTileData(
           context: context,
@@ -66,8 +70,9 @@ class ProfileData extends StatelessWidget {
           title: 'Email',
           fn: (context) => _showChangEmailForm(context: context),
           subtitle: profileProvider.isVisible
-              ? physioUser.email
-              : physioUser.obscureText(physioUser.email),
+              ? currentUser.currentPhysioUser!.email
+              : currentUser.currentPhysioUser!
+                  .obscureText(currentUser.currentPhysioUser!.email),
         ),
       ],
     );

@@ -7,12 +7,14 @@ import 'package:http/http.dart' as http;
 import 'package:physioapp/model/user/physio/physio_user.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 
-class AuthPhysioBackendService implements AuthPhysioService {
+class AuthPhysioBackendService
+    with ChangeNotifier
+    implements AuthPhysioService {
   static String? _globalToken;
   File? image;
   // static const String _url = '10.8.121.9';
-  // static const String _url = '192.168.15.3';
-  static const String _url = '10.8.116.1';
+  static const String _url = '192.168.15.3';
+  // static const String _url = '10.8.116.1';
   static PhysioUser? _currentUserPhysio;
 
   @override
@@ -144,24 +146,48 @@ class AuthPhysioBackendService implements AuthPhysioService {
   }
 
   @override
-  Future<void> updateUser({PhysioUser? currentUser, String? password, String? name, String? email}) async {
-    debugPrint(_globalToken);
-    debugPrint(currentUser?.id);
-    final response = await http.put(
-      Uri.parse('http://$_url:8080/users/${currentUser?.id}'),
-      headers: {
-        "Authorization": "Bearer $_globalToken",
-        "Content-Type": "application/json",
-      },
-      body: jsonEncode({
-        "fullname": currentUser?.name.toLowerCase(),
-        "email": currentUser?.email.toLowerCase(),
-        "password": password,
-      }),
-    );
+  Future<void> updateUser(
+      {PhysioUser? currentUser,
+      String? password,
+      String? name,
+      String? email}) async {
+    debugPrint(name);
+    final response = await http
+        .put(
+          Uri.parse('http://$_url:8080/users/${currentUser?.id}'),
+          headers: {
+            "Authorization": "Bearer $_globalToken",
+            "Content-Type": "application/json",
+          },
+          body: jsonEncode({
+            "fullname": name?.toLowerCase() ?? currentUser?.name.toLowerCase(),
+            "email": email?.toLowerCase() ?? currentUser?.email.toLowerCase(),
+            "password": password,
+          }),
+        )
+        .timeout(
+          const Duration(seconds: 5),
+        );
 
     if (response.statusCode == 200) {
       debugPrint('deu bom');
+
+      final current = await http.get(
+        Uri.parse('http://$_url:8080/users/me'),
+        headers: {"Authorization": "Bearer $_globalToken"},
+      );
+
+      final user = jsonDecode(current.body);
+
+      _currentUserPhysio = PhysioUser(
+        id: user['id'],
+        crefito: user['crefito'],
+        physioType: RadioButton.physioOption,
+        imageProfile: File(''),
+        name: user['fullname'],
+        email: user['email'],
+      );
+      notifyListeners();
     } else {
       debugPrint(response.statusCode.toString());
       debugPrint('deu ruim');

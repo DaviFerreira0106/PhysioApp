@@ -1,10 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:physioapp/model/user/physio/physio_user.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_backend_service.dart';
 import 'package:physioapp/services/auth/auth_form.dart';
 
-abstract class AuthPhysioService {
+abstract class AuthPhysioService with ChangeNotifier{
   PhysioUser? get currentPhysioUser;
 
   Future<void> signUp({
@@ -20,7 +21,12 @@ abstract class AuthPhysioService {
 
   Future<void> deleteAccount({required PhysioUser currentUser});
 
-  Future<void> updateUser({PhysioUser? currentUser, String? password});
+  Future<void> updateUser({
+    PhysioUser? currentUser,
+    String? password,
+    String? name,
+    String? email,
+  });
 
   Future<void> logout();
 

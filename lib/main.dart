@@ -7,6 +7,8 @@ import 'package:physioapp/page/physioterapist/exercises_page_physio.dart';
 import 'package:physioapp/page/physioterapist/policy_privacy_page.dart';
 import 'package:physioapp/page/physioterapist/tabs_page_physio.dart';
 import 'package:physioapp/services/auth/auth_form.dart';
+import 'package:physioapp/services/auth/physio/auth_physio_backend_service.dart';
+import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 import 'package:physioapp/services/exercises/physio/exercise_controller.dart';
 import 'package:physioapp/services/exercises/physio/exercises_controller_form.dart';
 import 'package:physioapp/services/exercises/physio/exercises_controller_component.dart';
@@ -72,6 +74,12 @@ class PhysioApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => PatientProfileService(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthPhysioBackendService(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthPhysioService(),
         ),
       ],
       child: MaterialApp(

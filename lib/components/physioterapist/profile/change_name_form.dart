@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/exception/auth_signup_exception.dart';
+import 'package:physioapp/exception/profile/change_data_profile_exception.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
 
 class ChangeNameForm extends StatefulWidget {
@@ -12,6 +12,7 @@ class ChangeNameForm extends StatefulWidget {
 class _ChangeNameFormState extends State<ChangeNameForm> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
+  bool _isLoading = false;
 
   Widget _defaultTextForm({required Widget textForm}) {
     return Container(
@@ -25,41 +26,35 @@ class _ChangeNameFormState extends State<ChangeNameForm> {
     );
   }
 
-  void _showMessageDialog({required String title, required String message}) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog.adaptive(
-        icon: Icon(Icons.check_circle_rounded),
-        title: Text(title),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Ok'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _submit() async {
+  Future<void> _submit({required BuildContext context}) async {
     final currentUser = AuthPhysioService();
-
+    final exception = ChangeDataProfileException();
     final isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) return;
 
     try {
-      await currentUser.updateUser(currentUser: currentUser.currentPhysioUser);
+      setState(() => _isLoading = true);
 
-      return _showMessageDialog(
-          title: 'Sucesso', message: 'Atualização feita com sucesso!');
+      await currentUser.updateUser(
+        currentUser: currentUser.currentPhysioUser,
+        name: _nameController.text,
+      );
+
+      await exception.showSucessMessageDialog(
+        title: 'Sucesso',
+        message: 'Nome atualizado com sucesso!',
+        context: context,
+      );
     } catch (error) {
-      return _showMessageDialog(title: 'Erro', message: 'Ação não realizada');
+      await exception.showFailedMessageDialog(
+        title: 'Erro',
+        message: 'Não foi possivel atualizar o nome! ${error.toString()}',
+        context: context,
+      );
     } finally {
-      if (mounted) {
-        Navigator.of(context).pop();
-      }
+      setState(() => _isLoading = false);
+      Navigator.of(context).pop();
     }
   }
 
@@ -110,25 +105,29 @@ class _ChangeNameFormState extends State<ChangeNameForm> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 15),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(
-                    Theme.of(context).colorScheme.tertiary,
-                  ),
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+              height: 40,
+              width: 130,
+              child: _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          Theme.of(context).colorScheme.tertiary,
+                        ),
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      onPressed: () => _submit(context: context),
+                      child: const Text(
+                        'Atualizar',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                onPressed: () => _submit(),
-                child: const Text(
-                  'Atualizar',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
             ),
           ],
         ),
