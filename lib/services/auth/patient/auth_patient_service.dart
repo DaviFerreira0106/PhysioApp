@@ -17,7 +17,12 @@ abstract class AuthPatientService {
 
   Future<void> deleteAccount({required PatientUser currentUser});
 
-  Future<void> updateUser({PatientUser? currentUser, String? password});
+  Future<void> updateUser({
+    PatientUser? currentUser,
+    String? password,
+    String? name,
+    String? email,
+  });
 
   Future<void> logout();
 

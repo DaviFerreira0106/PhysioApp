@@ -1,18 +1,27 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:physioapp/model/user/patient/patient_user.dart';
 import 'package:physioapp/services/auth/auth_form.dart';
 import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
+import 'package:physioapp/services/auth/patient/patient_endpoint.dart';
 
 class AuthPatientBackendService implements AuthPatientService {
-  String? _globalToken;
+  final endpoints = PatientEndpoint();
+
+  static String? _globalToken;
   File? image;
-  // static const String _url = '10.8.121.9';
-  // static const String _url = '192.168.15.3';
-  static const String _url = '10.8.116.1';
+
+  void _updatePatientUser({required dynamic user, File? imageProfile}) {
+    _currentUserPatient = PatientUser(
+      id: user['id'].toString(),
+      imageProfile: imageProfile ?? File(''),
+      name: user['fullname'],
+      email: user['email'],
+    );
+  }
+
   static PatientUser? _currentUserPatient;
 
   @override
@@ -26,57 +35,38 @@ class AuthPatientBackendService implements AuthPatientService {
     required String email,
     required String password,
   }) async {
-    final response = await http
-        .post(
-          Uri.parse('http://$_url:8080/auth/register'),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode({
-            "user_type": "PATIENT",
-            "fullname": name.toLowerCase(),
-            "email": email.toLowerCase(),
-            "password": password,
-          }),
-        )
-        .timeout(
-          const Duration(seconds: 5),
-        );
+    final response = await endpoints.registerEndpoint(
+      name: name,
+      password: password,
+      email: email,
+    );
 
-    if (response.statusCode == 201) {
+    try {
       debugPrint("ocorreu tudo bem");
-      final login = await http.post(
-        Uri.parse('http://$_url:8080/auth/login'),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "email": email,
-          "password": password,
-        }),
+      final login = await endpoints.loginEndpoint(
+        email: email,
+        password: password,
       );
 
-      if (login.statusCode == 200) {
+      try {
         final json = jsonDecode(login.body);
         String? token = json['token'];
 
         if (token != null && token.isNotEmpty) {
           _globalToken = token;
 
-          final current = await http.get(
-            Uri.parse('http://$_url:8080/users/me'),
-            headers: {"Authorization": "Bearer $_globalToken"},
-          );
+          final current = await endpoints.meEndpoint(token: _globalToken!);
 
           final user = jsonDecode(current.body);
 
           image = imageProfile;
 
-          _currentUserPatient = PatientUser(
-            id: user['id'].toString(),
-            imageProfile: imageProfile,
-            name: user['fullname'],
-            email: user['email'],
-          );
+          _updatePatientUser(user: user, imageProfile: image);
         }
+      } catch (error) {
+        debugPrint(error.toString());
       }
-    } else {
+    } catch (error) {
       debugPrint("ocorreu erro, deu ruim");
       debugPrint(response.statusCode.toString());
     }
@@ -84,75 +74,70 @@ class AuthPatientBackendService implements AuthPatientService {
 
   @override
   Future<void> login({required String email, required String password}) async {
-    final login = await http
-        .post(
-          Uri.parse('http://$_url:8080/auth/login'),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode({
-            "email": email.toLowerCase(),
-            "password": password,
-          }),
-        )
-        .timeout(
-          const Duration(seconds: 5),
-        );
+    final login = await endpoints.loginEndpoint(
+      email: email,
+      password: password,
+    );
 
-    if (login.statusCode == 200) {
+    try {
       final json = jsonDecode(login.body);
       String? token = json['token'];
+
       if (token != null && token.isNotEmpty) {
         _globalToken = token;
 
-        final current = await http.get(
-          Uri.parse('http://$_url:8080/users/me'),
-          headers: {"Authorization": "Bearer $_globalToken"},
-        );
+        final current = await endpoints.meEndpoint(token: token);
 
         final user = jsonDecode(current.body);
         image = image;
-        _currentUserPatient = PatientUser(
-          id: user['id'].toString(),
-          imageProfile: File(image?.path ?? ''),
-          name: user['fullname'],
-          email: user['email'],
-        );
+
+        _updatePatientUser(user: user, imageProfile: image);
+      } else {
+        return;
       }
-    } else {
+    } catch (error) {
       throw Exception(
-          'Erro de acesso, verifique se o endereço de e-mail está correto');
+        'Erro de acesso, verifique se o endereço de e-mail está correto',
+      );
     }
   }
 
   @override
   Future<void> deleteAccount({required PatientUser currentUser}) async {
-    final response = await http.delete(
-      Uri.parse('http://$_url:8080/users/${currentUser.id}'),
-      headers: {"Authorization": "Bearer $_globalToken"},
+    final response = await endpoints.deleteEndpoint(
+      userId: currentUser.id,
+      token: _globalToken!,
     );
 
-    if (response.statusCode == 204) {
+    try {
       debugPrint('Deu tudo certo');
-    } else {
+    } catch (error) {
       debugPrint(response.toString());
     }
   }
 
   @override
-  Future<void> updateUser({PatientUser? currentUser, String? password}) async {
+  Future<void> updateUser({
+    PatientUser? currentUser,
+    String? password,
+    String? name,
+    String? email,
+  }) async {
     debugPrint(_globalToken);
-    final response = await http.put(
-      Uri.parse('http://$_url:8080/users/${currentUser?.id}'),
-      headers: {"Authorization": "Bearer $_globalToken"},
-      body: jsonEncode({
-        "fullname": currentUser?.name.toLowerCase(),
-        "email": currentUser?.email.toLowerCase(),
-        "password": password,
-      }),
+    final response = await endpoints.updateEndpoint(
+      user: currentUser,
+      token: _globalToken,
     );
 
-    if (response.statusCode == 200) {
+    try {
       debugPrint('deu bom');
-    } else {
+
+      final current = await endpoints.meEndpoint(token: _globalToken!);
+
+      final user = jsonDecode(current.body);
+
+      _updatePatientUser(user: user);
+    } catch (error) {
       debugPrint(response.statusCode.toString());
       debugPrint('deu ruim');
     }

@@ -1,29 +1,26 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:physioapp/model/user/patient/patient_user.dart';
 
-import 'package:physioapp/model/user/physio/physio_user.dart';
-
-class PhysioEndpoint {
+class PatientEndpoint {
   // static const String _url = 'http://10.8.121.9:8080';
   static const String _url = 'http://192.168.15.2:8080';
   // static const String _url = 'http://10.8.116.1:8080';
 
   Future<http.Response> registerEndpoint({
     required String name,
-    required String email,
     required String password,
-    required String crefito,
+    required String email,
   }) async {
     return await http
         .post(
           Uri.parse('$_url/auth/register'),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({
+            "user_type": "PATIENT",
             "fullname": name.toLowerCase(),
             "email": email.toLowerCase(),
             "password": password,
-            "user_type": "PHYSIO",
-            "crefito": crefito,
           }),
         )
         .timeout(
@@ -66,23 +63,19 @@ class PhysioEndpoint {
     );
   }
 
-  Future<http.Response> updateEndpoint({
-    required PhysioUser? currentUser,
-    required String token,
-    String? name,
-    String? email,
-    String? password,
-  }) async {
+  Future<http.Response> updateEndpoint(
+      {required PatientUser? user,
+      String? name,
+      String? email,
+      String? password,
+      required String? token}) async {
     return await http
         .put(
-          Uri.parse('$_url/users/${currentUser?.id}'),
-          headers: {
-            "Authorization": "Bearer $token",
-            "Content-Type": "application/json",
-          },
+          Uri.parse('$_url/users/${user?.id}'),
+          headers: {"Authorization": "Bearer $token"},
           body: jsonEncode({
-            "fullname": name?.toLowerCase() ?? currentUser?.name.toLowerCase(),
-            "email": email?.toLowerCase() ?? currentUser?.email.toLowerCase(),
+            "fullname": name?.toLowerCase() ?? user?.name.toLowerCase(),
+            "email": email?.toLowerCase() ?? user?.email.toLowerCase(),
             "password": password,
           }),
         )

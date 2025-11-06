@@ -148,7 +148,6 @@ class AuthPhysioBackendService implements AuthPhysioService {
       _updatePhysioUser(
         user: user,
         physioType: RadioButton.physioOption,
-        imageProfile: File(''),
       );
     } catch (error) {
       debugPrint(response.statusCode.toString());
