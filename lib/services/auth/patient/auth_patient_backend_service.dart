@@ -25,6 +25,9 @@ class AuthPatientBackendService implements AuthPatientService {
   static PatientUser? _currentUserPatient;
 
   @override
+  String? get tokenPatient => _globalToken;
+
+  @override
   // TODO: implement currentPhysioUser
   PatientUser? get currentPatientUser => _currentUserPatient;
 

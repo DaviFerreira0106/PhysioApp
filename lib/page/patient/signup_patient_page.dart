@@ -64,102 +64,110 @@ class _SignupPatientPageState extends State<SignupPatientPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                'assets/images/background_image_auth_patient.jpg',
-              ),
-              fit: BoxFit.cover),
-        ),
+      body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(114, 20, 24, 27),
-                Color.fromARGB(255, 20, 24, 27),
-              ],
-            ),
+            image: DecorationImage(
+                image: AssetImage(
+                  'assets/images/background_image_auth_patient.jpg',
+                ),
+                fit: BoxFit.cover),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ImagePicket(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Cadastre-se',
-                    style: TextStyle(
-                      fontFamily:
-                          Theme.of(context).textTheme.displayMedium?.fontFamily,
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontSize:
-                          Theme.of(context).textTheme.displayMedium?.fontSize,
-                    ),
-                  ),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(114, 20, 24, 27),
+                  Color.fromARGB(255, 20, 24, 27),
                 ],
               ),
-              Text(
-                'Crie sua conta e inicie sua jornada de recuperação com apoio profissional.',
-                style: TextStyle(
-                  fontFamily:
-                      Theme.of(context).textTheme.bodyMedium?.fontFamily,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w300,
-                  fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              FormSignUpPatient(
-                onSubmited: _submit,
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 24, bottom: 64),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ImagePicket(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Já possui conta?',
+                      'Cadastre-se',
                       style: TextStyle(
-                        fontFamily:
-                            Theme.of(context).textTheme.labelLarge?.fontFamily,
-                        color: Theme.of(context).textTheme.labelLarge?.color,
+                        fontFamily: Theme.of(context)
+                            .textTheme
+                            .displayMedium
+                            ?.fontFamily,
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal,
                         fontSize:
-                            Theme.of(context).textTheme.labelLarge?.fontSize,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.of(context)
-                          .pushReplacementNamed(AppRoutes.signInPatientPage),
-                      child: Text(
-                        'Entre agora!',
-                        style: TextStyle(
-                          fontFamily:
-                              Theme.of(context).textTheme.bodyLarge?.fontFamily,
-                          fontSize:
-                              Theme.of(context).textTheme.bodyLarge?.fontSize,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).colorScheme.primary,
-                          decoration: TextDecoration.underline,
-                          decorationColor:
-                              Theme.of(context).colorScheme.primary,
-                        ),
+                            Theme.of(context).textTheme.displayMedium?.fontSize,
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                Text(
+                  'Crie sua conta e inicie sua jornada de recuperação com apoio profissional.',
+                  style: TextStyle(
+                    fontFamily:
+                        Theme.of(context).textTheme.bodyMedium?.fontFamily,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w300,
+                    fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                FormSignUpPatient(
+                  onSubmited: _submit,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 24, bottom: 64),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Já possui conta?',
+                        style: TextStyle(
+                          fontFamily: Theme.of(context)
+                              .textTheme
+                              .labelLarge
+                              ?.fontFamily,
+                          color: Theme.of(context).textTheme.labelLarge?.color,
+                          fontSize:
+                              Theme.of(context).textTheme.labelLarge?.fontSize,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.of(context)
+                            .pushReplacementNamed(AppRoutes.signInPatientPage),
+                        child: Text(
+                          'Entre agora!',
+                          style: TextStyle(
+                            fontFamily: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.fontFamily,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyLarge?.fontSize,
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).colorScheme.primary,
+                            decoration: TextDecoration.underline,
+                            decorationColor:
+                                Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

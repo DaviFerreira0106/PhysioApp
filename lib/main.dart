@@ -13,6 +13,7 @@ import 'package:physioapp/services/exercises/physio/exercises_controller_form.da
 import 'package:physioapp/services/exercises/physio/exercises_controller_component.dart';
 import 'package:physioapp/services/navigation/bottom_nav_bar_controller.dart';
 import 'package:physioapp/services/navigation/bottom_nav_bar_patient_controller.dart';
+import 'package:physioapp/services/pair_users/patient/pair_with_physio.dart';
 import 'package:physioapp/services/profile/patient/patient_profile_service.dart';
 import 'package:physioapp/services/profile/physio/physio_profile_service.dart';
 import 'package:physioapp/services/schedule/schedule_appointment_controller.dart';
@@ -73,6 +74,9 @@ class PhysioApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => PatientProfileService(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PairWithPhysio(),
         ),
       ],
       child: MaterialApp(

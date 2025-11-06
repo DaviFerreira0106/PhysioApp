@@ -6,6 +6,8 @@ import 'package:physioapp/services/auth/patient/auth_patient_backend_service.dar
 abstract class AuthPatientService {
   PatientUser? get currentPatientUser;
 
+  String? get tokenPatient;
+
   Future<void> signUp({
     required File imageProfile,
     required String name,

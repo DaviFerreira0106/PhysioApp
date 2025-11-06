@@ -8,98 +8,107 @@ class SigninPatientPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image:
-                AssetImage('assets/images/background_image_auth_patient.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
+      body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(114, 20, 24, 27),
-                Color.fromARGB(255, 20, 24, 27),
-              ],
+            image: DecorationImage(
+              image:
+                  AssetImage('assets/images/background_image_auth_patient.jpg'),
+              fit: BoxFit.cover,
             ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Entrar',
-                    style: TextStyle(
-                      fontFamily:
-                          Theme.of(context).textTheme.displayMedium?.fontFamily,
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      fontSize:
-                          Theme.of(context).textTheme.displayMedium?.fontSize,
-                    ),
-                  ),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(114, 20, 24, 27),
+                  Color.fromARGB(255, 20, 24, 27),
                 ],
               ),
-              Text(
-                  'Acesse e conecte-se ao seu fisioterapeuta, acompanhando sua evolução em cada exercício.',
-                  style: TextStyle(
-                    fontFamily:
-                        Theme.of(context).textTheme.bodyMedium?.fontFamily,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w300,
-                    fontSize: Theme.of(context).textTheme.bodyMedium?.fontSize,
-                  )),
-              const SizedBox(
-                height: 50,
-              ),
-              const FormSignInPatient(),
-              Container(
-                margin: const EdgeInsets.only(top: 24, bottom: 64),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Não possui conta?',
+                      'Entrar',
                       style: TextStyle(
-                        fontFamily:
-                            Theme.of(context).textTheme.labelLarge?.fontFamily,
-                        color: Theme.of(context).textTheme.labelLarge?.color,
+                        fontFamily: Theme.of(context)
+                            .textTheme
+                            .displayMedium
+                            ?.fontFamily,
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal,
                         fontSize:
-                            Theme.of(context).textTheme.labelLarge?.fontSize,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => Navigator.of(context)
-                          .pushReplacementNamed(AppRoutes.signUpPatientPage),
-                      child: Text(
-                        'Cadastre-se agora!',
-                        style: TextStyle(
-                          fontFamily:
-                              Theme.of(context).textTheme.bodyLarge?.fontFamily,
-                          fontSize:
-                              Theme.of(context).textTheme.bodyLarge?.fontSize,
-                          fontWeight: FontWeight.w700,
-                          color: Theme.of(context).colorScheme.primary,
-                          decoration: TextDecoration.underline,
-                          decorationColor:
-                              Theme.of(context).colorScheme.primary,
-                        ),
+                            Theme.of(context).textTheme.displayMedium?.fontSize,
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                Text(
+                    'Acesse e conecte-se ao seu fisioterapeuta, acompanhando sua evolução em cada exercício.',
+                    style: TextStyle(
+                      fontFamily:
+                          Theme.of(context).textTheme.bodyMedium?.fontFamily,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300,
+                      fontSize:
+                          Theme.of(context).textTheme.bodyMedium?.fontSize,
+                    )),
+                const SizedBox(
+                  height: 50,
+                ),
+                const FormSignInPatient(),
+                Container(
+                  margin: const EdgeInsets.only(top: 24, bottom: 64),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Não possui conta?',
+                        style: TextStyle(
+                          fontFamily: Theme.of(context)
+                              .textTheme
+                              .labelLarge
+                              ?.fontFamily,
+                          color: Theme.of(context).textTheme.labelLarge?.color,
+                          fontSize:
+                              Theme.of(context).textTheme.labelLarge?.fontSize,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.of(context)
+                            .pushReplacementNamed(AppRoutes.signUpPatientPage),
+                        child: Text(
+                          'Cadastre-se agora!',
+                          style: TextStyle(
+                            fontFamily: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.fontFamily,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyLarge?.fontSize,
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).colorScheme.primary,
+                            decoration: TextDecoration.underline,
+                            decorationColor:
+                                Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
