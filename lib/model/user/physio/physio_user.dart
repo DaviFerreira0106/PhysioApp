@@ -26,6 +26,13 @@ class PhysioUser {
     return nameFormted;
   }
 
+  String get emailSemiAnonimized {
+    final partsEmail = email.split('@');
+    final firstPart = partsEmail[0].substring(0, 3);
+    final domainAnoni = '$firstPart****@';
+    return domainAnoni + partsEmail[1];
+  }
+
   String get userName {
     // 1. Verifica se a string está vazia ou contém apenas espaços.
     if (name.trim().isEmpty) {

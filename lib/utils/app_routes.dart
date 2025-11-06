@@ -17,4 +17,5 @@ class AppRoutes {
   static const String exercisesPagePhysio = '/exercises-page-physio';
   static const String policyPrivacyPage = '/policy-privacy-page';
   static const String policyPrivacyPatientPage = '/policy-privacy-patient-page';
+  static const String pairedPhysioDataPage = 'paired-physio-data-page';
 }

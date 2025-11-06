@@ -25,7 +25,7 @@ class PairWithPhysio with ChangeNotifier {
       );
 
       _userId = code != '-1' ? code : 'Não validado!';
-      
+
       _addPairPhysio(userId: _userId!);
     } catch (error) {
       debugPrint('Não foi possivel validar o código');
@@ -38,17 +38,23 @@ class PairWithPhysio with ChangeNotifier {
 
     try {
       final physioData = await endpoint.pairWithPhysio(
-      physioId: userId,
-      token: authService.tokenPatient!,
-    );
+        physioId: userId,
+        token: authService.tokenPatient!,
+      );
 
-    final userPhysio = jsonDecode(physioData.body);
+      final userPhysio = jsonDecode(physioData.body);
 
-    _newPhysio(userPhysio: userPhysio);
-
+      _newPhysio(userPhysio: userPhysio);
     } catch (error) {
       debugPrint(error.toString());
     }
+  }
+
+  void removePairPhysio({required PhysioUser user}) {
+    _listPhysioPair.removeWhere(
+      (element) => element.id == user.id,
+    );
+    notifyListeners();
   }
 
   void _newPhysio({required dynamic userPhysio}) {
@@ -62,6 +68,7 @@ class PairWithPhysio with ChangeNotifier {
     );
 
     _listPhysioPair.add(newPhysio);
+
     notifyListeners();
   }
 }
