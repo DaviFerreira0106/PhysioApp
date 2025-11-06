@@ -63,16 +63,20 @@ class PatientEndpoint {
     );
   }
 
-  Future<http.Response> updateEndpoint(
-      {required PatientUser? user,
-      String? name,
-      String? email,
-      String? password,
-      required String? token}) async {
+  Future<http.Response> updateEndpoint({
+    required PatientUser? user,
+    String? name,
+    String? email,
+    String? password,
+    required String? token,
+  }) async {
     return await http
         .put(
           Uri.parse('$_url/users/${user?.id}'),
-          headers: {"Authorization": "Bearer $token"},
+          headers: {
+            "Authorization": "Bearer $token",
+            "Content-Type": "application/json",
+          },
           body: jsonEncode({
             "fullname": name?.toLowerCase() ?? user?.name.toLowerCase(),
             "email": email?.toLowerCase() ?? user?.email.toLowerCase(),

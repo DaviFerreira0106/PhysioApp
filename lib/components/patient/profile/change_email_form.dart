@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/exception/profile/change_data_profile_exception.dart';
+import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
 
 class ChangeEmailForm extends StatefulWidget {
-  const ChangeEmailForm({super.key});
+  final void Function() refreshPage;
+  const ChangeEmailForm({super.key, required this.refreshPage});
 
   @override
   State<ChangeEmailForm> createState() => _ChangeEmailFormState();
@@ -10,6 +13,7 @@ class ChangeEmailForm extends StatefulWidget {
 class _ChangeEmailFormState extends State<ChangeEmailForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  bool _isLoading = false;
 
   Widget _defaultTextForm({required Widget textForm}) {
     return Container(
@@ -23,10 +27,40 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
     );
   }
 
-  Future<void> _submit() async {
+  Future<void> _submit({required BuildContext context}) async {
     final isValid = _formKey.currentState?.validate() ?? false;
+    final currentUser = AuthPatientService();
+    final exception = ChangeDataProfileException();
 
     if (!isValid) return;
+
+    if (!isValid) return;
+
+    try {
+      setState(() => _isLoading = true);
+
+      await currentUser.updateUser(
+        currentUser: currentUser.currentPatientUser,
+        email: _emailController.text,
+      );
+
+      await exception.showSucessMessageDialog(
+        title: 'Sucesso',
+        message: 'Email atualizado com sucesso!',
+        context: context,
+      );
+    } catch (error) {
+      await exception.showFailedMessageDialog(
+        title: 'Erro',
+        message: 'Não foi possivel atualizar o email! ${error.toString()}',
+        context: context,
+      );
+    } finally {
+      setState(() => _isLoading = false);
+      Navigator.of(context).pop();
+
+      widget.refreshPage();
+    }
   }
 
   @override
@@ -76,25 +110,31 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 15),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(
-                    Theme.of(context).colorScheme.tertiary,
-                  ),
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+              height: 40,
+              width: 130,
+              child: _isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          Theme.of(context).colorScheme.tertiary,
+                        ),
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      onPressed: () => _submit(context: context),
+                      child: const Text(
+                        'Atualizar',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                onPressed: () => _submit(),
-                child: const Text(
-                  'Atualizar',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
             ),
           ],
         ),

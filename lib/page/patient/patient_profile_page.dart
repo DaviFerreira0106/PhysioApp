@@ -7,8 +7,17 @@ import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
 import 'package:physioapp/services/profile/patient/patient_profile_service.dart';
 import 'package:provider/provider.dart';
 
-class PatientProfilePage extends StatelessWidget {
+class PatientProfilePage extends StatefulWidget {
   const PatientProfilePage({super.key});
+
+  @override
+  State<PatientProfilePage> createState() => _PatientProfilePageState();
+}
+
+class _PatientProfilePageState extends State<PatientProfilePage> {
+  void refreshPage() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +79,7 @@ class PatientProfilePage extends StatelessWidget {
                         height: 10,
                       ),
                       ProfileDataPatient(
+                        refreshPage: refreshPage,
                         patientUser: patientUser.currentPatientUser!,
                       ),
                     ],

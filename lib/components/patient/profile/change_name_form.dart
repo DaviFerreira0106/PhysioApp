@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:physioapp/exception/profile/change_data_profile_exception.dart';
+import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
 
 class ChangeNameForm extends StatefulWidget {
-  const ChangeNameForm({super.key});
+  final void Function() refreshPage;
+  const ChangeNameForm({super.key, required this.refreshPage});
 
   @override
   State<ChangeNameForm> createState() => _ChangeNameFormState();
@@ -10,6 +13,7 @@ class ChangeNameForm extends StatefulWidget {
 class _ChangeNameFormState extends State<ChangeNameForm> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
+  bool _isLoading = false;
 
   Widget _defaultTextForm({required Widget textForm}) {
     return Container(
@@ -23,10 +27,38 @@ class _ChangeNameFormState extends State<ChangeNameForm> {
     );
   }
 
-  Future<void> _submit() async {
+  Future<void> _submit({required BuildContext context}) async {
+    final currentUser = AuthPatientService();
+    final exception = ChangeDataProfileException();
     final isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) return;
+
+    try {
+      setState(() => _isLoading = true);
+
+      await currentUser.updateUser(
+        currentUser: currentUser.currentPatientUser,
+        name: _nameController.text,
+      );
+
+      await exception.showSucessMessageDialog(
+        title: 'Sucesso',
+        message: 'Nome atualizado com sucesso!',
+        context: context,
+      );
+    } catch (error) {
+      await exception.showFailedMessageDialog(
+        title: 'Erro',
+        message: 'Não foi possivel atualizar o nome! ${error.toString()}',
+        context: context,
+      );
+    } finally {
+      setState(() => _isLoading = false);
+      Navigator.of(context).pop();
+
+      widget.refreshPage();
+    }
   }
 
   @override
@@ -76,25 +108,29 @@ class _ChangeNameFormState extends State<ChangeNameForm> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 15),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(
-                    Theme.of(context).colorScheme.tertiary,
-                  ),
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+              height: 40,
+              width: 130,
+              child: _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll(
+                          Theme.of(context).colorScheme.tertiary,
+                        ),
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      onPressed: () => _submit(context: context),
+                      child: const Text(
+                        'Atualizar',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                onPressed: () => _submit(),
-                child: const Text(
-                  'Atualizar',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
             ),
           ],
         ),

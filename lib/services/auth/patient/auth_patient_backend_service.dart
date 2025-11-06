@@ -127,6 +127,9 @@ class AuthPatientBackendService implements AuthPatientService {
     final response = await endpoints.updateEndpoint(
       user: currentUser,
       token: _globalToken,
+      password: password,
+      email: email,
+      name: name,
     );
 
     try {
@@ -137,6 +140,7 @@ class AuthPatientBackendService implements AuthPatientService {
       final user = jsonDecode(current.body);
 
       _updatePatientUser(user: user);
+      
     } catch (error) {
       debugPrint(response.statusCode.toString());
       debugPrint('deu ruim');

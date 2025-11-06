@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/components/physioterapist/profile/alert_delete_account.dart';
-import 'package:physioapp/components/physioterapist/profile/change_password_form.dart';
+import 'package:physioapp/components/patient/profile/alert_delete_account.dart';
+import 'package:physioapp/components/patient/profile/change_password_form.dart';
 import 'package:physioapp/utils/app_routes.dart';
 
 class OtherOptionsPatient extends StatefulWidget {
@@ -64,8 +64,8 @@ class _OtherOptionsPatientState extends State<OtherOptionsPatient> {
         _componentListTile(
           icon: Icons.privacy_tip_rounded,
           text: 'Política de Privacidade',
-          function: () =>
-              Navigator.of(context).pushNamed(AppRoutes.policyPrivacyPage),
+          function: () => Navigator.of(context)
+              .pushNamed(AppRoutes.policyPrivacyPatientPage),
         ),
         _componentListTile(
           icon: Icons.lock,

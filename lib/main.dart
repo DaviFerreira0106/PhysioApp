@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/page/patient/add_physio_page.dart';
+import 'package:physioapp/page/patient/policy_privacy_patient_page.dart';
 import 'package:physioapp/page/patient/tabs_page_patient.dart';
 import 'package:physioapp/page/physioterapist/add_exercise_page.dart';
 import 'package:physioapp/page/physioterapist/add_patient_page.dart';
@@ -186,6 +187,7 @@ class PhysioApp extends StatelessWidget {
           AppRoutes.exercisesPagePhysio: (context) =>
               const ExercisesPagePhysio(),
           AppRoutes.policyPrivacyPage: (context) => const PolicyPrivacyPage(),
+          AppRoutes.policyPrivacyPatientPage: (context) => const PolicyPrivacyPatientPage(),
         },
       ),
     );

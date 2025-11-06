@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
-import 'package:physioapp/services/navigation/bottom_nav_bar_controller.dart';
+import 'package:physioapp/services/auth/patient/auth_patient_service.dart';
+import 'package:physioapp/services/navigation/bottom_nav_bar_patient_controller.dart';
 import 'package:physioapp/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +14,7 @@ class AlertDeleteAccount extends StatefulWidget {
 class _AlertDeleteAccountState extends State<AlertDeleteAccount> {
   @override
   Widget build(BuildContext context) {
-    final navigationPage = Provider.of<BottomNavBarPhysioController>(context);
+    final navigationPage = Provider.of<BottomNavBarPatientController>(context);
     return AlertDialog.adaptive(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -40,10 +40,10 @@ class _AlertDeleteAccountState extends State<AlertDeleteAccount> {
         ),
         TextButton(
           onPressed: () {
-            final currentUser = AuthPhysioService();
+            final currentUser = AuthPatientService();
 
             currentUser.deleteAccount(
-                currentUser: currentUser.currentPhysioUser!);
+                currentUser: currentUser.currentPatientUser!);
 
             navigationPage.toggleIndex(index: 0);
 
