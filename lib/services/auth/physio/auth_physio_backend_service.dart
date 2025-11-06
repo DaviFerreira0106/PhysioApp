@@ -3,16 +3,29 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:physioapp/services/auth/auth_form.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:physioapp/model/user/physio/physio_user.dart';
 import 'package:physioapp/services/auth/physio/auth_physio_service.dart';
+import 'package:physioapp/services/auth/physio/physio_endpoint.dart';
 
 class AuthPhysioBackendService implements AuthPhysioService {
+  final endpoints = PhysioEndpoint();
+
   static String? _globalToken;
   File? image;
-  // static const String _url = '10.8.121.9';
-  // static const String _url = '192.168.15.3';
-  static const String _url = '10.8.116.1';
+
+  void _updatePhysioUser(
+      {required dynamic user, File? imageProfile, RadioButton? physioType}) {
+    _currentUserPhysio = PhysioUser(
+      id: user['id'],
+      crefito: user['crefito'],
+      physioType: physioType ?? RadioButton.physioOption,
+      imageProfile: imageProfile ?? File(''),
+      name: user['fullname'],
+      email: user['email'],
+    );
+  }
+
   static PhysioUser? _currentUserPhysio;
 
   @override
@@ -28,56 +41,41 @@ class AuthPhysioBackendService implements AuthPhysioService {
     required String password,
     required String crefito,
   }) async {
-    final response = await http
-        .post(
-          Uri.parse('http://$_url:8080/auth/register'),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode({
-            "fullname": name.toLowerCase(),
-            "email": email.toLowerCase(),
-            "password": password,
-            "user_type": "PHYSIO",
-            "crefito": crefito,
-          }),
-        )
-        .timeout(
-          const Duration(seconds: 5),
-        );
+    final response = await endpoints.registerEndpoint(
+      name: name,
+      email: email,
+      password: password,
+      crefito: crefito,
+    );
 
-    if (response.statusCode == 201) {
-      final login = await http.post(
-        Uri.parse('http://$_url:8080/auth/login'),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "email": email,
-          "password": password,
-        }),
+    try {
+      final login = await endpoints.loginEndpoint(
+        email: email,
+        password: password,
       );
 
-      if (login.statusCode == 200) {
+      try {
         final json = jsonDecode(login.body);
-        String? token = json['token'];
+        final String? token = json['token'];
+
         if (token != null && token.isNotEmpty) {
           _globalToken = token;
 
-          final current = await http.get(
-            Uri.parse('http://$_url:8080/users/me'),
-            headers: {"Authorization": "Bearer $_globalToken"},
-          );
+          final current = await endpoints.meEndpoint(token: _globalToken!);
 
           final user = jsonDecode(current.body);
           image = imageProfile;
-          _currentUserPhysio = PhysioUser(
-            id: user['id'],
-            crefito: user['crefito'],
+
+          _updatePhysioUser(
+            user: user,
+            imageProfile: image,
             physioType: physioType,
-            imageProfile: imageProfile,
-            name: user['fullname'],
-            email: user['email'],
           );
         }
+      } catch (error) {
+        debugPrint(error.toString());
       }
-    } else {
+    } catch (error) {
       debugPrint("ocorreu erro, deu ruim");
       debugPrint(response.body);
     }
@@ -85,60 +83,43 @@ class AuthPhysioBackendService implements AuthPhysioService {
 
   @override
   Future<void> login({required String email, required String password}) async {
-    final login = await http
-        .post(
-          Uri.parse('http://$_url:8080/auth/login'),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode({
-            "email": email.toLowerCase(),
-            "password": password,
-          }),
-        )
-        .timeout(
-          const Duration(seconds: 5),
-        );
+    final login = await endpoints.loginEndpoint(
+      email: email,
+      password: password,
+    );
 
-    if (login.statusCode == 200) {
+    try {
       final json = jsonDecode(login.body);
-      String? token = json['token'];
+      final String? token = json['token'];
+
       if (token != null && token.isNotEmpty) {
         _globalToken = token;
 
-        final current = await http.get(
-          Uri.parse('http://$_url:8080/users/me'),
-          headers: {"Authorization": "Bearer $_globalToken"},
-        );
+        final current = await endpoints.meEndpoint(token: _globalToken!);
 
         final user = jsonDecode(current.body);
         debugPrint('User ===> $user');
         image = image;
-        _currentUserPhysio = PhysioUser(
-          id: user['id'],
-          crefito: user['crefito'],
-          physioType: RadioButton.physioOption,
-          imageProfile: File(image?.path ?? ''),
-          name: user['fullname'],
-          email: user['email'],
-        );
+
+        _updatePhysioUser(user: user, imageProfile: image);
       }
-    } else {
+    } catch (error) {
       debugPrint("ocorreu erro, deu ruim");
       debugPrint(login.statusCode.toString());
       throw Exception(
-          'Erro de acesso, verifique se o endereço de e-mail está correto');
+        'Erro de acesso, verifique se o endereço de e-mail está correto',
+      );
     }
   }
 
   @override
   Future<void> deleteAccount({required PhysioUser currentUser}) async {
-    final response = await http.delete(
-      Uri.parse('http://$_url:8080/users/${currentUser.id}'),
-      headers: {"Authorization": "Bearer $_globalToken"},
-    );
+    final response = await endpoints.deleteEndpoint(
+        userId: currentUser.id, token: _globalToken!);
 
-    if (response.statusCode == 204) {
+    try {
       debugPrint('Deu tudo certo');
-    } else {
+    } catch (error) {
       debugPrint(response.toString());
     }
   }
@@ -149,46 +130,27 @@ class AuthPhysioBackendService implements AuthPhysioService {
       String? password,
       String? name,
       String? email}) async {
-    debugPrint(name);
-    final response = await http
-        .put(
-          Uri.parse('http://$_url:8080/users/${currentUser?.id}'),
-          headers: {
-            "Authorization": "Bearer $_globalToken",
-            "Content-Type": "application/json",
-          },
-          body: jsonEncode({
-            "fullname": name?.toLowerCase() ?? currentUser?.name.toLowerCase(),
-            "email": email?.toLowerCase() ?? currentUser?.email.toLowerCase(),
-            "password": password,
-          }),
-        )
-        .timeout(
-          const Duration(seconds: 5),
-        );
+    final response = await endpoints.updateEndpoint(
+      currentUser: currentUser,
+      name: name,
+      email: email,
+      token: _globalToken!,
+      password: password,
+    );
 
-    if (response.statusCode == 200) {
+    try {
       debugPrint('deu bom');
 
-      final current = await http.get(
-        Uri.parse('http://$_url:8080/users/me'),
-        headers: {"Authorization": "Bearer $_globalToken"},
-      );
+      final current = await endpoints.meEndpoint(token: _globalToken!);
 
       final user = jsonDecode(current.body);
 
-      final updateUser = PhysioUser(
-        id: user['id'],
-        crefito: user['crefito'],
+      _updatePhysioUser(
+        user: user,
         physioType: RadioButton.physioOption,
         imageProfile: File(''),
-        name: user['fullname'],
-        email: user['email'],
       );
-
-      _currentUserPhysio = updateUser;
-      currentUser = updateUser;
-    } else {
+    } catch (error) {
       debugPrint(response.statusCode.toString());
       debugPrint('deu ruim');
     }
