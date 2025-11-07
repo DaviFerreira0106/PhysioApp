@@ -15,6 +15,7 @@ import 'package:physioapp/services/exercises/physio/exercises_controller_compone
 import 'package:physioapp/services/navigation/bottom_nav_bar_controller.dart';
 import 'package:physioapp/services/navigation/bottom_nav_bar_patient_controller.dart';
 import 'package:physioapp/services/pair_users/patient/pair_with_physio.dart';
+import 'package:physioapp/services/pair_users/physio/pair_with_patient.dart';
 import 'package:physioapp/services/profile/patient/patient_profile_service.dart';
 import 'package:physioapp/services/profile/physio/physio_profile_service.dart';
 import 'package:physioapp/services/schedule/schedule_appointment_controller.dart';
@@ -32,8 +33,19 @@ import 'package:physioapp/page/physioterapist/signin_physio_page.dart';
 import 'package:physioapp/page/physioterapist/signup_physio_page.dart';
 import 'package:physioapp/utils/signup_page_form.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(const PhysioApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, 
+    DeviceOrientation.portraitDown, 
+  ]);
+
+  runApp(const PhysioApp());
+}
 
 class PhysioApp extends StatelessWidget {
   @override
@@ -78,6 +90,9 @@ class PhysioApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => PairWithPhysio(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PairWithPatient(),
         ),
       ],
       child: MaterialApp(
@@ -192,8 +207,10 @@ class PhysioApp extends StatelessWidget {
           AppRoutes.exercisesPagePhysio: (context) =>
               const ExercisesPagePhysio(),
           AppRoutes.policyPrivacyPage: (context) => const PolicyPrivacyPage(),
-          AppRoutes.policyPrivacyPatientPage: (context) => const PolicyPrivacyPatientPage(),
-          AppRoutes.pairedPhysioDataPage: (context) => const PairedPhysioDataPage(),
+          AppRoutes.policyPrivacyPatientPage: (context) =>
+              const PolicyPrivacyPatientPage(),
+          AppRoutes.pairedPhysioDataPage: (context) =>
+              const PairedPhysioDataPage(),
         },
       ),
     );
