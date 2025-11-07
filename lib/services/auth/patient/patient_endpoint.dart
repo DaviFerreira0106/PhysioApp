@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:physioapp/model/user/patient/patient_user.dart';
+import 'package:physioapp/utils/domain_connection.dart';
 
 class PatientEndpoint {
-  // static const String _url = 'http://10.8.121.9:8080';
-  static const String _url = 'http://192.168.15.2:8080';
-  // static const String _url = 'http://10.8.116.1:8080';
+  final _url = DomainConnection().url;
 
   Future<http.Response> registerEndpoint({
     required String name,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/schedule_appointment/first_form_schedule_appointment.dart';
 import 'package:physioapp/components/physioterapist/schedule_appointment/second_form_schedule_appointment.dart';
 import 'package:physioapp/components/physioterapist/schedule_appointment/select_form.dart';
+import 'package:physioapp/exception/auth_signup_exception.dart';
+import 'package:physioapp/model/schedule/schedule_form_data.dart';
 import 'package:physioapp/services/schedule/schedule_appointment_form.dart';
 import 'package:provider/provider.dart';
 
@@ -64,6 +66,7 @@ class _ScheduleAppointmentPageState extends State<ScheduleAppointmentPage> {
                       if (scheduleProvider.firstForm)
                         TextButton(
                           onPressed: () {
+
                             scheduleProvider.toggleForm(
                               valueForm: scheduleProvider.getSecondForm,
                             );

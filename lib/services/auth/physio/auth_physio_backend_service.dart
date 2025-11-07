@@ -108,7 +108,7 @@ class AuthPhysioBackendService implements AuthPhysioService {
       debugPrint(login.statusCode.toString());
       throw Exception(
         'Erro de acesso, verifique se o endereço de e-mail está correto',
-      );
+      ); 
     }
   }
 

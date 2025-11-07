@@ -13,6 +13,10 @@ class _FirstFormScheduleAppointmentState
     extends State<FirstFormScheduleAppointment> {
   final _formKey = GlobalKey<FormState>();
 
+  Future<void> _showPatientsAppoiments() async {
+    showDialog(context: context, builder: (context) => ,);
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget defaultTextForm({required Widget textForm}) {
@@ -49,75 +53,26 @@ class _FirstFormScheduleAppointmentState
           child: Column(
             spacing: 20,
             children: [
-              defaultTextForm(
-                textForm: TextFormField(
-                  initialValue: ScheduleFormData.name,
-                  decoration: InputDecoration(
-                    label: Text(
-                      'Nome completo',
-                      style: Theme.of(context).textTheme.labelMedium,
+              GestureDetector(
+                onTap: () => ,
+                child: defaultTextForm(
+                  textForm: TextFormField(
+                    decoration: InputDecoration(
+                      label: Text(
+                        'Nome completo',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
                     ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
+                    keyboardType: TextInputType.name,
+                    onChanged: (name) => ScheduleFormData.name = name,
                   ),
-                  keyboardType: TextInputType.name,
-                  onChanged: (name) => ScheduleFormData.name = name,
                 ),
               ),
               defaultTextForm(
                 textForm: TextFormField(
-                  initialValue: ScheduleFormData.age.toString(),
-                  decoration: InputDecoration(
-                    label: Text(
-                      'Idade',
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  onChanged: (age) => ScheduleFormData.age = int.parse(age),
-                ),
-              ),
-              defaultTextForm(
-                textForm: TextFormField(
-                  initialValue: ScheduleFormData.weight.toString(),
-                  decoration: InputDecoration(
-                    label: Text(
-                      'Peso',
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                  onChanged: (weight) =>
-                      ScheduleFormData.weight = double.parse(weight),
-                  keyboardType: TextInputType.number,
-                ),
-              ),
-              defaultTextForm(
-                textForm: TextFormField(
-                  initialValue: ScheduleFormData.height.toString(),
-                  decoration: InputDecoration(
-                    label: Text(
-                      'Altura',
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  onChanged: (height) =>
-                      ScheduleFormData.height = double.parse(height),
-                ),
-              ),
-              defaultTextForm(
-                textForm: TextFormField(
-                  initialValue: ScheduleFormData.occurrence,
                   decoration: InputDecoration(
                     label: Text(
                       'Ocorrência',
