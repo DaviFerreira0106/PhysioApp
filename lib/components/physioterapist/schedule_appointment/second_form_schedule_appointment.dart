@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:physioapp/components/physioterapist/schedule_appointment/preview_map.dart';
+import 'package:physioapp/model/schedule/schedule_form_data.dart';
 import 'package:physioapp/services/schedule/schedule_appointment_form.dart';
 import 'package:provider/provider.dart';
 
@@ -13,8 +14,32 @@ class SecondFormScheduleAppointment extends StatefulWidget {
 
 class _SecondFormScheduleAppointmentState
     extends State<SecondFormScheduleAppointment> {
+  Future<void> _showDatePicket() async {
+    showDatePicker(
+      context: context,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2026),
+    ).then(
+      (date) {
+        ScheduleFormData.consultationDate = date;
+      },
+    );
+  }
+
+  Future<void> _showTimePicket() async {
+    showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    ).then(
+      (time) {
+        ScheduleFormData.consultationTime = time;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final scheduleDate = ScheduleFormData();
     final typeQueryProvider = Provider.of<ScheduleAppointmentForm>(context);
     return SingleChildScrollView(
       child: SizedBox(
@@ -48,9 +73,36 @@ class _SecondFormScheduleAppointmentState
                   Theme.of(context).colorScheme.tertiary,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                _showDatePicket();
+              },
               child: Text(
-                'Data e Hora da Consulta',
+                'Data da Consulta',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontFamily:
+                      Theme.of(context).textTheme.titleSmall?.fontFamily,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                shape: WidgetStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                backgroundColor: WidgetStatePropertyAll(
+                  Theme.of(context).colorScheme.tertiary,
+                ),
+              ),
+              onPressed: () {
+                _showTimePicket();
+              },
+              child: Text(
+                'Hora da Consulta',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
@@ -62,7 +114,7 @@ class _SecondFormScheduleAppointmentState
             ),
             const SizedBox(height: 10),
             Text(
-              'Data e Hora da Consulta: ',
+              'Data e Hora da Consulta: ${scheduleDate.dateTimeConsultation}',
               style: TextStyle(
                 color: Theme.of(context).textTheme.labelLarge?.color,
                 fontWeight: FontWeight.w500,
