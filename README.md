@@ -525,8 +525,7 @@ A proposta combina:
 > 🎓 Projeto desenvolvido como Trabalho de Conclusão de Curso (TCC).
 
 <div align="center">
-🩺 PhysioApp
-Flutter • Dart • Java • Spring Boot • REST API
+### 🩺 PhysioApp Flutter • Dart • Java • Spring Boot • REST API
 
 Uma solução mobile para auxiliar fisioterapeutas e pacientes no acompanhamento de tratamentos.
 
