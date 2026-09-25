@@ -326,8 +326,6 @@ O recurso permite estabelecer uma comunicação direta entre os usuários da pla
 
 Entre as principais dependências utilizadas no projeto estão:
 
-### 🎨 Interface
-
 ```yaml
 cupertino_icons: ^1.0.8
 provider: ^6.1.5+1
@@ -340,3 +338,196 @@ path_provider: ^2.1.5
 path: ^1.9.0
 qr_flutter: ^4.1.0
 flutter_barcode_scanner: ^2.0.0
+```
+
+## Parte 11 — Tecnologias e funcionalidades
+
+# 🧩 Principais Tecnologias
+
+```text
+Flutter
+   │
+   └── Dart
+        │
+        ├── Provider
+        ├── HTTP
+        ├── Encrypt
+        ├── Image Picker
+        ├── Video Player
+        ├── QR Flutter
+        ├── Barcode Scanner
+        └── Path Provider
+
+Backend
+   │
+   └── Java
+   └── Spring Boot
+   └── API REST
+   └── JSON
+   └── HTTP
+
+Frontend
+   │
+   └── Flutter
+   └── Dart
+   └── Provider
+   └── Material Design
+```
+
+
+## Parte 12 — Funcionalidades
+
+
+# 📱 Principais Funcionalidades
+
+| Funcionalidade | Descrição |
+|---|---|
+| 🔐 Autenticação | Login para fisioterapeutas e pacientes |
+| 👨‍⚕️ Pacientes | Gerenciamento de pacientes |
+| 🏋️ Exercícios | Biblioteca de exercícios |
+| 🖼️ Imagens | Visualização de exercícios através de imagens |
+| 🎥 Vídeos | Reprodução de vídeos de exercícios |
+| 📋 Compartilhamento | Disponibilização de exercícios para pacientes |
+| 📅 Consultas | Agendamento e visualização de consultas |
+| 💬 Chat | Comunicação entre profissional e paciente |
+| 📹 Videochamadas | Comunicação por vídeo |
+| 📷 Imagens | Seleção e captura de imagens |
+| 🔳 QR Code | Geração e utilização de QR Codes |
+| 📱 Barcode | Leitura de códigos de barras |
+
+# 🔄 Fluxo Geral da Aplicação
+
+```text
+                    ┌───────────────┐
+                    │     Login     │
+                    └───────┬───────┘
+                            │
+                 ┌──────────┴──────────┐
+                 │                     │
+                 ▼                     ▼
+        ┌─────────────────┐   ┌─────────────────┐
+        │ Fisioterapeuta  │   │    Paciente     │
+        └────────┬────────┘   └────────┬────────┘
+                 │                     │
+        ┌────────┼────────┐            │
+        │        │        │            │
+        ▼        ▼        ▼            ▼
+   Pacientes  Exercícios Consultas  Exercícios
+        │        │        │            │
+        │        │        └────────────┤
+        │        │                     │
+        └────────┴──────────┬──────────┘
+                            │
+                     ┌──────┴──────┐
+                     │ Comunicação │
+                     │             │
+                     │ Chat        │
+                     │ Videochamada│
+                     └─────────────┘
+```
+
+
+## Parte 14 — Organização do projeto
+
+
+# 🗂️ Organização do Projeto
+
+O frontend foi organizado de forma a separar as diferentes responsabilidades da aplicação.
+
+Uma estrutura conceitual do projeto pode ser representada da seguinte maneira:
+
+```text
+lib/
+│
+├── models/
+│
+├── services/
+│
+├── providers/
+│
+├── screens/
+│
+├── widgets/
+│
+├── utils/
+│
+└── main.dart
+```
+
+## Parte 15 — Desenvolvimento
+
+# 🧑‍💻 Desenvolvimento
+
+O projeto foi desenvolvido utilizando principalmente:
+
+- **Flutter**
+- **Dart**
+- **Java**
+- **Spring Boot**
+- **API REST**
+- **Git**
+
+O frontend é responsável pela interface e interação com o usuário, enquanto o backend disponibiliza os serviços necessários através de uma API REST.
+
+A comunicação entre as duas aplicações ocorre por meio de requisições HTTP e troca de dados estruturados em JSON.
+
+# 🎓 Trabalho de Conclusão de Curso
+
+Este projeto foi desenvolvido como parte do meu **Trabalho de Conclusão de Curso (TCC)** durante a graduação em **Engenharia de Software**.
+
+O desenvolvimento envolveu conceitos relacionados ao desenvolvimento de aplicações mobile e à integração entre diferentes componentes de uma arquitetura cliente-servidor.
+
+### Conhecimentos aplicados
+
+- Desenvolvimento mobile
+- Programação em Dart
+- Desenvolvimento com Flutter
+- Desenvolvimento de APIs REST
+- Java e Spring Boot
+- Arquitetura cliente-servidor
+- Consumo de APIs
+- Requisições HTTP
+- Manipulação de JSON
+- Autenticação de usuários
+- Gerenciamento de estado
+- Criptografia
+- Manipulação de imagens
+- Reprodução de vídeos
+- Gerenciamento de arquivos
+- Chat
+- Videochamadas
+- Integração entre frontend e backend
+
+# 🚀 Objetivo do Projeto
+
+O projeto foi desenvolvido com o objetivo de demonstrar como tecnologias de desenvolvimento mobile e backend podem ser integradas para criar uma solução voltada a um cenário real.
+
+A proposta combina:
+
+```text
+        Flutter + Dart
+              │
+              ▼
+       Aplicação Mobile
+              │
+              ▼
+          REST API
+              │
+              ▼
+       Backend Java
+              │
+              ▼
+       Persistência
+```
+
+# 📌 Status do Projeto
+
+> 🎓 Projeto desenvolvido como Trabalho de Conclusão de Curso (TCC).
+
+<div align="center">
+🩺 PhysioApp
+Flutter • Dart • Java • Spring Boot • REST API
+
+Uma solução mobile para auxiliar fisioterapeutas e pacientes no acompanhamento de tratamentos.
+
+</div>
