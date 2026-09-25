@@ -522,7 +522,7 @@ A proposta combina:
 
 # 📌 Status do Projeto
 
-> 🎓 Projeto desenvolvido como Trabalho de Conclusão de Curso (TCC).
+> 🎓 Projeto desenvolvido como Projeto Final de Curso (PFC).
 
 <div align="center">
 🩺 PhysioApp Flutter • Dart • Java • Spring Boot • REST API
